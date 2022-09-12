@@ -1,0 +1,13 @@
+#footer {
+    background-color: antiquewhite;
+    padding: 0 var(--ctr-offset);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+
+    .nav-links{
+        display: flex;
+        gap: 20px;
+    }
+}

@@ -1,0 +1,15 @@
+#breadcrumb {
+    position: relative;
+    z-index: 2;
+    padding: 20px 0;
+
+    ol {
+        display: flex;
+        gap: 15px;
+    }
+    
+
+    @media #{$breakpoint-md-down} {
+        display: none;
+    }
+}

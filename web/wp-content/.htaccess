@@ -1,0 +1,6 @@
+# Proteger le repertoire wp-content
+Require all denied
+
+<Files ~ ".(xml|css|css.map|jpe?g|png|gif|js|pdf|eot|svg|ttf|woff|woff2|svg|ico|mp4|ogv|ogg|mp3|mov|webm|webp|json|twig|webmanifest|map|docx|doc|xls|pptx|zip|xlsx)$">
+    Require all granted
+</Files>

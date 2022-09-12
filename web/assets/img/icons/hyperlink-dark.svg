@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="11px" height="11px" viewBox="0 0 11 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Rectangle</title>
+    <g id="UI-KIT-+-Contenu-riche" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Blocs" transform="translate(-351.000000, -2984.000000)" fill="#FFF62F">
+            <g id="01_Chapeau-Copy-6" transform="translate(0.000000, 2635.000000)">
+                <g id="Stacked-Group" transform="translate(138.000000, 50.000000)">
+                    <g id="Group-12" transform="translate(0.000000, 186.000000)">
+                        <path d="M218.5,113 L224,113 L224,113 L224,118.5 C224,121.537566 221.537566,124 218.5,124 C215.462434,124 213,121.537566 213,118.5 C213,115.462434 215.462434,113 218.5,113 Z" id="Rectangle"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,16 @@
+.strate-image {
+	.container {
+		padding: 3.5rem 9rem;
+
+		picture,
+		img {
+			width: 100%;
+			height: auto;
+		}
+
+		@media #{$breakpoint-lg-down} {
+			padding: 3.5rem 2.5rem;
+			display: block;
+		}
+	}
+}

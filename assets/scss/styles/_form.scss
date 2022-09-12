@@ -1,0 +1,229 @@
+.form {
+    fieldset {
+        padding: 0;
+        border: 0;
+        display: grid;
+        grid-row-gap: 20px;
+
+        &:disabled {
+            display: none;
+        }
+    }
+
+    .field {
+        position: relative;
+    }
+
+    label {
+        display: block;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    [type="email"],
+    [type="password"],
+    [type="tel"],
+    [type="date"],
+    [type="number"],
+    [type="url"] {
+        font-family: inherit;
+        font-size: inherit;
+        color: inherit;
+        background: none;
+        margin: 0;
+        width: 100%;
+        height: 40px;
+        padding: 0 15px;
+        border: 1px solid #000;
+    }
+
+    textarea {
+        font-family: inherit;
+        appearance: none;
+        font-size: inherit;
+        color: inherit;
+        background: none;
+        margin: 0;
+        width: 100%;
+        min-height: 160px;
+        padding: 15px 0 15px 15px;
+        border: 1px solid #000;
+        resize: vertical;
+    }
+
+    .radio,
+    .checkbox {
+        display: flex;
+
+        &[role="group"] {
+            display: block;
+
+            ul {
+                display: grid;
+                grid-gap: 10px;
+            }
+
+            li {
+                display: flex;
+            }
+        }
+
+        input {
+            border: 1px solid #000;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background-clip: content-box;
+            padding: 3px;
+        }
+
+        input~label {
+            font-size: var(--font-size-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            margin: 0;
+            border: 1px solid rgba(0, 0, 0, 0);
+            height: 20px;
+            font-weight: 400;
+        }
+
+        [aria-invalid="true"] {
+            border: 1px solid var(--color-error);
+        }
+    }
+
+    .checkbox {
+        input {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input:checked::before {
+            content: "✓";
+            line-height: 0;
+        }
+    }
+
+    .radio {
+        input {
+            border-radius: 50%;
+            background-clip: content-box;
+            padding: 3px;
+        }
+
+        input:checked {
+            background-color: #000;
+        }
+    }
+
+    select {
+        appearance: none;
+        font-size: inherit;
+        height: 40px;
+        padding: 0 60px 0 20px;
+        outline: none;
+        width: 100%;
+        max-width: 250px;
+        border-radius: 0;
+        background: none;
+        background-image: url(../img/icons/caret.svg);
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 15px 15px;
+        border: 1px solid #000000;
+        margin: 0;
+
+        option {
+            color: var(--color-text);
+            font-weight: 400;
+        }
+
+        &:-moz-focusring,
+        &::-moz-focus-inner {
+            outline: none;
+            color: transparent !important;
+            text-shadow: 0 0 0 #000 !important;
+        }
+
+        &::-ms-expand {
+            display: none;
+        }
+    }
+
+    [type="submit"],
+    button {
+        height: 40px;
+        padding: 0 20px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .action {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .invalid-msg {
+        color: var(--color-error);
+        font-style: italic;
+        font-size: 13px;
+        margin-top: 4px;
+        position: absolute;
+        top: 100%;
+        left: 0;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus {
+        -webkit-text-fill-color: inherit;
+        -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0) inset;
+        box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0) inset;
+        background-color: rgba(255, 255, 255, 0);
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    input,
+    select,
+    button,
+    textarea {
+        box-sizing: border-box;
+
+        &:focus {
+            outline: none;
+            border: 1px dashed var(--color-focus);
+        }
+
+        [aria-invalid="true"]:not(:focus) {
+            border: 1px solid var(--color-error);
+        }
+    }
+
+    [aria-invalid="true"]:not(:focus):invalid { 
+        border: 1px solid var(--color-error);
+    }
+
+    ::placeholder {
+        font-style: normal;
+        font-family: inherit;
+        opacity: 1;
+        font-weight: 300;
+        color: var(--color-gray);
+        font-size: inherit;
+    }
+}

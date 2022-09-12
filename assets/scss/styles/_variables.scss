@@ -1,0 +1,52 @@
+:root {
+    --font-1: 'ConduitITCPro', sans-serif;
+    --font-2: 'aeonik', sans-serif;
+
+    --ctr-width: 1400px;
+
+    --color-text: #1D1D1B;
+
+    --gray-light: #ECECEC;
+    --gray: #ECECEC;
+    --gray-dark: #ECECEC;
+
+    --color-1: #7163A9;
+    --color-2: #3F3B8F;
+    --color-3: #0089AB;
+    --color-4: #77C7C8;
+    --color-5: #F18E7E;
+
+    --color-error: red;
+    --color-valid: green;
+    --color-focus: blue;
+}
+
+/* breakpoint mobile first */
+$breakpoint-sm-up: "(min-width: 576px)";
+$breakpoint-md-up: "(min-width: 769px)";
+$breakpoint-lg-up: "(min-width: 992px)";
+$breakpoint-xlg-up: "(min-width: 1200px)";
+$breakpoint-wd-up: "(min-width: 1650px)";
+
+/* breakpoint desktop first */
+$breakpoint-sm-down: "(max-width: 575px)";
+$breakpoint-md-down: "(max-width: 768px)";
+$breakpoint-lg-down: "(max-width: 991px)";
+$breakpoint-xlg-down: "(max-width: 1199px)";
+$breakpoint-wd-down: "(max-width: 1649px)";
+
+@media #{$breakpoint-lg-down} {
+    :root {
+        --ctr-offset: 20px;
+        --gap: 40px;
+        --header-height: 40px;
+    }
+}
+
+@media #{$breakpoint-lg-up} {
+    :root {
+        --ctr-offset: 60px;
+        --gap: 80px;
+        --header-height: 80px;
+    }
+}

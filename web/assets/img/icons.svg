@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+    <symbol id="twitter" viewBox="0 0 36 36">
+        <path stroke="none" d="M32,9.7c-1,0.5-2.1,0.8-3.3,0.9c1.2-0.7,2.1-1.8,2.5-3.2c-1.1,0.7-2.3,1.1-3.6,1.4 C26.5,7.7,25,7,23.4,7c-3.2,0-5.7,2.6-5.7,5.7c0,0.5,0,0.9,0.1,1.3C13,13.8,8.8,11.5,6,8c-0.5,0.8-0.8,1.8-0.8,2.9 c0,2,1,3.7,2.6,4.7c-0.9,0-1.8-0.3-2.6-0.7c0,0,0,0,0,0.1c0,2.8,2,5.1,4.6,5.6c-0.5,0.1-1,0.2-1.5,0.2c-0.4,0-0.7,0-1.1-0.1 c0.7,2.3,2.9,3.9,5.4,4c-2,1.5-4.4,2.4-7.1,2.4c-0.5,0-0.9,0-1.4-0.1c2.5,1.6,5.6,2.6,8.8,2.6c10.6,0,16.4-8.7,16.4-16.2 c0-0.2,0-0.5,0-0.7C30.3,11.8,31.2,10.8,32,9.7z"/>
+    </symbol>
+    <symbol id="linkedin" viewBox="0 0 36 36">
+        <path stroke="none" d="M6.8,13c-0.1,0-0.2,0.1-0.2,0.3v15.2c0,0.1,0.1,0.3,0.3,0.3h4.8c0.1,0,0.3-0.1,0.3-0.3V13.3 c0-0.1-0.1-0.3-0.3-0.3H6.8z M23.8,12.5c-2,0-3.3,1-4.2,2v-1.2c0-0.1-0.1-0.3-0.3-0.3h-4.5c-0.1,0-0.3,0.1-0.3,0.3v15.2 c0,0.1,0.1,0.3,0.3,0.3h4.8c0.1,0,0.3-0.1,0.3-0.3V20c0-0.8,0.2-1.5,0.6-2c0.3-0.5,0.9-0.9,1.4-0.9h0.5c0.5,0,1,0.3,1.4,0.9 c0.3,0.5,0.6,1.3,0.6,2v8.5c0,0.1,0.1,0.3,0.3,0.3h4.8c0.1,0,0.3-0.1,0.3-0.3v-9.9c0-1.8-0.3-3.4-1.3-4.5 C27.4,13.1,25.9,12.5,23.8,12.5L23.8,12.5z M9.1,5.2C7.4,5.2,6,6.6,6,8.3s1.4,3.1,3.1,3.1s3.1-1.4,3.1-3.1S10.8,5.2,9.1,5.2L9.1,5.2 z"/>
+    </symbol>
+    <symbol id="facebook" viewBox="0 0 36 36">
+        <path stroke="none" d="M28.7,6H7.3C6.6,6,6,6.7,6,7.3v21.2c0,0.8,0.6,1.3,1.3,1.3h11.5v-9.3h-3.2V17h3.2v-2.7 c0-3.1,1.9-4.7,4.7-4.7c1.3,0,2.5,0.1,2.8,0.2V13h-1.9c-1.5,0-1.8,0.8-1.8,1.8v2.3h3.6l-0.5,3.6h-3.2V30h6.1c0.8,0,1.3-0.6,1.3-1.3 V7.3C30,6.7,29.4,6,28.7,6"/>
+    </symbol>
+    <symbol id="caret" viewBox="0 0 12 7">
+        <path fill="#231F20" d="M6.1,6.8l5.7-5.7l-0.9-0.9L6.1,5L1.3,0.2L0.4,1.1L6.1,6.8z"/>
+    </symbol>
+    <symbol id="arrow-down" viewBox="0 0 19 19">
+        <path d="M19,9.3l-1.5-1.5l-7,7l0-14.5H8.5l0,14.5l-7-7L0,9.3l9.5,9.5L19,9.3z"/>
+    </symbol>
+    <symbol id="icon-jaune" viewBox="0 0 13 13">
+        <rect fill="#FFF62F" width="13" height="13"/>
+    </symbol>
+    <symbol id="icon-vert" viewBox="0 0 13 13">
+        <path fill="#92D283" d="M6.4,0H13l0,0v6.6c0,3.5-2.9,6.4-6.4,6.4H0l0,0V6.4C0,2.9,2.9,0,6.4,0z"/>
+    </symbol>
+    <symbol id="icon-bleu" viewBox="0 0 13 13">
+        <path fill="#8FB7FB" d="M6.5,0H13l0,0v6.5c0,3.6-2.9,6.5-6.5,6.5S0,10.1,0,6.5S2.9,0,6.5,0z"/>
+    </symbol>
+    <symbol id="icon-noir" viewBox="0 0 13 13">
+        <rect x="0" y="0" width="13" height="13" rx="6.5" stroke="none" stroke-width="1" fill="#231F20" fill-rule="evenodd"></rect>
+    </symbol>
+    <symbol id="close" viewBox="0 0 16 16">
+        <g id="Annexe" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Cookies-Pop-in" transform="translate(-1385.000000, -37.000000)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.8">
+                <g id="CTA" transform="translate(1368.000000, 20.000000)">
+                    <path d="M31.574487,18.0622615 L32.7486595,19.198752 L26.4994468,25.2462615 L32.7486595,31.2945647 L31.574487,32.4310552 L25.3264468,26.3822615 L19.0776193,32.4310552 L17.9034468,31.2945647 L24.1524468,25.2462615 L17.9034468,19.198752 L19.0776193,18.0622615 L25.3264468,24.1102615 L31.574487,18.0622615 Z" id="Rectangle-2" transform="translate(25.326053, 25.246658) rotate(-90.000000) translate(-25.326053, -25.246658) "></path>
+                </g>
+            </g>
+        </g>
+    </symbol>
+    <symbol  id="check" viewBox="0 0 18 14">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Cookies" transform="translate(-466.000000, -852.000000)" stroke="#FFFFFF" stroke-width="2">
+                <g id="Box" transform="translate(0.000000, 675.500000)">
+                    <g id="CTA-Copy" transform="translate(454.517422, 163.969101)">
+                        <polyline id="Path" transform="translate(21.062839, 16.392195) rotate(-135.000000) translate(-21.062839, -16.392195) " points="17.3104872 23.3732414 16.0314663 9.41114804 26.0942108 9.41114804"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </symbol>
+    <symbol  id="play" viewBox="0 0 20 30">
+        <g stroke="none" stroke-width="1" fill-rule="evenodd">
+            <g transform="translate(-713.000000, -1769.000000)">
+                <g transform="translate(0.000000, 1396.525974)">
+                    <g transform="translate(138.000000, 60.000000)">
+                        <g transform="translate(534.000000, 279.474026)">
+                            <polygon transform="translate(44.000000, 48.000000) rotate(-45.000000) translate(-44.000000, -48.000000) " points="52.0598695 36 56 60 32 56.0598695"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </symbol>
+    <symbol id="star" viewBox="0 0 154 154">
+        <circle id="path-1_00000105408214374909155720000016266146596724914823_" class="st0" cx="77" cy="77" r="77"/>
+        <path fill="#FFFFFF" d="M82.4,106.4L75.5,85l-13.8,17.8l-7.3-6.2l15.1-16.7l-22.3-3.2l1.6-9.5l22,4.7L62.3,51l9.2-3.4L78.5,69 l13.8-17.8l7.3,6.2l-15,16.8l22.2,3.1l-1.6,9.5l-22-4.7l8.5,20.8L82.4,106.4z"/>
+    </symbol>
+    <symbol id="scroll-black" viewBox="0 0 100 100">
+        <rect fill="#231f20" width="100" height="100" rx="50"/>
+        <path fill="#fff" stroke="#fff" d="M48.85,33.6h2.82V64.36L65.84,50.19l2,2L50.25,69.75,32.68,52.18l2-2L48.85,64.36Z" />
+    </symbol>
+    <symbol id="scroll-blue" viewBox="0 0 100 100">
+        <rect fill="#4D2CF8" width="100" height="100" rx="50"/>
+        <path fill="#fff" stroke="#fff" d="M48.85,33.6h2.82V64.36L65.84,50.19l2,2L50.25,69.75,32.68,52.18l2-2L48.85,64.36Z" />
+    </symbol>
+    <symbol id="scroll-green" viewBox="0 0 100 100">
+        <rect fill="#92D283" width="100" height="100" rx="50"/>
+        <path fill="#fff" stroke="#fff" d="M48.85,33.6h2.82V64.36L65.84,50.19l2,2L50.25,69.75,32.68,52.18l2-2L48.85,64.36Z" />
+    </symbol>
+    <symbol id="download" viewBox="0 0 40 38">
+        <ellipse fill="#FFF62F" cx="20.2" cy="19" rx="19.7" ry="19"/>
+        <g transform="translate(19.684211, 23.369932) rotate(45.000000) translate(-19.684211, -23.369932) translate(14.258161, 17.943882)">
+            <path fill="#4D2CF8" d="M4.3,10.5V8.9l4.2,0L0.4,0.8l1.1-1.1l8.1,8.1l0-4.2h1.6v6.9H4.3z"/>
+        </g>
+        <polyline style="fill:none;stroke:#4D2CF8;stroke-width:1.5;" points="14.3,25.1 14.3,10.4 26,10.4 26,25.1 "/>
+    </symbol>
+</svg>

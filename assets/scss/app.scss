@@ -1,0 +1,30 @@
+//Style
+@import "styles/reset";
+@import "styles/variables";
+@import "styles/fonts";
+@import "styles/layout";
+@import "styles/btns";
+@import "styles/links";
+@import "styles/titles";
+@import "styles/rte";
+@import "styles/form";
+
+//modules
+@import "modules/rgpd";
+
+//blocks
+@import "blocks/footer";
+@import "blocks/header";
+@import "blocks/nav";
+@import "blocks/breadcrumb";
+
+//heros
+@import "heros/homepage";
+@import "heros/page";
+@import "heros/simple";
+@import "heros/article";
+
+//Strates
+@import "strates/image";
+@import "strates/wysiwyg";
+@import "strates/sitemap";
