@@ -15,7 +15,7 @@ WP_HOME=$(echo "$WP_HOME")
 cd "$(dirname "$0")"
 
 echo -e ${RED}"Stop all docker containers${NC}"
-docker container stop $(docker container ls -aq)
+#docker container stop $(docker container ls -aq)
 
 echo -e ${RED}"Delete all docker containers${NC}"
 # docker container rm $(docker container ls -aq)

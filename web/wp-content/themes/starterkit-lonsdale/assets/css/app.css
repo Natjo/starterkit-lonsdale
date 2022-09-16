@@ -256,6 +256,23 @@ main {
 }
 
 /* rich text */
+.rte {
+    /*
+     * Give every element, except the first,
+     * in an article a margin top.
+
+    article * + * {
+        margin-top: 1rem;
+      }
+      */
+    /*
+     * Give h1, h2 and h3 elements, except the first,
+     * a bigger margin top.
+
+    article * + :is(h1,h2,h3) {
+      margin-top: 2.5rem;
+    } */
+}
 .rte h2 {
     margin-bottom: 15px;
 }

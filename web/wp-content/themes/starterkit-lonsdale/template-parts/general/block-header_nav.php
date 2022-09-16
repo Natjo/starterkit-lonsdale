@@ -15,14 +15,7 @@
 
         <button id="btn-nav" aria-expanded="false" aria-controls="nav-panel">Menu</button>
 
-        <div id="nav-panel">
-            <form id="search" method="post" action="/">
-                <input id="search-input" type="text" name="s" placeholder="recherche"> 
-                <label for="search-input">Search</label>
-                <?= icon('search', 30, 21)?>
-            </form>
-
-            <nav id="nav" role="navigation" aria-label="Access to navigation">
+        <div id="nav-panel"> <nav id="nav" role="navigation" aria-label="Access to navigation">
                 <?php
                 wp_nav_menu(array(
                     'container' => false,
@@ -33,6 +26,13 @@
                 ));
                 ?>
             </nav>
+            <form id="search" method="post" action="/">
+                <input id="search-input" type="text" name="s" placeholder="recherche"> 
+                <label for="search-input">Search</label>
+                <?= icon('search', 30, 21)?>
+            </form>
+
+           
         </div>
     </div>
 </header>

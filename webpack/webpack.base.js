@@ -110,6 +110,7 @@ const webpackBase = {
                
                 { from: './assets/favicon', to: 'favicon' },
                 { from: './assets/img', to: 'img' },
+                { from: './assets/print.css', to: 'print.css' },
             ],
         }),
         new RemoveFilesPlugin({

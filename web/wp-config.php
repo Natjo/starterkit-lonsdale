@@ -33,15 +33,19 @@ if (ENV_PROD) {
 // ** Réglages MySQL - Votre hébergeur doit vous fournir ces informations. ** //
 /** Nom de la base de données de WordPress. */
 define('DB_NAME', getenv('MYSQL_DATABASE'));
+//define('DB_NAME', 'newsletter');
 
 /** Utilisateur de la base de données MySQL. */
 define('DB_USER', getenv('MYSQL_USER'));
+//define('DB_USER', 'newsletter');
 
 /** Mot de passe de la base de données MySQL. */
 define('DB_PASSWORD', getenv('MYSQL_PASSWORD'));
+//define('DB_PASSWORD', 'dG3CxcXE9WdWSR2P');
 
 /** Adresse de l’hébergement MySQL. */
 define('DB_HOST', getenv('MYSQL_HOST'));
+//define('DB_HOST', 'localhost');
 
 /** Jeu de caractères à utiliser par la base de données lors de la création des tables. */
 define('DB_CHARSET', 'utf8');

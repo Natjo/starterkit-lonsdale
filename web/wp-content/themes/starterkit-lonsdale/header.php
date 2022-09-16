@@ -21,7 +21,7 @@
     <meta name='HandheldFriendly' content='true' />
     <meta name='format-detection' content='telephone=no'/>
     <meta name="msapplication-tap-highlight" content="no">
-
+    <link rel='stylesheet' href='<?= THEME_ASSETS ?>print.css' media='print'>
     <?php wp_head(); ?>
 </head>
 

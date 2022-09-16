@@ -60,6 +60,13 @@ function scripts_site()
         define('PARAMSDATA', $dataToBePassed);
     }
 }
+function add_defer_attribute($tag, $handle) {
+    if ( 'script-js' !== $handle )
+      return $tag;
+    return str_replace( ' src', ' async src', $tag );
+  }
+  
+  add_filter('script_loader_tag', 'add_defer_attribute', 10, 2);
 
 
 /*
