@@ -945,6 +945,11 @@ a img.aligncenter {
     padding-bottom: 40px;
 }
 
+.card-article img {
+    width: 100%;
+    height: auto;
+}
+
 .strate-image .container {
     padding: 3.5rem 9rem;
 }
@@ -958,6 +963,18 @@ a img.aligncenter {
         padding: 3.5rem 2.5rem;
         display: block;
     }
+}
+
+.page-actualities .list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap);
+}
+
+.page-search .list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap);
 }
 
 /*# sourceMappingURL=app.css.map*/

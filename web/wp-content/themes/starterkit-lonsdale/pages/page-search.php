@@ -47,7 +47,7 @@ $totalPosts = $argsPosts['pager']['total_posts'];
 
     <section>
         <div class="container">
-            <ul>
+            <ul class="list">
                 <?php if (!empty($argsPosts['items'])) : ?>
                     <?php foreach ($argsPosts['items'] as $item) : ?>
                         <?php get_template_part('template-parts/cards/card', $card_tpl, $item); ?>

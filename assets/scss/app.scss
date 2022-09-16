@@ -24,7 +24,16 @@
 @import "heros/simple";
 @import "heros/article";
 
-//Strates
+//cards
+@import "cards/article";
+
+//strates
 @import "strates/image";
 @import "strates/wysiwyg";
-@import "strates/sitemap";
+
+
+//pages
+@import "pages/actualities";
+@import "pages/search";
+@import "pages/contact";
+@import "pages/sitemap";

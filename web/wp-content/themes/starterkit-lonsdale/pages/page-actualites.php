@@ -14,7 +14,7 @@ $postsPerPage = get_option('posts_per_page');
 $argsPosts = getSearchCptNews(["s" => $currentSearch], $paged, $postsPerPage);
 ?>
 
-<main id="main" role="main" tabindex="-1" class="page-archive">
+<main id="main" role="main" tabindex="-1" class="page-actualities">
     <?php get_template_part('template-parts/general/block', 'breadcrumb'); ?>
 
     <?php
@@ -22,12 +22,11 @@ $argsPosts = getSearchCptNews(["s" => $currentSearch], $paged, $postsPerPage);
     get_template_part('template-parts/heros/hero', 'page', $args);
     ?>
 
-    <section class="list-actu">
+    <section>
         <div class="container">
-            <ul>
+            <ul class="list">
                 <?php if (!empty($argsPosts['items'])) : ?>
                     <?php foreach ($argsPosts['items'] as $item) : ?>
-
                         <?php get_template_part('template-parts/cards/card', $card_tpl, $item); ?>
                     <?php endforeach; ?>
                 <?php endif; ?>

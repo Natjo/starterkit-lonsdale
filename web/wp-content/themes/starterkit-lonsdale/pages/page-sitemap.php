@@ -15,7 +15,7 @@ get_template_part('template-parts/general/block', 'header_nav');
     get_template_part('template-parts/heros/hero', 'page', $args);
     ?>
 
-    <section class="strate-sitemap">
+    <section>
         <div class="container">
             <ul>
                 <?php wp_list_pages(array(

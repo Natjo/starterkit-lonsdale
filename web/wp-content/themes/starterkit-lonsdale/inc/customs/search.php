@@ -30,9 +30,9 @@ function getSearchCptNews($filters, $paged = 1, $itemPerPage = -1,  $tax_query =
                     'link' =>  get_the_permalink($rowId),
                     'images' => array(
                         //'desktop' => lsd_get_thumb($rowId, 'medium'),
-                        'desktop' => lsd_get_featured($rowId, 'medium'),
-                        'width' => 346,
-                        'height' => 288
+                        'desktop' => lsd_get_featured($rowId, '415_300'),
+                        'width' => 415,
+                        'height' => 300
                     )
                 ];
             }

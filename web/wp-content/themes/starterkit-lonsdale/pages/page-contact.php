@@ -31,7 +31,7 @@ $mail_error = !empty($mail['error']) ? true : false;
         <?php endif; ?>
 
         <?php if (!$mail_send) : ?>
-            <form action="/contact" method="post" enctype='multipart/form-data' novalidate data-mandatory="Vous devez remplir ce champs">
+            <form class="form" action="/contact" method="post" enctype='multipart/form-data' novalidate data-mandatory="Vous devez remplir ce champs">
                 <div class="container">
                     <?php wp_nonce_field('contact', 'contact_nonce'); ?>
 

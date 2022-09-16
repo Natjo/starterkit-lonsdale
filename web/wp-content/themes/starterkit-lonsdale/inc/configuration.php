@@ -26,6 +26,7 @@ function theme_setup()
 
     show_admin_bar(false);
 
+    add_image_size('415_300', 415, 300, array('center', 'center'));
    
 }
 

@@ -2,7 +2,7 @@
 $images = $args['images'];
 ?>
 
-<li class="item" data-view="card-article">
+<li class="item card-article" data-view="card-article">
 	<?php if (!empty($args['tag'])) : ?>
 		<span><?= $args['tag'] ?></span>
 	<?php endif ?>
