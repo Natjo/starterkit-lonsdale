@@ -36,6 +36,14 @@ var map = {
 	"./modules/rgpd.js": [
 		"./assets/js/modules/rgpd.js"
 	],
+	"./modules/slider": [
+		"./assets/js/modules/slider.js",
+		"assets_js_modules_slider_js"
+	],
+	"./modules/slider.js": [
+		"./assets/js/modules/slider.js",
+		"assets_js_modules_slider_js"
+	],
 	"./modules/thirdparts": [
 		"./assets/js/modules/thirdparts.js"
 	],
@@ -49,6 +57,14 @@ var map = {
 	"./strates/contact.js": [
 		"./assets/js/strates/contact.js",
 		"assets_js_strates_contact_js"
+	],
+	"./strates/news": [
+		"./assets/js/strates/news.js",
+		"assets_js_strates_news_js"
+	],
+	"./strates/news.js": [
+		"./assets/js/strates/news.js",
+		"assets_js_strates_news_js"
 	]
 };
 function webpackAsyncContext(req) {
@@ -12083,7 +12099,9 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 			// return url for filenames not based on template
 /******/ 			if (chunkId === "assets_js_blocks_header-nav_js") return "./js/chunks/2c760a048cf26fc52350.js";
 /******/ 			if (chunkId === "assets_js_modules_formValidate_js") return "./js/chunks/cd1da5e53ca6b4797c44.js";
+/******/ 			if (chunkId === "assets_js_modules_slider_js") return "./js/chunks/11f2048e0fc8cd6e6eb1.js";
 /******/ 			if (chunkId === "assets_js_strates_contact_js") return "./js/chunks/e4f5556d2ef581bb733f.js";
+/******/ 			if (chunkId === "assets_js_strates_news_js") return "./js/chunks/45138494d05984fedc42.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

@@ -6,8 +6,6 @@ Template Name: Actualites
 get_header();
 get_template_part('template-parts/general/block', 'header_nav');
 
-$card_tpl = "news";
-
 $currentSearch = -1;
 $paged = get_query_var('paged') ? get_query_var('paged') : 1;
 $postsPerPage = get_option('posts_per_page');
@@ -27,7 +25,7 @@ $argsPosts = getSearchCptNews(["s" => $currentSearch], $paged, $postsPerPage);
             <ul class="list">
                 <?php if (!empty($argsPosts['items'])) : ?>
                     <?php foreach ($argsPosts['items'] as $item) : ?>
-                        <?php get_template_part('template-parts/cards/card', $card_tpl, $item); ?>
+                        <?php get_template_part('template-parts/cards/card', "news", $item); ?>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </ul>

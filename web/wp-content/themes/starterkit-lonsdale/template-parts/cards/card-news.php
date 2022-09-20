@@ -2,16 +2,20 @@
 $images = $args['images'];
 ?>
 
-<li class="item card-article" data-view="card-article">
+<li class="item card-article">
 	<?php if (!empty($args['tag'])) : ?>
 		<span><?= $args['tag'] ?></span>
 	<?php endif ?>
+
 	<h3><?= $args['title'] ?></h3>
+
 	<time datetime="<?= $args['datetime'] ?>"><?= $args['date'] ?></time>
-	<a href="<?= $args['link'] ?>">More</a>
-	<p>
-		<?= $args['text'] ?>
-	</p>
+
+	<a href="<?= $args['link'] ?>">Voir</a>
+	
+	<?php if (!empty($args['text'])) : ?>
+	<p><?= $args['text'] ?></p>
+	<?php endif ?>
 
 	<picture>
 		<?php if (!empty($images['mobile'])) : ?>

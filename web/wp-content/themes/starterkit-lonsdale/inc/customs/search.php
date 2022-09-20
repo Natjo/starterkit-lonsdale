@@ -1,5 +1,63 @@
 <?php
 
+/**
+ * Affiches les items du cpt news
+ * 
+ * getCptNews(array(
+ *     'max_items' => 10,
+ *     'tax_query' => array(
+ *           'taxonomy' => 'Catégories',
+ *           'field' => 'slug',
+ *           'terms' => ['techno'],
+ *      )
+ * ));
+ *
+ */
+
+
+function getCptNews($params = [])
+{
+
+    $tax_query = !empty($params['tax_query']) ? $params['tax_query'] : -1;
+    $max_items = !empty($params['max_items']) ? $params['max_items'] : -1;
+    $args = array(
+        'post_type' => 'news',
+        'post_status' => 'publish',
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => $max_items,
+        'tax_query' => array($tax_query)
+    );
+    $queryArticles = new WP_Query($args);
+
+    $items = [];
+    if ($queryArticles->have_posts()) {
+        while ($queryArticles->have_posts()) {
+            $queryArticles->the_post();
+            $rowId = get_the_ID();
+            $terms =  lsd_get_the_terms_name($rowId, 'Catégories');
+            $items[] = [
+                'is_h2' => true,
+                'title' => get_the_title(),
+                'datetime' => get_the_date('Y-m-d'),
+                'date' => get_the_date('d.m.Y'),
+                'tag' => !empty($terms) ? $terms[0] : "",
+                'text' =>  get_field('card-news-desc', $rowId),
+                'link' =>  get_the_permalink($rowId),
+                'images' => array(
+                    //'desktop' => lsd_get_thumb($rowId, 'medium'),
+                    'desktop' => lsd_get_featured($rowId, '415_300'),
+                    'width' => 415,
+                    'height' => 300
+                )
+            ];
+        }
+        wp_reset_postdata();
+    }
+
+    return $items;
+}
+
 function getSearchCptNews($filters, $paged = 1, $itemPerPage = -1,  $tax_query = null)
 {
     if (!empty($filters['s'])) {
@@ -12,6 +70,7 @@ function getSearchCptNews($filters, $paged = 1, $itemPerPage = -1,  $tax_query =
             'order' => 'DESC',
             's' => $filters['s'] === -1 ? null : $filters['s'],
             'tax_query' => array($tax_query),
+            // 'meta_key' => 'note', // C'est ici qu'on indique quel est ce champ
         );
         $queryArticles = new WP_Query($args);
 
@@ -26,7 +85,7 @@ function getSearchCptNews($filters, $paged = 1, $itemPerPage = -1,  $tax_query =
                     'title' => get_the_title(),
                     'date' => get_the_date('d.m.Y'),
                     'tag' => !empty($terms) ? $terms[0] : "",
-                    'text' =>  get_field('cpt-news-text', $rowId),
+                    'text' =>  get_field('card-news-desc', $rowId),
                     'link' =>  get_the_permalink($rowId),
                     'images' => array(
                         //'desktop' => lsd_get_thumb($rowId, 'medium'),
@@ -129,16 +188,16 @@ function pager($pager, $query = null)
         }
 
         //
-        $pictoPrev = '<div class="picto-btn-1 left">'.icon("arrow-down", 19, 19).'</div>';
-        $pictoNext = '<div class="picto-btn-1 right">'.icon("arrow-down", 19, 19).'</div>';
+        $pictoPrev = '<div class="picto-btn-1 left">' . icon("arrow-down", 19, 19) . '</div>';
+        $pictoNext = '<div class="picto-btn-1 right">' . icon("arrow-down", 19, 19) . '</div>';
         echo '<div class="pager">';
-        echo $prev >= 1 ? '<a rel="prev" href="' . $query . $prev . '" class="btn-1 prev">'.$pictoPrev.'</a>' : '<button class="btn-1 prev disabled">'.$pictoPrev.'</button>';
+        echo $prev >= 1 ? '<a rel="prev" href="' . $query . $prev . '" class="btn-1 prev">' . $pictoPrev . '</a>' : '<button class="btn-1 prev disabled">' . $pictoPrev . '</button>';
         for ($i = 0; $i < count($arr); $i++) {
             $index = $arr[$i];
             $active = ($index === $page) ? ' class="active"' : '';
             echo ($index === null) ?  "<span>...</span>" :  '<a href="' . $query . $index . '"' . $active . '>' . $index . '</a>';
         }
-        echo $next <= $total ? '<a rel="next" href="' . $query  . $next . '" class="btn-1 next">'.$pictoNext.'</a>' : '<button class="btn-1 next disabled">'.$pictoNext.'</button>';
+        echo $next <= $total ? '<a rel="next" href="' . $query  . $next . '" class="btn-1 next">' . $pictoNext . '</a>' : '<button class="btn-1 next disabled">' . $pictoNext . '</button>';
         echo '</div>';
     }
 }

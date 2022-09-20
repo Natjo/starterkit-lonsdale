@@ -24,4 +24,12 @@ class Strate_Helper
 
         return $args;
     }
+
+    public static function strate_news($aStrate)
+    {
+        $args = [];
+        $args['title'] = $aStrate['title'];
+
+        return $args;
+    }
 }

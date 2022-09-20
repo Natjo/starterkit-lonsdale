@@ -11,6 +11,9 @@ if (isset($aStrates) && !empty($aStrates)) {
             case 'strate-wysiwyg':
                 get_template_part('template-parts/strates/strate', 'wysiwyg', Strate_Helper::strate_wysiwyg($aStrate));
                 break;
+            case 'strate-news':
+                get_template_part('template-parts/strates/strate', 'news', Strate_Helper::strate_news($aStrate));
+                break;
         }
     }
 }
