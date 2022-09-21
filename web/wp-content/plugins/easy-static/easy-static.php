@@ -9,7 +9,7 @@ Author: Martin Jonathan
 global $host;
 global $hostfinal;
 
-$host = "172.22.0.3";
+$host = "192.168.48.3";
 $hostfinal = $_SERVER['SERVER_NAME'];
 //$url = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'];
 
