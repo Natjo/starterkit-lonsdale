@@ -12099,9 +12099,9 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 			// return url for filenames not based on template
 /******/ 			if (chunkId === "assets_js_blocks_header-nav_js") return "./js/chunks/2c760a048cf26fc52350.js";
 /******/ 			if (chunkId === "assets_js_modules_formValidate_js") return "./js/chunks/cd1da5e53ca6b4797c44.js";
-/******/ 			if (chunkId === "assets_js_modules_slider_js") return "./js/chunks/11f2048e0fc8cd6e6eb1.js";
+/******/ 			if (chunkId === "assets_js_modules_slider_js") return "./js/chunks/ab1a0b9a8cf30a8820ff.js";
 /******/ 			if (chunkId === "assets_js_strates_contact_js") return "./js/chunks/e4f5556d2ef581bb733f.js";
-/******/ 			if (chunkId === "assets_js_strates_news_js") return "./js/chunks/45138494d05984fedc42.js";
+/******/ 			if (chunkId === "assets_js_strates_news_js") return "./js/chunks/cbb338d1d85d1c786059.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

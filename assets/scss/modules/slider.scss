@@ -73,15 +73,16 @@
 	}
 
 	&.full {
-		.slider-content {
-			padding-left: var(--offset);
-			padding-right: var(--ctr-offset);
-			--offset: var(--ctr-offset);
+        --offset: var(--ctr-offset);
 
-			@media #{$breakpoint-fluid-up} {
-				--width: (100% - var(--ctr-width));
-				--offset: calc((100% - var(--ctr-width)) / 2);
-			}
-		}
-	}
+        .slider-content {
+            padding-left: var(--offset);
+            padding-right: var(--ctr-offset);
+        }
+
+        @media #{$breakpoint-fluid-up} {
+            --width: (100% - var(--ctr-width));
+            --offset: calc((100% - var(--ctr-width)) / 2);
+        }
+    }
 }

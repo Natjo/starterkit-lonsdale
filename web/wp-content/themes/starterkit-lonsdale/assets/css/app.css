@@ -817,13 +817,15 @@ a img.aligncenter {
     grid-row: 1;
     grid-column: span calc(var(--col) / var(--nb));
 }
+.slider.full {
+    --offset: var(--ctr-offset);
+}
 .slider.full .slider-content {
     padding-left: var(--offset);
     padding-right: var(--ctr-offset);
-    --offset: var(--ctr-offset);
 }
 @media (min-width: 1400px) {
-    .slider.full .slider-content {
+    .slider.full {
         --width: (100% - var(--ctr-width));
         --offset: calc((100% - var(--ctr-width)) / 2);
     }
