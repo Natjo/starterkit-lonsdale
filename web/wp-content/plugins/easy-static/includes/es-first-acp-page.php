@@ -17,13 +17,10 @@ if (!isset($table_posts_rows->static_generate)) {
 
 /*
 WIP
-Ajoute host dans easy_Static bdd 
-$table_options = $wpdb->prefix.'options';
-$data = array('option_name' => "easy_static", 'option_value' => "192.168.48.3");
-$format = array('%s','%s');
-$wpdb->insert($table_options,$data,$format);
-//$my_id = $wpdb->insert_id;
-*/
+Ajoute host dans easy_Static bdd */
+
+
+
 
 /*
 
@@ -42,15 +39,13 @@ function upToDate($posts)
 
 <div class="wrap">
     <h1>Static website</h1>
-    TODO<br>
-    display last generate<br>
-    rec host docker<br>
 
-    <br><br><br>
-    <u>dans easy-static.php mettre le host du nginx :</u><br>
-    docker exec -it starterkit-lonsdale-nginx bash<br>
-    cat /etc/hosts
-    <br><br><br>
+    <div>
+        TODO<br>
+        display last generate<br>
+    </div>
+
+    <br>
 
     <div>
         <input type="checkbox" id="plug-static-toggle-status" <?php if ($isStatic) echo 'checked' ?>><label for="plug-static-toggle-status">Mode static active</label>
@@ -59,10 +54,48 @@ function upToDate($posts)
     </div>
 
     <br>
-    <label>docker host</label>
-    <input type="text" value="172.19.0.3" style="width: 300px"><br>
+    <hr>
+    <div>
 
-    <br>
+        <h2>local host</h2>
+        <p>
+            En local, mettre le vhost de la machine virtuelle.<br>
+            En ligne, mettre l'url (default)
+        </p>
+        <div style="
+        background: #fff;
+        border: 1px solid #c3c4c7;
+        border-left-color: rgb(195, 196, 199);
+        border-left-width: 1px;
+        border-left-width: 4px;
+        box-shadow: 0 1px 1px rgba(0,0,0,.04);
+        margin: 5px 0 2px;
+        padding: 1px 12px;
+    ">
+            <u>Pour récuperer le vhost dans docker :</u><br>
+            docker exec -it starterkit-lonsdale-nginx bash<br>
+            cat /etc/hosts
+        </div>
+        <br>
+        <input type="text" id="es-host" value="<?= $host ?>" style="width: 300px"><br>
+
+        <br>
+
+<!--
+    A METTRE DANS web/index.php
+        // load static if exist or if no generate var available
+if(empty($_GET['generate'])){
+    if (file_exists(__DIR__ . '/wp-content/static/' . $_SERVER['REQUEST_URI'] . '/index.html')) {
+        echo file_get_contents(__DIR__ . '/wp-content/static/' . $_SERVER['REQUEST_URI'] . '/index.html');
+        exit;
+    }
+} -->
+
+    </div>
+
+    <hr>
+
+
 
     <section>
         <h2>Cpts</h2>
@@ -110,7 +143,7 @@ function upToDate($posts)
     <br>
 
     <section>
-        <h2>Post</h2>
+        <h2>Posts</h2>
         <table class="wp-list-table widefat fixed striped">
             <thead>
                 <tr>
@@ -185,5 +218,19 @@ function upToDate($posts)
             const response = JSON.parse(xhr.responseText);
             pages_result.innerHTML = response.markup;
         }
+    }
+
+
+    //
+    const input_host = document.getElementById("es-host");
+    input_host.onchange = () => {
+        const data = new FormData();
+        data.append('action', "static_change_host");
+        data.append('nonce', '<?= $nonce ?>');
+        data.append('host', input_host.value);
+        const xhr = new XMLHttpRequest();
+        xhr.open("post", '<?= AJAX_URL ?>', true);
+        xhr.send(data);
+        xhr.onload = () => {}
     }
 </script>

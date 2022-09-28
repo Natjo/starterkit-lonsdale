@@ -1,3 +1,4 @@
+#FROM wordpress:5.5-php7.3-fpm
 FROM wordpress:php8.0-fpm
 
 # Install sockets for PHP

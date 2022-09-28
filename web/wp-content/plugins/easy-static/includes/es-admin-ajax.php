@@ -69,3 +69,17 @@ function test_callback()
 
     wp_die();
 }
+
+
+add_action('wp_ajax_static_change_host', 'static_change_host_callback');
+add_action('wp_ajax_nopriv_static_change_host', 'static_change_host_callback');
+
+function static_change_host_callback(){
+    checkNonce('test_nonce');
+    $host = $_POST['host'];
+    $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
+    $sql = "UPDATE wp_options SET option_value = '$host' WHERE option_name ='easy_static_host' ";
+    mysqli_query($link, $sql);
+    mysqli_close($link);
+
+}
