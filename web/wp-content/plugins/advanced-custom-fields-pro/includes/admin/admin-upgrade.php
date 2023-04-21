@@ -130,7 +130,7 @@ if ( ! class_exists( 'ACF_Admin_Upgrade' ) ) :
 				// Reduces memory usage (same pattern used in wp-includes/ms-site.php).
 				remove_action( 'switch_blog', 'wp_switch_roles_and_user', 1 );
 
-				foreach ( $sites as $site_id ) {					
+				foreach ( $sites as $site_id ) {
 					switch_to_blog( $site_id );
 
 					$site_needs_upgrade = acf_has_upgrade();
@@ -168,6 +168,8 @@ if ( ! class_exists( 'ACF_Admin_Upgrade' ) ) :
 		 */
 		function admin_load() {
 
+			add_action( 'admin_body_class', array( $this, 'admin_body_class' ) );
+
 			// remove prompt
 			remove_action( 'admin_notices', array( $this, 'admin_notices' ) );
 
@@ -188,11 +190,26 @@ if ( ! class_exists( 'ACF_Admin_Upgrade' ) ) :
 		 */
 		function network_admin_load() {
 
+			add_action( 'admin_body_class', array( $this, 'admin_body_class' ) );
+
 			// remove prompt
 			remove_action( 'network_admin_notices', array( $this, 'network_admin_notices' ) );
 
 			// Enqueue core script.
 			acf_enqueue_script( 'acf' );
+		}
+
+		/**
+		 * Modifies the admin body class.
+		 *
+		 * @since 6.0.0
+		 *
+		 * @param string $classes Space-separated list of CSS classes.
+		 * @return string
+		 */
+		public function admin_body_class( $classes ) {
+			$classes .= ' acf-admin-page';
+			return $classes;
 		}
 
 		/**
@@ -216,7 +233,7 @@ if ( ! class_exists( 'ACF_Admin_Upgrade' ) ) :
 			);
 
 			// view
-			acf_get_view( 'html-notice-upgrade', $view );
+			acf_get_view( 'upgrade/notice', $view );
 		}
 
 		/**
@@ -240,7 +257,7 @@ if ( ! class_exists( 'ACF_Admin_Upgrade' ) ) :
 			);
 
 			// view
-			acf_get_view( 'html-notice-upgrade', $view );
+			acf_get_view( 'upgrade/notice', $view );
 		}
 
 		/**
@@ -255,7 +272,7 @@ if ( ! class_exists( 'ACF_Admin_Upgrade' ) ) :
 		 *  @return  void
 		 */
 		function admin_html() {
-			acf_get_view( 'html-admin-page-upgrade' );
+			acf_get_view( 'upgrade/upgrade' );
 		}
 
 		/**
@@ -270,7 +287,7 @@ if ( ! class_exists( 'ACF_Admin_Upgrade' ) ) :
 		 *  @return  void
 		 */
 		function network_admin_html() {
-			acf_get_view( 'html-admin-page-upgrade-network' );
+			acf_get_view( 'upgrade/network' );
 		}
 	}
 

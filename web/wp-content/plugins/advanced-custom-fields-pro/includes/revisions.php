@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'acf_revisions' ) ) :
-
+	#[AllowDynamicProperties]
 	class acf_revisions {
 
 		// vars
@@ -248,10 +248,10 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 
 			// bail early if is empty.
 			if ( empty( $value ) ) {
-				return $value;
+				return '';
 			}
 
-			$value   = maybe_unserialize( $value );
+			$value   = acf_maybe_unserialize( $value );
 			$post_id = $post->ID;
 
 			// load field.
@@ -322,6 +322,7 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 
 		function acf_validate_post_id( $post_id, $_post_id ) {
 
+			// phpcs:disable WordPress.Security.NonceVerification.Recommended
 			// bail early if no preview in URL
 			if ( ! isset( $_GET['preview'] ) ) {
 				return $post_id;
@@ -355,6 +356,7 @@ if ( ! class_exists( 'acf_revisions' ) ) :
 				$preview_id = (int) $_GET['page_id'];
 
 			}
+			// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 			// bail early id $preview_id does not match $post_id
 			if ( $preview_id != $post_id ) {

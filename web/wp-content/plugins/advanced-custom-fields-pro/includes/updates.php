@@ -261,7 +261,7 @@ if ( ! class_exists( 'ACF_Updates' ) ) :
 				'wp'      => wp_json_encode(
 					array(
 						'wp_name'     => get_bloginfo( 'name' ),
-						'wp_url'      => home_url(),
+						'wp_url'      => acf_get_home_url(),
 						'wp_version'  => get_bloginfo( 'version' ),
 						'wp_language' => get_bloginfo( 'language' ),
 						'wp_timezone' => get_option( 'timezone_string' ),
@@ -368,7 +368,7 @@ if ( ! class_exists( 'ACF_Updates' ) ) :
 			}
 
 			// force-check (only once)
-			$force_check = ( $this->checked == 0 ) ? ! empty( $_GET['force-check'] ) : false;
+			$force_check = ( $this->checked == 0 ) ? ! empty( $_GET['force-check'] ) : false; // phpcs:ignore -- False positive, value not used.
 
 			// fetch updates (this filter is called multiple times during a single page load)
 			$updates = $this->get_plugin_updates( $force_check );

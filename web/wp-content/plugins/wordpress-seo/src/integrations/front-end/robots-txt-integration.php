@@ -38,13 +38,14 @@ class Robots_Txt_Integration implements Integration_Interface {
 	/**
 	 * Sets the helpers.
 	 *
-	 * @param Options_Helper    $options_helper Options helper.
-	 * @param Robots_Txt_Helper $robots_txt_helper Robots txt helper.
+	 * @param Options_Helper       $options_helper       Options helper.
+	 * @param Robots_Txt_Helper    $robots_txt_helper    Robots txt helper.
+	 * @param Robots_Txt_Presenter $robots_txt_presenter Robots txt presenter.
 	 */
-	public function __construct( Options_Helper $options_helper, Robots_Txt_Helper $robots_txt_helper ) {
+	public function __construct( Options_Helper $options_helper, Robots_Txt_Helper $robots_txt_helper, Robots_Txt_Presenter $robots_txt_presenter ) {
 		$this->options_helper       = $options_helper;
 		$this->robots_txt_helper    = $robots_txt_helper;
-		$this->robots_txt_presenter = new Robots_Txt_Presenter( $robots_txt_helper );
+		$this->robots_txt_presenter = $robots_txt_presenter;
 	}
 
 	/**
@@ -65,6 +66,13 @@ class Robots_Txt_Integration implements Integration_Interface {
 	 */
 	public function register_hooks() {
 		\add_filter( 'robots_txt', [ $this, 'filter_robots' ], 99999 );
+
+		if ( $this->options_helper->get( 'deny_search_crawling' ) && ! \is_multisite() ) {
+			\add_action( 'Yoast\WP\SEO\register_robots_rules', [ $this, 'add_disallow_search_to_robots' ], 10, 1 );
+		}
+		if ( $this->options_helper->get( 'deny_wp_json_crawling' ) && ! \is_multisite() ) {
+			\add_action( 'Yoast\WP\SEO\register_robots_rules', [ $this, 'add_disallow_wp_json_to_robots' ], 10, 1 );
+		}
 	}
 
 	/**
@@ -77,7 +85,17 @@ class Robots_Txt_Integration implements Integration_Interface {
 	public function filter_robots( $robots_txt ) {
 		$robots_txt = $this->remove_default_robots( $robots_txt );
 		$this->maybe_add_xml_sitemap();
-		$this->add_subdirectory_multisite_xml_sitemaps();
+
+		/**
+		 * Filter: 'wpseo_should_add_subdirectory_multisite_xml_sitemaps' - Disabling this filter removes subdirectory sites from xml sitemaps.
+		 *
+		 * @since 19.8
+		 *
+		 * @param bool $show Whether to display multisites in the xml sitemaps.
+		 */
+		if ( \apply_filters( 'wpseo_should_add_subdirectory_multisite_xml_sitemaps', true ) ) {
+			$this->add_subdirectory_multisite_xml_sitemaps();
+		}
 
 		/**
 		 * Allow registering custom robots rules to be outputted within the Yoast content block in robots.txt.
@@ -86,7 +104,31 @@ class Robots_Txt_Integration implements Integration_Interface {
 		 */
 		\do_action( 'Yoast\WP\SEO\register_robots_rules', $this->robots_txt_helper );
 
-		return \trim( $robots_txt . PHP_EOL . $this->robots_txt_presenter->present() . PHP_EOL );
+		return \trim( $robots_txt . \PHP_EOL . $this->robots_txt_presenter->present() . \PHP_EOL );
+	}
+
+	/**
+	 * Add a disallow rule for search to robots.txt.
+	 *
+	 * @param Robots_Txt_Helper $robots_txt_helper The robots txt helper.
+	 *
+	 * @return void
+	 */
+	public function add_disallow_search_to_robots( Robots_Txt_Helper $robots_txt_helper ) {
+		$robots_txt_helper->add_disallow( '*', '/?s=' );
+		$robots_txt_helper->add_disallow( '*', '/search/' );
+	}
+
+	/**
+	 * Add a disallow rule for /wp-json/ to robots.txt.
+	 *
+	 * @param Robots_Txt_Helper $robots_txt_helper The robots txt helper.
+	 *
+	 * @return void
+	 */
+	public function add_disallow_wp_json_to_robots( Robots_Txt_Helper $robots_txt_helper ) {
+		$robots_txt_helper->add_disallow( '*', '/wp-json/' );
+		$robots_txt_helper->add_disallow( '*', '/?rest_route=' );
 	}
 
 	/**
@@ -97,8 +139,8 @@ class Robots_Txt_Integration implements Integration_Interface {
 	 * @return string
 	 */
 	protected function remove_default_robots( $robots_txt ) {
-		return \str_replace(
-			"User-agent: *\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php\n",
+		return \preg_replace(
+			'`User-agent: \*[\r\n]+Disallow: /wp-admin/[\r\n]+Allow: /wp-admin/admin-ajax\.php[\r\n]+`',
 			'',
 			$robots_txt
 		);
