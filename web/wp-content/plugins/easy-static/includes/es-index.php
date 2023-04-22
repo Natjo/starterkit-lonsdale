@@ -15,15 +15,12 @@ if (!isset($table_posts_rows->static_generate)) {
 }
 
 
+
 /*
 WIP
 Ajoute host dans easy_Static bdd */
 
-
-
-
 /*
-
 function upToDate($posts)
 {
     $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
@@ -43,121 +40,26 @@ function upToDate($posts)
     <div>
         TODO<br>
         display last generate<br>
+        add ondition in index.php if not exist (maj wp)<br>
+        langues<br>
+        export static<br>
     </div>
 
     <br>
 
-    <div>
-        <input type="checkbox" id="plug-static-toggle-status" <?php if ($isStatic) echo 'checked' ?>><label for="plug-static-toggle-status">Mode static active</label>
-        &nbsp;&nbsp;
-        <button class="plug-static-btn-generate">Generate all pages</button>
-    </div>
+    <nav class="nav-tab-wrapper">
+        <a href="#pages" class="nav-tab nav-tab-active">Pages</a>
+        <a href="#parameters" class="nav-tab">Paramètres</a>
+        <a href="#export" class="nav-tab">Export</a>
+    </nav>
 
     <br>
-    <hr>
-    <div>
 
-        <h2>local host</h2>
-        <p>
-            En local, mettre le vhost de la machine virtuelle.<br>
-            En ligne, mettre l'url (default)
-        </p>
-        <div style="
-        background: #fff;
-        border: 1px solid #c3c4c7;
-        border-left-color: rgb(195, 196, 199);
-        border-left-width: 1px;
-        border-left-width: 4px;
-        box-shadow: 0 1px 1px rgba(0,0,0,.04);
-        margin: 5px 0 2px;
-        padding: 1px 12px;
-    ">
-            <u>Pour récuperer le vhost dans docker :</u><br>
-            docker exec -it starterkit-lonsdale-nginx bash<br>
-            cat /etc/hosts
-        </div>
-        <br>
-        <input type="text" id="es-host" value="<?= $host ?>" style="width: 300px"><br>
+    <?php include 'es-parameters.php'; ?>
 
-        <br>
+    <?php include 'es-pages.php'; ?>
 
-<!--
-    A METTRE DANS web/index.php
-        // load static if exist or if no generate var available
-if(empty($_GET['generate'])){
-    if (file_exists(__DIR__ . '/wp-content/static/' . $_SERVER['REQUEST_URI'] . '/index.html')) {
-        echo file_get_contents(__DIR__ . '/wp-content/static/' . $_SERVER['REQUEST_URI'] . '/index.html');
-        exit;
-    }
-} -->
-
-    </div>
-
-    <hr>
-
-
-
-    <section>
-        <h2>Cpts</h2>
-        <table class="wp-list-table widefat fixed striped">
-            <thead>
-                <tr>
-                    <th>Type</th>
-                    <th>Slug</th>
-                    <th>has pagination</th>
-                    <th>Static</th>
-                    <th>post per page</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-
-                // static_active
-                $post_types = postTypes();
-                foreach ($post_types as $post_type) :
-                    $args = array(
-                        'post_type' => $post_type,
-                        'posts_per_page' => -1,
-                        'order' => 'ID',
-                        'orderby' => 'title',
-                        'post_status' => 'publish',
-                        'ignore_sticky_posts' => 1,
-                    );
-                    $queryArticles = new WP_Query($args);
-                    $post_type_object = get_post_type_object($post_type);
-                ?>
-                    <tr>
-                        <td>news</td>
-                        <td><?= $post_type_object->rewrite['slug'] ?></td>
-                        <td><?= $post_type_object->has_pagination ? "oui" : "non" ?></td>
-                        <td>oui</td>
-                        <td><?= $post_type_object->posts_per_page ?></td>
-                    </tr>
-                <?php endforeach; ?>
-
-            </tbody>
-
-        </table>
-    </section>
-    <br>
-
-    <section>
-        <h2>Posts</h2>
-        <table class="wp-list-table widefat fixed striped">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Static</th>
-                    <th>Up to date</th>
-                </tr>
-            </thead>
-            <tbody id="plug-static-pages">
-                <?= display(); ?>
-            </tbody>
-        </table>
-    </section>
+    <?php include 'es-export.php'; ?>
 </div>
 
 
@@ -165,6 +67,7 @@ if(empty($_GET['generate'])){
 <script>
     const pages_result = document.getElementById('plug-static-pages');
     const btn_generate = document.querySelector('.plug-static-btn-generate');
+    const btns_regenerate = document.querySelectorAll('.btn-regenerate');
     const toogle_status = document.getElementById("plug-static-toggle-status");
     toogle_status.checked = Boolean(<?= $isStatic ? true : false; ?>);
 
@@ -188,10 +91,21 @@ if(empty($_GET['generate'])){
     const checkbox_static_active = pages_result.querySelectorAll(".checkbox-static_active");
     checkbox_static_active.forEach((el) => {
         el.onchange = () => {
+
+            if (!el.checked) {
+                el.parentNode.parentNode.querySelector('.btn-regenerate').setAttribute('disabled', true);
+                el.value = 0;
+            } else {
+                el.parentNode.parentNode.querySelector('.btn-regenerate').removeAttribute('disabled');
+                el.parentNode.parentNode.querySelector('.info-update').classList.remove('error');
+                el.value = 1;
+            }
+
             const data = new FormData();
             data.append('action', "static_posts_his_active");
             data.append('nonce', '<?= $nonce ?>');
             data.append('id', el.id);
+            data.append('slug', el.dataset.slug);
             data.append('status', el.checked);
             const xhr = new XMLHttpRequest();
             xhr.open("post", '<?= AJAX_URL ?>', true);
@@ -199,7 +113,12 @@ if(empty($_GET['generate'])){
             xhr.onload = () => {}
         }
     })
-
+// regenerate
+btns_regenerate.forEach(btn => {
+    btn.onclick = () => {
+        alert(btn.dataset.slug);
+    }
+});
 
     // status
     toogle_status.onchange = () => {
@@ -233,4 +152,29 @@ if(empty($_GET['generate'])){
         xhr.send(data);
         xhr.onload = () => {}
     }
+
+    // tabs
+    const tab_links = document.querySelectorAll('.nav-tab-wrapper .nav-tab');
+    const tab_content = document.querySelectorAll('.tab-content');
+
+    tab_content.forEach((tab, i) => {
+        tab.style.display = tab.id === 'pages' ? 'block' : 'none'
+    })
+
+    tab_links.forEach(link => {
+        link.onclick = e => {
+            e.preventDefault();
+
+            tab_links.forEach(aa => {
+                if (aa === link)
+                    aa.classList.add('nav-tab-active');
+                else aa.classList.remove('nav-tab-active');
+            })
+
+            const id = link.getAttribute('href');
+            tab_content.forEach(tab => {
+                tab.style.display = '#' + tab.id === id ? 'block' : 'none'
+            })
+        }
+    })
 </script>

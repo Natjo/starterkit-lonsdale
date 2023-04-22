@@ -6,14 +6,16 @@ add_action('admin_menu', 'mfp_Add_My_Admin_Link');
 function mfp_Add_My_Admin_Link()
 {
     add_menu_page(
-        'My First Page', // Title of the page
+        'Easy static', // Title of the page
         'Easy static', // Text to show on the menu link
         'manage_options', // Capability requirement to see the link
-        'easy-static/includes/es-first-acp-page.php', // The 'slug' - file to display when clicking the link
+        //'easy-static/includes/es-first-acp-page.php', // The 'slug' - file to display when clicking the link
+        'easy-static/includes/es-index.php', // The 'slug' - file to display when clicking the link
         '',
         'dashicons-text-page',
     );
 }
+
 
 // helpers
 class TinyHtmlMinifier
@@ -391,9 +393,11 @@ function tr($posts, $post_types)
 
         $markup .= '<tr>';
         $markup .= '<td><a href="/' . $slug . '/" target="_blank">' . $post->post_title . '</a></td>';
+        $markup .= "<td>" . $slug  . "</td>";
         $markup .= "<td>" . $post->post_type  . "</td>";
-        $markup .= '<td><input type="checkbox" ' . ($post->static_active ? "checked" : "") . ' value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></td>';
-        $markup .= ($upToDate ?  '<td style="color:green">✓</td>' : '<td style="color:red">x</td>');
+        $markup .= '<td><input data-slug="' . $slug . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></td>';
+        $markup .=  '<td><button data-id="' . $post->ID . '" data-slug="' . $slug . '" class="btn-regenerate" ' . (!$post->static_active ? "disabled" : "") . '><span class="dashicons dashicons-update-alt"></span></button></td>';
+        $markup .= ($upToDate ?  '<td class="info-update"></td>' : '<td class="info-update error"></td>');
         $markup .= "</tr>";
     }
     return $markup;
@@ -426,6 +430,14 @@ function upToDate($posts)
         $sql = "UPDATE wp_posts SET static_generate = CURRENT_TIMESTAMP WHERE ID = " . $post->ID;
         mysqli_query($link, $sql);
     }
+    mysqli_close($link);
+}
+
+function setupToDate($id)
+{
+    $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
+    $sql = "UPDATE wp_posts SET static_generate = CURRENT_TIMESTAMP WHERE ID = " . $id;
+    mysqli_query($link, $sql);
     mysqli_close($link);
 }
 
