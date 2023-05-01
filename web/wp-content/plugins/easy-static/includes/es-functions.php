@@ -212,9 +212,10 @@ class TinyHtmlMinifier
     // Remove unneeded self slash
     private function removeSelfSlash($element)
     {
-        if (substr($element, -3) == ' />') {
+        // commented because remove / in svg element
+        /* if (substr($element, -3) == ' />') {
             $element = substr($element, 0, -3) . '>';
-        }
+        }*/
         return $element;
     }
 
@@ -333,24 +334,89 @@ function rm_rf($path)
         return @unlink($path);
     }
 }
+function copyfolder($from, $to)
+{
+    // (A1) SOURCE FOLDER CHECK
+    if (!is_dir($from)) {
+        exit("$from does not exist");
+    }
+
+    // (A2) CREATE DESTINATION FOLDER
+    if (!is_dir($to)) {
+        if (!mkdir($to)) {
+            exit("Failed to create $to");
+        };
+        echo "$to created\r\n";
+    }
+
+    // (A3) COPY FILES + RECURSIVE INTERNAL FOLDERS
+    $dir = opendir($from);
+    while (($ff = readdir($dir)) !== false) {
+        if ($ff != "." && $ff != "..") {
+            if (is_dir("$from$ff")) {
+                copyfolder("$from$ff/", "$to$ff/");
+            } else {
+                if (!copy("$from$ff", "$to$ff")) {
+                    exit("Error copying $from$ff to $to$ff");
+                }
+                echo "$from$ff copied to $to$ff\r\n";
+            }
+        }
+    }
+    closedir($dir);
+}
+
+//
+function zipFolder($rootPath, $filefinal)
+{
+
+    $zip = new ZipArchive();
+    $zip->open($filefinal, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
+    // Create recursive directory iterator
+    /** @var SplFileInfo[] $files */
+    $files = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($rootPath),
+        RecursiveIteratorIterator::LEAVES_ONLY
+    );
+    foreach ($files as $name => $file) {
+        // Skip directories (they would be added automatically)
+        if (!$file->isDir()) {
+            $filePath = $file->getRealPath();
+            $relativePath = substr($filePath, strlen($rootPath) + 1);
+            $zip->addFile($filePath, $relativePath);
+        }
+    }
+    $zip->close();
+}
 
 //
 function loadPage($file)
 {
     global $host;
-    global $hostfinal;
+    global $authentification;
 
     $arrContextOptions = array(
         "ssl" => array(
             "verify_peer" => false,
             "verify_peer_name" => false,
         ),
+        /*'http' => array (
+        	'header' => 'Authorization: Basic ' . base64_encode("groupama-ra-2022:aer3aech7Aequ6ae")
+    	)*/
     );
+
+    if ($authentification['active'] === true) {
+        $user_pass = $authentification["user"] . ':' . $authentification["password"];
+        $arrContextOptions['http'] =  array(
+            'header' => 'Authorization: Basic ' . base64_encode("'.$user_pass.'")
+        );
+    }
 
     $html = file_get_contents($file, false, stream_context_create($arrContextOptions));
 
-    if ($host !== $hostfinal) {
-        $html = str_replace($host, $hostfinal, $html);
+    if ($host !== $_SERVER['SERVER_NAME']) {
+        $html = str_replace($host, $_SERVER['SERVER_NAME'], $html);
     }
 
     return $html;
@@ -372,14 +438,29 @@ function queryPosts()
     return $posts->posts;
 }
 
+function locale()
+{
+    $locale = "";
+    if (defined("ICL_LANGUAGE_CODE")) {
+        $locale = ICL_LANGUAGE_CODE . "/";
+    }
+    return $locale;
+}
+
 function tr($posts, $post_types)
 {
+
     $markup = "";
     foreach ($posts as $post) {
         $origin = date_create($post->post_modified);
         $target = date_create($post->static_generate);
         $upToDate = $origin < $target ? true : false;
         $slug = $post->post_name;
+        if ($slug === 'homepage') {
+            $exist  = (file_exists(WP_CONTENT_DIR . '/easy-static/static/' . locale() . '/index.html'))  ? true : false;
+        } else {
+            $exist  = (file_exists(WP_CONTENT_DIR . '/easy-static/static/' . locale() . $slug . '/index.html'))  ? true : false;
+        }
 
         if (in_array($post->post_type, $post_types)) {
             $post_type_object = get_post_type_object($post->post_type);
@@ -392,12 +473,11 @@ function tr($posts, $post_types)
         }
 
         $markup .= '<tr>';
-        $markup .= '<td><a href="/' . $slug . '/" target="_blank">' . $post->post_title . '</a></td>';
-        $markup .= "<td>" . $slug  . "</td>";
+        $markup .= '<td><a href="/' . locale() . $slug . '/" target="_blank">' . $post->post_title . '</a></td>';
+        $markup .= "<td>" . locale() . $slug  . "</td>";
         $markup .= "<td>" . $post->post_type  . "</td>";
         $markup .= '<td><input data-slug="' . $slug . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></td>';
-        $markup .=  '<td><button data-id="' . $post->ID . '" data-slug="' . $slug . '" class="btn-regenerate" ' . (!$post->static_active ? "disabled" : "") . '><span class="dashicons dashicons-update-alt"></span></button></td>';
-        $markup .= ($upToDate ?  '<td class="info-update"></td>' : '<td class="info-update error"></td>');
+        $markup .= (($upToDate && $exist) ?  '<td class="info-update"></td>' : '<td class="info-update error"></td>');
         $markup .= "</tr>";
     }
     return $markup;
@@ -424,10 +504,11 @@ function display()
 
 function upToDate($posts)
 {
+    global $table_prefix;
     $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
 
     foreach ($posts as $post) {
-        $sql = "UPDATE wp_posts SET static_generate = CURRENT_TIMESTAMP WHERE ID = " . $post->ID;
+        $sql = "UPDATE " . $table_prefix . "posts SET static_generate = CURRENT_TIMESTAMP WHERE ID = " . $post->ID;
         mysqli_query($link, $sql);
     }
     mysqli_close($link);
@@ -435,8 +516,9 @@ function upToDate($posts)
 
 function setupToDate($id)
 {
+    global $table_prefix;
     $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
-    $sql = "UPDATE wp_posts SET static_generate = CURRENT_TIMESTAMP WHERE ID = " . $id;
+    $sql = "UPDATE " . $table_prefix . "posts SET static_generate = CURRENT_TIMESTAMP WHERE ID = " . $id;
     mysqli_query($link, $sql);
     mysqli_close($link);
 }
@@ -464,11 +546,11 @@ function ctpPages($post_type)
 
     if ($has_pagination) {
         for ($i = 1; $i <= $totalPages; $i++) {
-            $pp =  $slug . "/page/" . $i . "/";
+            $pp = locale() . $slug . "/page/" . $i . "/";
 
-            $html = loadPage("https;//" . $host . "/" . $pp . "?generate=true");
-            mkdir(WP_CONTENT_DIR . '/static/' . $pp, 0755, true);
-            file_put_contents(WP_CONTENT_DIR . '/static/' . $pp . 'index.html', TinyMinify::html($html));
+            $html = loadPage("https://" . $host . "/" . $pp . "?generate=true");
+            mkdir(WP_CONTENT_DIR . '/easy-static/static/' .  $pp, 0755, true);
+            file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . $pp . 'index.html', TinyMinify::html($html));
         }
     }
 }
@@ -477,8 +559,8 @@ function create($posts, $post_types)
 {
     global $host;
 
-    rm_rf(WP_CONTENT_DIR . '/static');
-    mkdir(WP_CONTENT_DIR . '/static/', 0755, true);
+    rm_rf(WP_CONTENT_DIR . '/easy-static/static/' . locale());
+    mkdir(WP_CONTENT_DIR . '/easy-static/static/' . locale(), 0755, true);
 
     // create pages pagination
     foreach ($post_types as $post_type) {
@@ -503,14 +585,14 @@ function create($posts, $post_types)
                 $parent_slug = get_post_field('post_name', $post->post_parent);
                 $folder =  $parent_slug . "/" . $post->post_name . "/";
             }
-
-            $html = loadPage("https://" . $host . "/" . $folder . "?generate=true");
+  
+           $html = loadPage("https://" . $host . "/" . locale() . $folder . "?generate=true");
 
             if ($folder === "home/" || $folder === "homepage/") {
-                file_put_contents(WP_CONTENT_DIR . '/static/index.html', TinyMinify::html($html));
+                file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', TinyMinify::html($html));
             } else {
-                mkdir(WP_CONTENT_DIR . "/static/" . $folder, 0755, true);
-                file_put_contents(WP_CONTENT_DIR . "/static/" . $folder . 'index.html', TinyMinify::html($html));
+                mkdir(WP_CONTENT_DIR . "/easy-static/static/" . locale() . $folder, 0755, true);
+                file_put_contents(WP_CONTENT_DIR . "/easy-static/static/" .  locale() . $folder . 'index.html', TinyMinify::html($html));
             }
         }
     }

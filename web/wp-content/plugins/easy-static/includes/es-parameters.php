@@ -2,43 +2,36 @@
 
     <header>
 
-        <h2>local host</h2>
+        <h2>Host</h2>
+
         <p>
-            En local, mettre le vhost de la machine virtuelle.<br>
-            En ligne, mettre l'url (default)
+            En local, vhost de la machine virtuelle: <b><?= $_SERVER['SERVER_ADDR']; ?></b><br>
+            Preprod/prod: <b><?= $_SERVER['SERVER_NAME']; ?></b><br>
         </p>
-        <div style="
-background: #fff;
-border: 1px solid #c3c4c7;
-border-left-color: rgb(195, 196, 199);
-border-left-width: 1px;
-border-left-width: 4px;
-box-shadow: 0 1px 1px rgba(0,0,0,.04);
-margin: 5px 0 2px;
-padding: 1px 12px;
-">
-            <u>Pour récuperer le vhost dans docker :</u><br>
-            docker exec -it starterkit-lonsdale-nginx bash<br>
-            cat /etc/hosts
-        </div>
-        <br>
         <input type="text" id="es-host" value="<?= $host ?>" style="width: 300px"><br>
+        <br> <br>
 
-        <br>
+        <?php if ($authentification['active'] === true) : ?>
+            <h2>Htaccess</h2>
+            <p>Si preprod ou recette</p>
 
-        <!--
-A METTRE DANS web/index.php
-// load static if exist or if no generate var available
-if(empty($_GET['generate'])){
-if (file_exists(__DIR__ . '/wp-content/static/' . $_SERVER['REQUEST_URI'] . '/index.html')) {
-echo file_get_contents(__DIR__ . '/wp-content/static/' . $_SERVER['REQUEST_URI'] . '/index.html');
-exit;
-}
-} -->
+            <div>
+                <div>
+                    <label for="">User</label>
+                    <input type="text" id="es-auth-user" value="<?= $authentification['user'] ?>">
+                </div>
 
-</header>
+                <div>
+                    <label for="">Password</label>
+                    <input type="password" id="es-auth-password" value="<?= $authentification['password'] ?>">
+                </div>
+            </div>
+        <?php endif; ?>
+    </header>
 
 
+    <hr>
+    <br>
     <h2>Cpts</h2>
     <table class="wp-list-table widefat fixed striped">
         <thead>

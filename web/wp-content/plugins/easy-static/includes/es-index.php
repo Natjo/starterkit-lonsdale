@@ -1,17 +1,28 @@
 <?php
 
 global $wpdb;
+global $table_prefix;
 $nonce = wp_create_nonce('test_nonce');
-$isStatic  = (file_exists(WP_CONTENT_DIR . '/static/'))  ? 1 : 0;
+//$isStatic  = (file_exists(WP_CONTENT_DIR . '/static/' . locale()))  ? 1 : 0;
 
-// create column (static_active,static_generate) in wp_posts
+
+// create column (easy_static_active) in options
+$easy_static_active = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . 'options' . " WHERE option_name = 'easy_static_active'");
+$isStatic = $easy_static_active[0]->option_value === "0" ? false : true;
+
+
+
+
+
+
+// create column (static_active,static_generate) in posts
 $table_posts = $wpdb->prefix . 'posts';
 $table_posts_rows = $wpdb->get_row("SELECT * FROM " . $table_posts);
 if (!isset($table_posts_rows->static_active)) {
-    $wpdb->query("ALTER TABLE wp_posts ADD static_active  BOOLEAN DEFAULT 1");
+    $wpdb->query("ALTER TABLE " . $table_prefix . "posts ADD static_active  BOOLEAN DEFAULT 1");
 }
 if (!isset($table_posts_rows->static_generate)) {
-    $wpdb->query("ALTER TABLE wp_posts ADD static_generate timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL");
+    $wpdb->query("ALTER TABLE " . $table_prefix . "posts ADD static_generate timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL");
 }
 
 
@@ -38,14 +49,77 @@ function upToDate($posts)
     <h1>Static website</h1>
 
     <div>
+        Update gitigore;<br>
+        web/wp-content/easy-static/<br>
+ 
+    </div>
+
+    <div>
         TODO<br>
-        display last generate<br>
-        add ondition in index.php if not exist (maj wp)<br>
-        langues<br>
-        export static<br>
+        add condition in index.php if not exist (maj wp)<br>
+        add htaccess cache files<br>
+
     </div>
 
     <br>
+    <div>
+        <input class="switch" type="checkbox" id="plug-static-toggle-status" <?php if ($isStatic) echo 'checked' ?>>
+        <label for="plug-static-toggle-status"><span></span></label>
+    </div>
+
+    <style>
+        .switch {
+            display: none !important;
+        }
+
+        .switch+label {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .switch:not(:checked)+label {}
+
+        .switch+label span {
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            width: 60px;
+            height: 30px;
+            border-radius: 15px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+            padding: 2px;
+            box-sizing: border-box;
+        }
+
+        .switch+label span:before {
+            content: '';
+            display: block;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background-color: #ccc;
+
+        }
+
+        .switch:checked+label span:before {
+            margin-left: auto;
+            background-color: #2271b1;
+
+        }
+
+        .switch+label:after {
+            content: 'Mode static inactive';
+        }
+
+        .switch:checked+label:after {
+            content: 'Mode static active';
+        }
+    </style>
+
+    <br>
+    <br>
+
 
     <nav class="nav-tab-wrapper">
         <a href="#pages" class="nav-tab nav-tab-active">Pages</a>
@@ -67,12 +141,14 @@ function upToDate($posts)
 <script>
     const pages_result = document.getElementById('plug-static-pages');
     const btn_generate = document.querySelector('.plug-static-btn-generate');
-    const btns_regenerate = document.querySelectorAll('.btn-regenerate');
+
     const toogle_status = document.getElementById("plug-static-toggle-status");
     toogle_status.checked = Boolean(<?= $isStatic ? true : false; ?>);
 
     btn_generate.onclick = () => {
-        btn_generate.disabled = true;
+        document.getElementById('pages').classList.add('disabled');
+        
+        btn_generate.classList.add('loading');
         const data = new FormData();
         data.append('action', "test");
         data.append('nonce', '<?= $nonce ?>');
@@ -81,7 +157,8 @@ function upToDate($posts)
         xhr.open("post", '<?= AJAX_URL ?>', true);
         xhr.send(data);
         xhr.onload = () => {
-            btn_generate.disabled = false;
+            btn_generate.classList.remove('loading');
+            document.getElementById('pages').classList.remove('disabled');
             const response = JSON.parse(xhr.responseText);
             pages_result.innerHTML = response.markup;
         }
@@ -93,10 +170,8 @@ function upToDate($posts)
         el.onchange = () => {
 
             if (!el.checked) {
-                el.parentNode.parentNode.querySelector('.btn-regenerate').setAttribute('disabled', true);
                 el.value = 0;
             } else {
-                el.parentNode.parentNode.querySelector('.btn-regenerate').removeAttribute('disabled');
                 el.parentNode.parentNode.querySelector('.info-update').classList.remove('error');
                 el.value = 1;
             }
@@ -113,18 +188,23 @@ function upToDate($posts)
             xhr.onload = () => {}
         }
     })
-// regenerate
-btns_regenerate.forEach(btn => {
-    btn.onclick = () => {
-        alert(btn.dataset.slug);
-    }
-});
 
-    // status
+    // Switch mode 
+    if (toogle_status.checked) {
+        document.getElementById('pages').classList.remove('disabled');
+    } else {
+        document.getElementById('pages').classList.add('disabled');
+    }
+
     toogle_status.onchange = () => {
-        btn_generate.disabled = true;
-        toogle_status.disabled = true;
         const data = new FormData();
+
+        if (toogle_status.checked) {
+            document.getElementById('pages').classList.remove('disabled');
+        } else {
+            document.getElementById('pages').classList.add('disabled');
+        }
+
         data.append('action', "static_change_status");
         data.append('nonce', '<?= $nonce ?>');
         data.append('status', toogle_status.checked);
@@ -134,9 +214,25 @@ btns_regenerate.forEach(btn => {
         xhr.onload = () => {
             btn_generate.disabled = false;
             toogle_status.disabled = false;
-            const response = JSON.parse(xhr.responseText);
-            pages_result.innerHTML = response.markup;
+
         }
+
+
+        /* btn_generate.disabled = true;
+         toogle_status.disabled = true;
+         const data = new FormData();
+         data.append('action', "static_change_status");
+         data.append('nonce', '<?= $nonce ?>');
+         data.append('status', toogle_status.checked);
+         const xhr = new XMLHttpRequest();
+         xhr.open("post", '<?= AJAX_URL ?>', true);
+         xhr.send(data);
+         xhr.onload = () => {
+             btn_generate.disabled = false;
+             toogle_status.disabled = false;
+             const response = JSON.parse(xhr.responseText);
+             pages_result.innerHTML = response.markup;
+         }*/
     }
 
 

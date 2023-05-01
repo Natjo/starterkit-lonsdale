@@ -1,8 +1,7 @@
 <section id="pages" class="tab-content">
     <header>
-        <input type="checkbox" id="plug-static-toggle-status" <?php if ($isStatic) echo 'checked' ?>><label for="plug-static-toggle-status">Mode static active</label>
-        &nbsp;&nbsp;
-        <button class="plug-static-btn-generate">Generate all pages</button>
+        
+        <button class="es-btn plug-static-btn-generate"><span>Generate  pages</span></button>
     </header>
 
     <br>
@@ -13,7 +12,6 @@
                 <th>Slug</th>
                 <th>Type</th>
                 <th>Static</th>
-                <th>Generate</th>
                 <th class="table-col-sm">Up to date</th>
             </tr>
         </thead>
@@ -38,6 +36,10 @@
     #pages-list td:nth-last-child(1) {
         width: 100px;
         text-align: center;
+    }
+    #pages.disabled{
+        pointer-events: none;
+        opacity: .6;
     }
 
 

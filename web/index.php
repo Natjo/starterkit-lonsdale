@@ -1,12 +1,14 @@
 <?php
+
+/* easy-static */
 // load static if exist or if no generate var available
 if(empty($_GET['generate'])){
-    if (file_exists(__DIR__ . '/wp-content/static/' . $_SERVER['REQUEST_URI'] . '/index.html')) {
-        echo file_get_contents(__DIR__ . '/wp-content/static/' . $_SERVER['REQUEST_URI'] . '/index.html');
+    if (file_exists(__DIR__ . '/wp-content/easy-static/static/' . $_SERVER['REQUEST_URI'] . '/index.html')) {
+        echo file_get_contents(__DIR__ . '/wp-content/easy-static/static/' . $_SERVER['REQUEST_URI'] . '/index.html');
         exit;
     }
 }
-
+/* end-easy-static */
 
 /**
  * Front to the WordPress application. This file doesn't do anything, but loads
