@@ -456,20 +456,19 @@ function tr($posts, $post_types)
         $target = date_create($post->static_generate);
         $upToDate = $origin < $target ? true : false;
         $slug = $post->post_name;
-        if ($slug === 'homepage') {
-            $exist  = (file_exists(WP_CONTENT_DIR . '/easy-static/static/' . locale() . '/index.html'))  ? true : false;
-        } else {
-            $exist  = (file_exists(WP_CONTENT_DIR . '/easy-static/static/' . locale() . $slug . '/index.html'))  ? true : false;
-        }
 
         if (in_array($post->post_type, $post_types)) {
             $post_type_object = get_post_type_object($post->post_type);
             $slug = $post_type_object->rewrite['slug'] . "/" . $post->post_name;
         }
-
         if ($post->post_parent) {
             $parent_slug = get_post_field('post_name', $post->post_parent);
             $slug = $parent_slug . "/" . $post->post_name;
+        }
+        if ($slug === 'homepage') {
+            $exist  = (file_exists(WP_CONTENT_DIR . '/easy-static/static/' . locale() . '/index.html'))  ? true : false;
+        } else {
+            $exist  = (file_exists(WP_CONTENT_DIR . '/easy-static/static/' . locale() . $slug . '/index.html'))  ? true : false;
         }
 
         $markup .= '<tr>';

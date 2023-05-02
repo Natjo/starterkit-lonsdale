@@ -76,3 +76,7 @@ web/wp-content/languages/themes/*-backup-*
 
 # node
 package-lock.json
+
+# plugin
+web/wp-content/easy-static/*
+

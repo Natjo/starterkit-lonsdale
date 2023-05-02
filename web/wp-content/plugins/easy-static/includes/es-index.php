@@ -58,6 +58,7 @@ function upToDate($posts)
         TODO<br>
         add condition in index.php if not exist (maj wp)<br>
         add htaccess cache files<br>
+        auto save uptodate when changing post<br>
 
     </div>
 
