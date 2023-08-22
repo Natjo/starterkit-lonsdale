@@ -118,28 +118,28 @@ button {
 /* ConduitITCPro */
 @font-face {
     font-family: "ConduitITCPro";
-    src: url(/test_static/assets/fonts/ConduitITCPro-Light.woff2) format("woff2");
+    src: url(/lorem/assets/fonts/ConduitITCPro-Light.woff2) format("woff2");
     font-weight: 300;
     font-style: normal;
     font-display: swap;
 }
 @font-face {
     font-family: "ConduitITCPro";
-    src: url(/test_static/assets/fonts/ConduitITCPro-LightItalic.woff2) format("woff2");
+    src: url(/lorem/assets/fonts/ConduitITCPro-LightItalic.woff2) format("woff2");
     font-weight: 300;
     font-style: italic;
     font-display: swap;
 }
 @font-face {
     font-family: "ConduitITCPro";
-    src: url(/test_static/assets/fonts/ConduitITCStd-Regular.woff2) format("woff2");
+    src: url(/lorem/assets/fonts/ConduitITCStd-Regular.woff2) format("woff2");
     font-weight: 400;
     font-style: normal;
     font-display: swap;
 }
 @font-face {
     font-family: "ConduitITCPro";
-    src: url(/test_static/assets/fonts/ConduitITCPro-Bold.woff2) format("woff2");
+    src: url(/lorem/assets/fonts/ConduitITCPro-Bold.woff2) format("woff2");
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -147,28 +147,28 @@ button {
 /* Aeonik */
 @font-face {
     font-family: "Aeonik";
-    src: url(/test_static/assets/fonts/aeonik-light.woff2) format("woff2");
+    src: url(/lorem/assets/fonts/aeonik-light.woff2) format("woff2");
     font-weight: 300;
     font-style: normal;
     font-display: swap;
 }
 @font-face {
     font-family: "Aeonik";
-    src: url(/test_static/assets/fonts/aeonik-regular.woff2) format("woff2");
+    src: url(/lorem/assets/fonts/aeonik-regular.woff2) format("woff2");
     font-weight: 400;
     font-style: normal;
     font-display: swap;
 }
 @font-face {
     font-family: "Aeonik";
-    src: url(/test_static/assets/fonts/aeonik-medium.woff2) format("woff2");
+    src: url(/lorem/assets/fonts/aeonik-medium.woff2) format("woff2");
     font-weight: 500;
     font-style: normal;
     font-display: swap;
 }
 @font-face {
     font-family: "Aeonik";
-    src: url(/test_static/assets/fonts/aeonik-bold.woff2) format("woff2");
+    src: url(/lorem/assets/fonts/aeonik-bold.woff2) format("woff2");
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -487,7 +487,7 @@ a img.aligncenter {
     max-width: 250px;
     border-radius: 0;
     background: none;
-    background-image: url(/test_static/assets/img/icons/caret.svg);
+    background-image: url(/lorem/assets/img/icons/caret.svg);
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 15px 15px;

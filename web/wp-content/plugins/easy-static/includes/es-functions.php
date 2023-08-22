@@ -452,9 +452,9 @@ function tr($posts, $post_types)
 
     $markup = "";
     foreach ($posts as $post) {
-        $origin = date_create($post->post_modified);
-        $target = date_create($post->static_generate);
-        $upToDate = $origin < $target ? true : false;
+      //  $origin = date_create($post->post_modified);
+     //   $target = date_create($post->static_generate);
+      //  $upToDate = $origin < $target ? true : false;
         $slug = $post->post_name;
 
         if (in_array($post->post_type, $post_types)) {
@@ -465,18 +465,25 @@ function tr($posts, $post_types)
             $parent_slug = get_post_field('post_name', $post->post_parent);
             $slug = $parent_slug . "/" . $post->post_name;
         }
-        if ($slug === 'homepage') {
+       /* if ($slug === 'homepage') {
             $exist  = (file_exists(WP_CONTENT_DIR . '/easy-static/static/' . locale() . '/index.html'))  ? true : false;
         } else {
             $exist  = (file_exists(WP_CONTENT_DIR . '/easy-static/static/' . locale() . $slug . '/index.html'))  ? true : false;
-        }
-
+        }*/
         $markup .= '<tr>';
-        $markup .= '<td><a href="/' . locale() . $slug . '/" target="_blank">' . $post->post_title . '</a></td>';
-        $markup .= "<td>" . locale() . $slug  . "</td>";
+        if ($slug === "home" || $slug === "homepage") {
+            $markup .= '<td><a href="/" target="_blank">' . $post->post_title . '</a></td>';
+            $markup .= "<td>/</td>";
+        }else{
+            $markup .= '<td><a href="/' . locale() . $slug . '/" target="_blank">' . $post->post_title . '</a></td>';
+            $markup .= "<td>" . locale() . $slug  . "</td>";
+        }
+       
+        
+      
         $markup .= "<td>" . $post->post_type  . "</td>";
         $markup .= '<td><input data-slug="' . $slug . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></td>';
-        $markup .= (($upToDate && $exist) ?  '<td class="info-update"></td>' : '<td class="info-update error"></td>');
+       // $markup .= (($upToDate && $exist) ?  '<td class="info-update"></td>' : '<td class="info-update error"></td>');
         $markup .= "</tr>";
     }
     return $markup;
@@ -548,6 +555,7 @@ function ctpPages($post_type)
             $pp = locale() . $slug . "/page/" . $i . "/";
 
             $html = loadPage("https://" . $host . "/" . $pp . "?generate=true");
+            //echo  $html;
             mkdir(WP_CONTENT_DIR . '/easy-static/static/' .  $pp, 0755, true);
             file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . $pp . 'index.html', TinyMinify::html($html));
         }
@@ -584,12 +592,15 @@ function create($posts, $post_types)
                 $parent_slug = get_post_field('post_name', $post->post_parent);
                 $folder =  $parent_slug . "/" . $post->post_name . "/";
             }
-  
-           $html = loadPage("https://" . $host . "/" . locale() . $folder . "?generate=true");
 
+// pop/fr/
+// pop/
+//
             if ($folder === "home/" || $folder === "homepage/") {
+                $html = loadPage("https://" . $host . "/" . locale() . "?generate=true");
                 file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', TinyMinify::html($html));
             } else {
+                $html = loadPage("https://" . $host . "/" . locale() . $folder . "?generate=true");
                 mkdir(WP_CONTENT_DIR . "/easy-static/static/" . locale() . $folder, 0755, true);
                 file_put_contents(WP_CONTENT_DIR . "/easy-static/static/" .  locale() . $folder . 'index.html', TinyMinify::html($html));
             }

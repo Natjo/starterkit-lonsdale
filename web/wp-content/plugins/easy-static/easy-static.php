@@ -43,6 +43,7 @@ $authentification = array(
 );
 
 
+
 // add easy_static_slug to options
 $easy_static_sluge = $wpdb->get_results("SELECT * FROM " . $table_prefix . "options WHERE option_name = 'easy_static_slug'");
 if (empty($easy_static_sluge)) {
@@ -61,9 +62,8 @@ echo file_get_contents(__DIR__ . '/wp-content/easy-static/static/' . $_SERVER['R
 exit;   
 }
 } */
-
-
 // Include mfp-functions.php, use require_once to stop the script if mfp-functions.php is not found
 require_once plugin_dir_path(__FILE__) . 'includes/es-functions.php';
 
 require_once plugin_dir_path(__FILE__) . 'includes/es-admin-ajax.php';
+?>

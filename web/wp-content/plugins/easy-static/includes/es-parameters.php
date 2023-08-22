@@ -29,7 +29,19 @@
         <?php endif; ?>
     </header>
 
+    <br>
+    <hr>
 
+    <h2>Options</h2>
+    <input type="checkbox"><label>Compresser les pages générées</label>
+    <br>
+    <input type="checkbox"><label>Ajouter htaccess pour la mise en caches des fichier</label>
+    <br>
+    <input type="checkbox"><label>Ajouter htaccess redirection si multilangue dans folder</label>
+    <br>
+    <br>
+
+    <hr>
     <hr>
     <br>
     <h2>Cpts</h2>
@@ -39,7 +51,6 @@
                 <th>Type</th>
                 <th>Slug</th>
                 <th>has pagination</th>
-                <th>Static</th>
                 <th>post per page</th>
 
             </tr>
@@ -65,7 +76,7 @@
                     <td>news</td>
                     <td><?= $post_type_object->rewrite['slug'] ?></td>
                     <td><?= $post_type_object->has_pagination ? "oui" : "non" ?></td>
-                    <td>oui</td>
+                 
                     <td><?= $post_type_object->posts_per_page ?></td>
                 </tr>
             <?php endforeach; ?>

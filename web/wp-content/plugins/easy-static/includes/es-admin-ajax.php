@@ -76,10 +76,12 @@ function static_posts_his_active_callback()
 
     // create or remove index.html
     if ($_POST['status'] == "true") {
-        $html = loadPage("https://" . $host . "/" . locale() . $folder . "?generate=true");
+       
         if ($folder === "home/" || $folder === "homepage/") {
-            file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', TinyMinify::html($html));
+            $html = loadPage("https://" . $host . "/?generate=true");
+            file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', "TinyMinify::html($html)");
         } else {
+            $html = loadPage("https://" . $host . "/" . locale() . $folder . "?generate=true");
             mkdir(WP_CONTENT_DIR . "/easy-static/static/" . $folder, 0755, true);
             file_put_contents(WP_CONTENT_DIR . "/easy-static/static/" . $folder . 'index.html', TinyMinify::html($html));
         }
@@ -94,6 +96,9 @@ function static_posts_his_active_callback()
     setupToDate($_POST['id']);
 }
 
+/**
+ * Génération des pages
+ */
 
 add_action('wp_ajax_test', 'test_callback');
 add_action('wp_ajax_nopriv_test', 'test_callback');
@@ -110,7 +115,7 @@ function test_callback()
 
     upToDate($posts);
 
-    $posts = queryPosts();
+    //$posts = queryPosts();
 
     $response['markup'] = tr($posts, $post_types);
 
@@ -181,8 +186,12 @@ function static_export_pages_callback()
                 $parent_slug = get_post_field('post_name', $post->post_parent);
                 $folder =  $parent_slug . "/" . $post->post_name . "/";
             }
-
-            $html = loadPage("https://" . $host . "/" . locale() . $folder . "?generate=true");
+            if ($folder === "home/" || $folder === "homepage/") {
+            $html = loadPage("https://" . $host . "/?generate=true");
+            }
+            else{
+                $html = loadPage("https://" . $host . "/" . locale() . $folder . "?generate=true"); 
+            }
 
             // 1: uploads
             $test = str_replace($currentUrl . "wp-content/uploads/", "/" . $newUrlSlug . "/uploads/", $html);
