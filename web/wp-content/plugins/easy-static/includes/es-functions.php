@@ -404,12 +404,17 @@ function loadPage($file)
         /*'http' => array (
         	'header' => 'Authorization: Basic ' . base64_encode("groupama-ra-2022:aer3aech7Aequ6ae")
     	)*/
+        /*  'header' =>
+            "Accept-language: en"*/
     );
-
+    
     if ($authentification['active'] === true) {
         $user_pass = $authentification["user"] . ':' . $authentification["password"];
         $arrContextOptions['http'] =  array(
-            'header' => 'Authorization: Basic ' . base64_encode("'.$user_pass.'")
+            'header' => array(
+                'Authorization: Basic ' . base64_encode($user_pass),
+                //"Accept-language: fr"
+            )
         );
     }
 
@@ -452,9 +457,9 @@ function tr($posts, $post_types)
 
     $markup = "";
     foreach ($posts as $post) {
-      //  $origin = date_create($post->post_modified);
-     //   $target = date_create($post->static_generate);
-      //  $upToDate = $origin < $target ? true : false;
+        //  $origin = date_create($post->post_modified);
+        //   $target = date_create($post->static_generate);
+        //  $upToDate = $origin < $target ? true : false;
         $slug = $post->post_name;
 
         if (in_array($post->post_type, $post_types)) {
@@ -465,7 +470,7 @@ function tr($posts, $post_types)
             $parent_slug = get_post_field('post_name', $post->post_parent);
             $slug = $parent_slug . "/" . $post->post_name;
         }
-       /* if ($slug === 'homepage') {
+        /* if ($slug === 'homepage') {
             $exist  = (file_exists(WP_CONTENT_DIR . '/easy-static/static/' . locale() . '/index.html'))  ? true : false;
         } else {
             $exist  = (file_exists(WP_CONTENT_DIR . '/easy-static/static/' . locale() . $slug . '/index.html'))  ? true : false;
@@ -474,16 +479,16 @@ function tr($posts, $post_types)
         if ($slug === "home" || $slug === "homepage") {
             $markup .= '<td><a href="/" target="_blank">' . $post->post_title . '</a></td>';
             $markup .= "<td>/</td>";
-        }else{
+        } else {
             $markup .= '<td><a href="/' . locale() . $slug . '/" target="_blank">' . $post->post_title . '</a></td>';
             $markup .= "<td>" . locale() . $slug  . "</td>";
         }
-       
-        
-      
+
+
+
         $markup .= "<td>" . $post->post_type  . "</td>";
         $markup .= '<td><input data-slug="' . $slug . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></td>';
-       // $markup .= (($upToDate && $exist) ?  '<td class="info-update"></td>' : '<td class="info-update error"></td>');
+        // $markup .= (($upToDate && $exist) ?  '<td class="info-update"></td>' : '<td class="info-update error"></td>');
         $markup .= "</tr>";
     }
     return $markup;
@@ -562,9 +567,13 @@ function ctpPages($post_type)
     }
 }
 
+/**
+ * 
+ */
 function create($posts, $post_types)
 {
     global $host;
+
 
     rm_rf(WP_CONTENT_DIR . '/easy-static/static/' . locale());
     mkdir(WP_CONTENT_DIR . '/easy-static/static/' . locale(), 0755, true);
@@ -581,7 +590,6 @@ function create($posts, $post_types)
     foreach ($posts as $post) {
         if ($post->static_active) {
 
-
             $folder = $post->post_name . "/";
             if (in_array($post->post_type, $post_types)) {
                 $post_type_object = get_post_type_object($post->post_type);
@@ -593,9 +601,10 @@ function create($posts, $post_types)
                 $folder =  $parent_slug . "/" . $post->post_name . "/";
             }
 
-// pop/fr/
-// pop/
-//
+            // pop/fr/
+            // pop/
+            // 
+            echo "https://" . $host . "/" . locale() . $folder . "?generate=true";
             if ($folder === "home/" || $folder === "homepage/") {
                 $html = loadPage("https://" . $host . "/" . locale() . "?generate=true");
                 file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', TinyMinify::html($html));
@@ -606,4 +615,5 @@ function create($posts, $post_types)
             }
         }
     }
+
 }

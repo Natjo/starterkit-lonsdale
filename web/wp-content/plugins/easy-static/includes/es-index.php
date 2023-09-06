@@ -70,11 +70,6 @@ function upToDate($posts)
 <div class="wrap" id="es-main" data-static="<?= $isStatic ? true : false; ?>" data-nonce="<?= $nonce ?>" data-ajaxurl="<?= AJAX_URL ?>">
     <h1>Static website</h1>
 
-    <div>
-        Update gitigore;<br>
-        web/wp-content/easy-static/<br>
- 
-    </div>
 
     <div>
         TODO<br>

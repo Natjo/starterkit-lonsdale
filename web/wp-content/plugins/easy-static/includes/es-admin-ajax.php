@@ -110,6 +110,7 @@ function test_callback()
     $post_types = postTypes();
 
     $posts = queryPosts();
+   //print_r($posts);
 
     create($posts, $post_types, $_POST['status']);
 
