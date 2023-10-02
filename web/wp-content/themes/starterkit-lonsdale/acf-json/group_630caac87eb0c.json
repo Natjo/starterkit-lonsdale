@@ -6,6 +6,7 @@
             "key": "field_630caad36485f",
             "label": "",
             "name": "strates",
+            "aria-label": "",
             "type": "flexible_content",
             "instructions": "",
             "required": 0,
@@ -26,6 +27,7 @@
                             "key": "field_630cab0764860",
                             "label": "Text",
                             "name": "text",
+                            "aria-label": "",
                             "type": "wysiwyg",
                             "instructions": "",
                             "required": 0,
@@ -55,6 +57,7 @@
                             "key": "field_630cab6864863",
                             "label": "Image desktop",
                             "name": "img-desktop",
+                            "aria-label": "",
                             "type": "image",
                             "instructions": "",
                             "required": 0,
@@ -79,6 +82,7 @@
                             "key": "field_630cab8764864",
                             "label": "Image mobile",
                             "name": "image_mobile",
+                            "aria-label": "",
                             "type": "image",
                             "instructions": "",
                             "required": 0,
@@ -103,6 +107,7 @@
                             "key": "field_630caba164865",
                             "label": "Image tablet",
                             "name": "img-tablet",
+                            "aria-label": "",
                             "type": "image",
                             "instructions": "",
                             "required": 0,
@@ -137,6 +142,7 @@
                             "key": "field_6328506575531",
                             "label": "Titre",
                             "name": "title",
+                            "aria-label": "",
                             "type": "text",
                             "instructions": "",
                             "required": 0,
@@ -176,6 +182,13 @@
                 "operator": "==",
                 "value": "news"
             }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "pages\/page-flexible.php"
+            }
         ]
     ],
     "menu_order": 0,
@@ -187,5 +200,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1663586422
+    "modified": 1695911580
 }

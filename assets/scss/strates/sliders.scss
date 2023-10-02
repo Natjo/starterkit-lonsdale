@@ -1,0 +1,385 @@
+.strate-sliders {
+
+	.slider {
+		display: grid;
+
+		.slider-btn {
+			grid-row: 1;
+			grid-column: 1;
+			background: #f5f5f5;
+			border: 1px solid black;
+			margin: 0;
+			padding: 10px;
+
+			&.prev {
+				justify-self: start;
+			}
+
+			&.next {
+				justify-self: end;
+			}
+		}
+
+		.slider-content {
+			grid-row: 2;
+			grid-column: 1;
+			margin-top: 10px;
+		}
+
+		.slider-pagination {
+			grid-row: 3;
+			grid-column: 1;
+			justify-self: center;
+			margin-top: 10px;
+			gap: 5px;
+
+			button {
+				border: none;
+				width: 15px;
+				height: 15px;
+				border-radius: 50%;
+				background: #dcdcdc;
+
+				&.active {
+					background: gray;
+				}
+			}
+		}
+	}
+
+	hr {
+		border: none;
+		border-bottom: 1px dashed #a9a9a9;
+		margin: 0;
+	}
+
+	section {
+
+		padding-top: 60px;
+		padding-bottom: 60px;
+
+		header {
+			margin-bottom: 30px;
+		}
+
+		p {
+			margin-top: 10px;
+		}
+	}
+
+	h2 {}
+
+	// auto width
+	.slider0 {
+		.slider-content {
+			margin-left: calc(-1 * var(--ctr-left));
+			margin-right: calc(-1 * var(--ctr-left));
+		}
+
+		.item {
+			height: 354px;
+		}
+	}
+
+	// grid
+	.slider1 {
+		.slider-content {
+			margin-left: calc(-1 * var(--ctr-left));
+			margin-right: calc(-1 * var(--ctr-left));
+		}
+
+		.item {
+			background: pink;
+			width: 200px;
+			aspect-ratio: 1;
+			width: calc((var(--ctr-width) - (var(--nb) - 1) * var(--gap)) / var(--nb));
+		}
+
+		@media (min-width: 468px) {
+			--nb: 2;
+		}
+
+		@media (min-width: 768px) {
+			--nb: 3;
+		}
+	}
+
+	// height auto offset right 
+	.slider2 {
+		--offset: 130px;
+
+		.slider-content {
+			margin-left: calc(-1 * var(--ctr-left));
+			margin-right: calc(-1 * var(--ctr-left));
+		}
+
+		.item {
+			background: pink;
+			width: 200px;
+			aspect-ratio: 1;
+			width: calc(((100vw - var(--offset) - var(--ctr-left)) - (var(--nb) - 1) * var(--gap)) / var(--nb));
+		}
+
+		@media (min-width: 590px) {
+			--nb: 2;
+		}
+
+		@media (min-width: 992px) {
+			--nb: 3;
+		}
+	}
+
+	// full 
+	.slider3 {
+		--gap: 0px;
+
+		.item {
+			background: pink;
+			width: 200px;
+			aspect-ratio: 1;
+			width: calc(((var(--ctr-width)) - (var(--nb) - 1) * var(--gap)) / var(--nb));
+
+			&:nth-child(odd) {
+				background: antiquewhite;
+			}
+
+			&:last-child {
+				margin: 0;
+			}
+		}
+
+		@media (min-width: 992px) {
+			--gap: 20px;
+			--nb: 2;
+		}
+
+		@media (min-width: 992px) {
+			--nb: 4;
+		}
+	}
+
+	// with sidebar
+	.layout-sidebar {
+		display: grid;
+		grid-template-columns: 1fr 4fr;
+
+		.sidebar {
+			background: #ccc;
+			z-index: 10;
+		}
+	}
+
+	.slider4 {
+		--offset: 130px;
+
+		.slider-content {
+			margin-left: calc(-1 * var(--ctr-left));
+			margin-right: calc(-1 * var(--ctr-offset));
+			margin-right: 0;
+		}
+
+		.item {
+			background: pink;
+			width: 200px;
+			aspect-ratio: 1;
+			width: calc(((100vw - var(--offset) - var(--ctr-left)) - (var(--nb) - 1) * var(--gap)) / var(--nb));
+		}
+
+		@media (min-width: 590px) {
+			--nb: 2;
+		}
+
+		@media (min-width: 992px) {
+			--nb: 3;
+		}
+	}
+
+	// slider to grid 
+	.slider5 {
+		--nb: 3;
+
+		.item {
+			background: pink;
+			width: 100%;
+			aspect-ratio: 1;
+			width: calc((var(--ctr-width) - (var(--nb) - 1) * var(--gap)) / var(--nb));
+		}
+
+		@media (max-width: 767px) {
+			.slider-content {
+				margin-left: calc(-1 * var(--ctr-left));
+				margin-right: calc(-1 * var(--ctr-left));
+			}
+
+			@media (min-width: 468px) {
+				--nb: 2;
+			}
+		}
+
+		@media (min-width: 768px) {
+
+			.slider-btn,
+			.slider-pagination {
+				display: none;
+			}
+
+			.slider-content {
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr;
+				grid-gap: var(--gap);
+			}
+
+		}
+	}
+
+}
+
+
+// train paris avigon
+.trains {
+
+header{
+ul{
+	display: grid;
+	gap: 5px;
+	
+}
+	li{
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+}
+	.color{
+		width: 20px;
+		height: 20px;
+
+		&.valid {
+			background: green;
+		}
+	
+		&.risque {
+			background: orange;
+		}
+	
+		&.not {
+			background: red;
+		}
+	}
+	.valid {
+		color: green;
+	}
+
+	.risque {
+		color: orange;
+	}
+
+	.not {
+		color: red;
+	}
+
+	.strate-content {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 40px;
+
+		ol {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+
+			>li {
+				display: grid;
+				grid-template-columns: min-content auto;
+			}
+		}
+
+		ul {
+			li {
+				display: flex;
+				align-items: center;
+				height: 26px;
+			}
+		}
+	}
+
+	h2 {
+		margin-bottom: 20px;
+	}
+
+	form {
+		border: 1px solid #ccc;
+		display: flex;
+		flex-direction: column;
+	}
+
+	fieldset {
+		padding: 10px;
+	}
+
+	.btn-add {
+		margin-top: 20px;
+		background: #f5f5f5;
+		padding: 5px 10px 3px;
+
+	}
+
+	.btn-reset {
+		background: #fcca005c;
+		padding: 5px 10px 3px;
+		border: 1px solid #aeaeae
+	}
+
+	.time {
+		display: inline-flex;
+		align-items: center;
+		border: 1px solid #ccc;
+		margin-right: 15px;
+		align-self: start;
+
+		&:focus-within {
+			border: solid 1px #000;
+		}
+
+		input {
+			width: 24px;
+			margin: 0;
+			border: none;
+			padding: 0;
+			background: none;
+			color: inherit;
+			box-sizing: border-box;
+			height: 26px;
+
+			text-align: center;
+
+
+			&:focus {
+				outline: none;
+			}
+
+			&:first-of-type {
+				margin-right: -1px;
+				text-align: right;
+				padding-right: 2px;
+
+			}
+
+			&:last-of-type {
+				margin-left: -1px;
+				text-align: left;
+				padding-left: 2px;
+
+			}
+		}
+
+	}
+
+	.action {
+		background-color: #f5f5f5;
+		padding: 10px;
+		display: flex;
+		justify-content: end;
+		margin-top: auto;
+	}
+}

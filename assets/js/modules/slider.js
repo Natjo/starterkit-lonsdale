@@ -10,31 +10,54 @@ function Slider(slider) {
     const isTouch = 'ontouchstart' in document.documentElement;
     const content = slider.querySelector('.slider-content');
     const items = content.querySelectorAll('.item');
+    const pagination = slider.querySelector('.slider-pagination');
     const btn_next = slider.querySelector('.next');
     const btn_prev = slider.querySelector('.prev');
+    const focusEls = slider.querySelectorAll('.item a,.item button,.item input');
+    let bullets = [];
     let offsetX = 0;
     let index = 0;
-    let itemW;
     let downX;
-    let gap;
-    let nb;
+    let length = 1;
+    let paddingLeft;
 
-    // replace if tabulating
-    slider.addEventListener('keyup', () => {
+    const getLength = () => {
+        length = 0;
         for (let i = 0; i < items.length; i++) {
-            if (items[i].contains(document.activeElement)) {
-                goto(i);
+            if (items[i].offsetLeft < content.scrollWidth - content.offsetWidth + paddingLeft) {
+                length++;
             }
+        }
+    }
+
+    getLength();
+
+    focusEls.forEach(el => {
+        el.onfocus = () => {
+            const item = el.closest('.item');
+            index = [...item.parentNode.children].indexOf(item);
+            if (index > length) index = length;
+            goto();
         }
     });
 
-    // Use fakeScrollTo while smooth behavior not fully supported
+    if (pagination) {
+        for (let i = 0; i < items.length; i++) {
+            const bullet = document.createElement('button');
+            bullet.value = i;
+            bullet.setAttribute('aria-hidden', true);
+            bullet.setAttribute('tabindex', -1);
+            pagination.appendChild(bullet);
+            bullets.push(bullet);
+        }
+    }
+
     function fakeScrollTo(end) {
         let req;
         let init = null;
         let time;
         const start = content.scrollLeft;
-        const duration = 500;
+        const duration = 600;
         const easing = (t, b, c, d) => -c * ((t = t / d - 1) * t * t * t - 1) + b;
         const startAnim = timeStamp => {
             init = timeStamp;
@@ -55,30 +78,58 @@ function Slider(slider) {
     };
 
     const resize = () => {
-        gap = parseInt(getComputedStyle(content).gridColumnGap);
-        nb = parseInt(getComputedStyle(slider).getPropertyValue('--nb')) || 1;
-        itemW = items[0].offsetWidth;
-        goto(index);
+        slider.style.setProperty('--ctr-left', `${slider.getBoundingClientRect().left}px`);
+        slider.style.setProperty('--ctr-width', `${slider.offsetWidth}px`);
+        paddingLeft = slider.offsetLeft + parseInt(getComputedStyle(slider).getPropertyValue('--padding-left') * 10);
+        getLength();
+        goto();
     };
 
-    const goto = num => {
-        if (!isTouch) {
-            fakeScrollTo((itemW + gap) * num);
-        } else {
-            content.scrollTo({
-                left: (itemW + gap) * num,
-                behavior: 'smooth'
-            });
+    function controlStatus() {
+        if (pagination) {
+            for (let i = 0; i < bullets.length; i++) {
+                bullets[i].classList[i === index ? 'add' : 'remove']('active');
+                bullets[i].classList[i <= length ? 'remove' : 'add']('hide')
+            }
+            if (bullets.length == 1) bullets[0].classList.add('hide')
         }
+        if (btn_prev) {
+            if (index <= 0) btn_prev.setAttribute('aria-disabled', true);
+            else btn_prev.removeAttribute('aria-disabled');
+            btn_prev.classList[length === 0 ? 'add' : 'remove']('hide');
+        }
+        if (btn_next) {
+            if (index == length) btn_next.setAttribute('aria-disabled', true);
+            else btn_next.removeAttribute('aria-disabled');
+            btn_next.classList[length === 0 ? 'add' : 'remove']('hide');
+        }
+    }
+
+    const goto = () => {
+        controlStatus();
+        const itempos = items[index].offsetLeft - paddingLeft;
+        let diff = itempos - (content.scrollWidth - content.offsetWidth);
+        if (diff < 0) diff = 0;
+        fakeScrollTo(itempos - diff);
+        /*content.scrollTo({
+            left: itempos - diff,
+            behavior: 'smooth'
+        });*/
     };
+
+    function getIndex() {
+        items.forEach(item => {
+            if (item.offsetLeft < content.scrollLeft + paddingLeft + 100) index = index + 1;
+        });
+        if (offsetX - downX > content.scrollLeft) index = index - 1;
+        if (index <= 0) index = 0;
+        if (index > length) index = length;
+    }
 
     const mouseUp = e => {
         index = 0;
-        items.forEach((item, i) => {
-            if (item.offsetLeft - (itemW / 2) - gap < content.scrollLeft) index = i;
-        });
-
-        goto(index);
+        getIndex();
+        goto();
         window.removeEventListener('mousemove', mouseMove);
         window.removeEventListener('mouseup', mouseUp);
         content.classList.remove('onswipe');
@@ -94,30 +145,45 @@ function Slider(slider) {
 
     const next = () => {
         index++;
-        if (index >= items.length - nb) index = items.length - nb;
-        goto(index);
+        if (index >= length) index = length;
+        goto();
     };
 
     const prev = () => {
         index--;
         if (index <= 0) index = 0;
-        goto(index);
+        goto();
     };
 
     if (btn_next) btn_next.onclick = () => next();
     if (btn_prev) btn_prev.onclick = () => prev();
 
+    bullets.forEach(bullet => {
+        bullet.onclick = () => {
+            index = Number(bullet.value);
+            goto();
+        }
+    })
+
     this.enable = () => {
+        slider.classList.add('slider');
+        index = 0;
         resize();
         if (!isTouch) {
             content.onmousedown = e => mouseDown(e.clientX);
             window.addEventListener('resize', resize, { passive: true });
         } else {
             content.classList.add('touchable');
+            content.addEventListener("scroll", () => {
+                index = -1;
+                getIndex();
+                controlStatus();
+            }, { passive: true });
         }
     };
 
     this.disable = () => {
+        slider.classList.remove('slider');
         content.onmousedown = null;
         window.removeEventListener('resize', resize);
         mouseUp();

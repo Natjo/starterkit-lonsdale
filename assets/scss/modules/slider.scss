@@ -1,88 +1,79 @@
 .slider {
-	display: grid;
-	--nb: 1;
-	--col: 4;
+    --nb: 1;
+    --padding-left: 0;
+    --padding-right: 0;
+    --offset: 0;
+    display: grid;
 
-	&-content {
-		position: relative;
-		overflow-y: hidden;
-		overflow-x: scroll;
-		box-sizing: border-box;
-		display: grid;
-		grid-auto-columns: calc((100% - var(--width, 0px) - (var(--col) - 1) * var(--gap)) / var(--col));
-		grid-gap: var(--gap);
-		width: 100%;
-		-ms-overflow-style: none;
-		scrollbar-width: none;
+    &-content {
+       // position: relative;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        display: grid;
+       // grid-auto-columns: 100%;
+        grid-gap: var(--gap);
+        -ms-overflow-style: none;
+        scrollbar-width: none;
 
-		&::-webkit-scrollbar {
-			display: none;
-		}
-
-		&.touchable {
-			scroll-snap-type: x mandatory;
-
-			.item {
-				scroll-snap-align: start;
-			}
-		}
-
-		&.onswipe {
-			cursor: grab;
-			user-select: none;
-
-			a,
-			button {
-				pointer-events: none;
-			}
-		}
-	}
-
-	&-content,
-	&-btn {
-		grid-area: 1/1;
-	}
-
-	&-btn {
-		z-index: 2;
-		align-self: center;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		background: #f5f5f5;
-		border: 1px solid black;
-		margin: 0;
-
-		&[aria-disabled=true] {
-			opacity: .5;
-		}
-
-		&.prev {
-			justify-self: start;
-		}
-
-		&.next {
-			justify-self: end;
-		}
-	}
-
-	.item {
-		grid-row: 1;
-		grid-column: span calc(var(--col) / var(--nb));
-	}
-
-	&.full {
-        --offset: var(--ctr-offset);
-
-        .slider-content {
-            padding-left: var(--offset);
-            padding-right: var(--ctr-offset);
+        &::-webkit-scrollbar {
+            display: none;
         }
 
-        @media #{$breakpoint-fluid-up} {
-            --width: (100% - var(--ctr-width));
-            --offset: calc((100% - var(--ctr-width)) / 2);
+        &.touchable {
+            scroll-snap-type: x mandatory;
+
+            .item {
+                scroll-snap-align: start;
+            }
+        }
+
+        &.onswipe {
+            cursor: grab;
+            user-select: none;
+
+            a,
+            button {
+                pointer-events: none;
+            }
         }
     }
+
+	&-btn {
+        cursor: pointer;
+
+        &[aria-disabled=true]{
+            opacity: .5;
+            pointer-events: none;
+        }
+
+        &.hide{
+            display: none;
+        }
+    }
+    
+    &-pagination{
+        display: flex;
+		
+		button{
+			&.hide{
+				display: none;
+			}
+		}
+    }
+
+    .item {
+        grid-row: 1;
+        width: 100%;
+    }
+	.item {
+
+
+		&:first-child {
+			margin-left: var(--ctr-left);
+		}
+
+		&:last-child {
+			margin-right: var(--ctr-offset);
+		}
+	}
 }
