@@ -354,10 +354,32 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     }
   };
 
-  function round(val) {
-    // return Math.round(val * 100) / 100
-    var ff = String(Math.round(val * 100) / 100).split('.');
-    return ff[1].length == 1 ? ff[1] + 0 : ff[1];
+  function dateDiff(time1, titme2) {
+    var date1 = new Date("0001-01-01 ".concat(time1, ":00"));
+    var date2 = new Date("0001-01-01 ".concat(titme2, ":00"));
+    var diff = {};
+    var tmp = date2 - date1;
+    tmp = Math.floor(tmp / 1000);
+    diff.sec = tmp % 60;
+    tmp = Math.floor((tmp - diff.sec) / 60);
+    diff.min = tmp % 60;
+    tmp = Math.floor((tmp - diff.min) / 60);
+    diff.hour = tmp % 24;
+    return "".concat(diff.hour > 0 ? diff.hour + 'h' : '').concat(diff.min, "min");
+  }
+
+  function dateDiff1(time1, titme2) {
+    var date1 = new Date("0001-01-01 ".concat(time1, ":00"));
+    var date2 = new Date("0001-01-01 ".concat(titme2, ":00"));
+    var diff = {};
+    var tmp = date2 - date1;
+    tmp = Math.floor(tmp / 1000);
+    diff.sec = tmp % 60;
+    tmp = Math.floor((tmp - diff.sec) / 60);
+    diff.min = tmp % 60;
+    tmp = Math.floor((tmp - diff.min) / 60);
+    diff.hour = tmp % 24;
+    return Number("".concat(diff.hour * 60 + diff.min));
   }
 
   var blur = function blur(input) {
@@ -366,7 +388,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     var value = Number(hours) + Number(minutes / 100);
 
     if (hours.length > 0 && minutes.length > 0) {
-      var key = input.name;
+      var key = input.closest('form').dataset.type;
       var msg = "";
 
       for (var bus in datas) {
@@ -382,17 +404,24 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
             if (!match) {
               var diff = depart - value;
-              var status = 0;
+              diff = dateDiff1("".concat(hours, ":").concat(minutes), time['depart']);
+              var correspondance = dateDiff("".concat(hours, ":").concat(minutes), time['depart']);
 
-              if (diff < .4 && diff > .2) {
-                status = 1;
+              if (diff <= 80 && diff > 40) {
                 match = true;
-                msg += "<li class=\"valid\"><b>".concat(bus, "</b> (").concat(datas[bus]['name'], ") ").concat(time['depart'], " - ").concat(time['arriver'], " (").concat(round(diff), "minutes)</li>");
-              } else if (diff <= .2 && diff >= .15) {
-                status = 2;
+                msg += "<li class=\"large\"><b>".concat(diff + "-" + bus, "</b> (").concat(datas[bus]['name'], ") ").concat(time['depart'], " - ").concat(time['arriver'], " (").concat(correspondance, " de correspondance)</li>");
+              }
+
+              if (diff <= 40 && diff > 20) {
                 match = true;
-                msg += "<li class=\"risque\"><b>".concat(bus, "</b> (").concat(datas[bus]['name'], ") ").concat(time['depart'], " - ").concat(time['arriver'], " (").concat(round(diff), "minutes)</li>");
-              } else {}
+                msg += "<li class=\"valid\"><b>".concat(diff + "-" + bus, "</b> (").concat(datas[bus]['name'], ") ").concat(time['depart'], " - ").concat(time['arriver'], " (").concat(correspondance, " de correspondance)</li>");
+              } else if (diff <= 20 && diff > 15) {
+                match = true;
+                msg += "<li class=\"risque\"><b>".concat(diff + "-" + bus, "</b> (").concat(datas[bus]['name'], ") ").concat(time['depart'], " - ").concat(time['arriver'], " (").concat(correspondance, "  de correspondance)</li>");
+              } else if (diff <= 15 && diff > 5) {
+                match = true;
+                msg += "<li class=\"not\"><b>".concat(diff + "-" + bus, "</b> (").concat(datas[bus]['name'], ") ").concat(time['depart'], " - ").concat(time['arriver'], " (").concat(correspondance, "  de correspondance)</li>");
+              }
             }
           }
         } catch (err) {
@@ -402,8 +431,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         }
       }
 
-      input.parentNode.parentNode.querySelector('ul').innerHTML = msg ? msg : '<li class="not">Pas de correspondances</li>';
-    } else {}
+      input.parentNode.parentNode.querySelector('ul').innerHTML = msg ? msg : '<li>--</li>';
+    }
   };
 
   var add = function add(inputs) {
@@ -469,4 +498,4 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 /***/ })
 
 }]);
-//# sourceMappingURL=4de81b49e85e0b51573e.js.map
+//# sourceMappingURL=6b94f10bcc8349fdac1d.js.map

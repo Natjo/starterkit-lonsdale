@@ -122,12 +122,41 @@ export default (el) => {
         }
     }
 
-    function round(val) {
-        // return Math.round(val * 100) / 100
-        const ff = String(Math.round(val * 100) / 100).split('.');
-        
-        return ff[1].length == 1 ? (ff[1] + 0) : ff[1];
+    function dateDiff(time1, titme2) {
+        const date1 = new Date(`0001-01-01 ${time1}:00`);
+        const date2 = new Date(`0001-01-01 ${titme2}:00`);
+        const diff = {}
+        let tmp = date2 - date1;
+        tmp = Math.floor(tmp / 1000);
+        diff.sec = tmp % 60;
+
+        tmp = Math.floor((tmp - diff.sec) / 60);
+        diff.min = tmp % 60;
+
+        tmp = Math.floor((tmp - diff.min) / 60);
+        diff.hour = tmp % 24;
+
+        return `${diff.hour > 0 ? diff.hour + 'h' : ''}${diff.min}min`;
     }
+
+
+    function dateDiff1(time1, titme2) {
+        const date1 = new Date(`0001-01-01 ${time1}:00`);
+        const date2 = new Date(`0001-01-01 ${titme2}:00`);
+        const diff = {}
+        let tmp = date2 - date1;
+        tmp = Math.floor(tmp / 1000);
+        diff.sec = tmp % 60;
+
+        tmp = Math.floor((tmp - diff.sec) / 60);
+        diff.min = tmp % 60;
+
+        tmp = Math.floor((tmp - diff.min) / 60);
+        diff.hour = tmp % 24;
+
+        return Number(`${(diff.hour * 60) + diff.min}`);
+    }
+
 
     const blur = (input) => {
         const hours = input.parentNode.querySelector('.hours').value;
@@ -135,8 +164,7 @@ export default (el) => {
         const value = Number(hours) + Number(minutes / 100);
 
         if (hours.length > 0 && minutes.length > 0) {
-
-            const key = input.name;
+            const key = input.closest('form').dataset.type;
             let msg = "";
             for (let bus in datas) {
                 let match = false;
@@ -144,29 +172,31 @@ export default (el) => {
                     const depart = Number(time['depart'].replace(':', '.'));
                     if (!match) {
                         let diff = depart - value;
-                        let status = 0;
-
-                        if (diff < .4 && diff > .2) {
-                            status = 1;
+                        diff = dateDiff1(`${hours}:${minutes}`, time['depart']);
+                        let correspondance = dateDiff(`${hours}:${minutes}`, time['depart']);
+                        if (diff <= 80 && diff > 40) {
                             match = true;
-                            msg += `<li class="valid"><b>${bus}</b> (${datas[bus]['name']}) ${time['depart']} - ${time['arriver']} (${round(diff)}minutes)</li>`;
+                            msg += `<li class="large"><b>${diff + "-" +bus}</b> (${datas[bus]['name']}) ${time['depart']} - ${time['arriver']} (${correspondance} de correspondance)</li>`;
                         }
-                        else if (diff <= .2 && diff >= .15) {
-                            status = 2;
+                        if (diff <= 40 && diff > 20) {
                             match = true;
-                            msg += `<li class="risque"><b>${bus}</b> (${datas[bus]['name']}) ${time['depart']} - ${time['arriver']} (${round(diff)}minutes)</li>`;
+                            msg += `<li class="valid"><b>${diff + "-" +bus}</b> (${datas[bus]['name']}) ${time['depart']} - ${time['arriver']} (${correspondance} de correspondance)</li>`;
                         }
-                        else {
-
+                        else if (diff <= 20 && diff > 15) {
+                            match = true;
+                            msg += `<li class="risque"><b>${diff + "-" +bus}</b> (${datas[bus]['name']}) ${time['depart']} - ${time['arriver']} (${correspondance}  de correspondance)</li>`;
                         }
+                        else if (diff <= 15 && diff > 5) {
+                            match = true;
+                            msg += `<li class="not"><b>${diff + "-" +bus}</b> (${datas[bus]['name']}) ${time['depart']} - ${time['arriver']} (${correspondance}  de correspondance)</li>`;
+                        }
+                      
                     }
                 }
             }
 
-            input.parentNode.parentNode.querySelector('ul').innerHTML = msg ? msg : '<li class="not">Pas de correspondances</li>';
-        } else {
-
-        }
+            input.parentNode.parentNode.querySelector('ul').innerHTML = msg ? msg : '<li>--</li>';
+        } 
 
     }
 
@@ -207,10 +237,8 @@ export default (el) => {
         btn.onclick = () => {
             const ol = btn.previousElementSibling;
             const template = document.querySelector("#time");
-
             const clone = document.importNode(template.content, true);
             ol.appendChild(clone);
-
             const inputs = ol.querySelectorAll('li:last-child input');
 
             add(inputs);

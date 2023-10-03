@@ -23,7 +23,7 @@ $mail_error = !empty($mail['error']) ? true : false;
         <template id="time">
             <li>
                 <div class="time">
-                    <input minlength="1" maxlength="2" type="text" name="go" class="hours">:<input minlength="1" maxlength="2" type="text" name="go" class="minutes">
+                    <input minlength="1" maxlength="2" type="text" class="hours">:<input minlength="1" maxlength="2" type="text" class="minutes">
                 </div>
                 <ul></ul>
             </li>
@@ -33,38 +33,48 @@ $mail_error = !empty($mail['error']) ? true : false;
             <header>
                 <h2 class="title-2">Trains</h2>
                 <ul>
-                    <li><div class="color valid"></div> entre 40min et 20min avant</li>
-                    <li> <div class="color risque"></div> orange: entre 20min et 15min avant<br></li>
+                    <li>
+                        <div class="color large"></div> entre 1h20min et 40min avant
+                    </li>
+                    <li>
+                        <div class="color valid"></div> entre 40min et 20min avant
+                    </li>
+                    <li>
+                        <div class="color risque"></div> orange: entre 20min et 15min avant<br>
+                    </li>
+                    <li>
+                        <div class="color not"></div> orange: entre 15min et 5min avant<br>
+                    </li>
                 </ul>
             </header>
 
             <div class="strate-content">
-                <form>
+            <form data-type="go">
                     <fieldset>
-                        <h2 class="title-3">Aller Paris - Avigon</h2>
+                        <h2 class="title-3">De la gare d'Avignon</h2>
 
                         <ol>
                             <li>
                                 <div class="time">
-                                    <input minlength="1" maxlength="2" type="text" name="go" class="hours">:<input minlength="1" maxlength="2" type="text" name="go" class="minutes">
+                                    <input minlength="1" maxlength="2" type="text" class="hours">:<input minlength="1" maxlength="2" type="text" class="minutes">
                                 </div>
                                 <ul></ul>
                             </li>
                             <li>
                                 <div class="time">
-                                    <input minlength="1" maxlength="2" type="text" name="go" class="hours">:<input minlength="1" maxlength="2" type="text" name="go" class="minutes">
+                                    <input minlength="1" maxlength="2" type="text" class="hours">:<input minlength="1" maxlength="2" type="text" class="minutes">
                                 </div>
                                 <ul></ul>
                             </li>
                             <li>
                                 <div class="time">
-                                    <input minlength="1" maxlength="2" type="text" name="go" class="hours">:<input minlength="1" maxlength="2" type="text" name="go" class="minutes">
+                                    <input minlength="1" maxlength="2" type="text" class="hours">:<input minlength="1" maxlength="2" type="text" class="minutes">
                                 </div>
                                 <ul></ul>
                             </li>
                             <li>
                                 <div class="time">
-                                    <input minlength="1" maxlength="2" type="text" name="go" class="hours">:<input minlength="1" maxlength="2" type="text" name="go" class="minutes">
+                                    <input minlength="1" maxlength="2" type="text" class="hours">:<input minlength="1" maxlength="2" type="text" class="minutes">
                                 </div>
                                 <ul></ul>
                             </li>
@@ -78,32 +88,32 @@ $mail_error = !empty($mail['error']) ? true : false;
                     </div>
                 </form>
 
-                <form>
+                <form data-type="back">
                     <fieldset>
                         <h2 class="title-3">Retour Avignon - Paris</h2>
 
                         <ol>
                             <li>
                                 <div class="time">
-                                    <input minlength="1" maxlength="2" type="text" name="go" class="hours">:<input minlength="1" maxlength="2" type="text" name="go" class="minutes">
+                                    <input minlength="1" maxlength="2" type="text" class="hours">:<input minlength="1" maxlength="2" type="text" class="minutes">
                                 </div>
                                 <ul></ul>
                             </li>
                             <li>
                                 <div class="time">
-                                    <input minlength="1" maxlength="2" type="text" name="go" class="hours">:<input minlength="1" maxlength="2" type="text" name="go" class="minutes">
+                                    <input minlength="1" maxlength="2" type="text" class="hours">:<input minlength="1" maxlength="2" type="text" class="minutes">
                                 </div>
                                 <ul></ul>
                             </li>
                             <li>
                                 <div class="time">
-                                    <input minlength="1" maxlength="2" type="text" name="go" class="hours">:<input minlength="1" maxlength="2" type="text" name="go" class="minutes">
+                                    <input minlength="1" maxlength="2" type="text" class="hours">:<input minlength="1" maxlength="2" type="text" class="minutes">
                                 </div>
                                 <ul></ul>
                             </li>
                             <li>
                                 <div class="time">
-                                    <input minlength="1" maxlength="2" type="text" name="go" class="hours">:<input minlength="1" maxlength="2" type="text" name="go" class="minutes">
+                                    <input minlength="1" maxlength="2" type="text" class="hours">:<input minlength="1" maxlength="2" type="text" class="minutes">
                                 </div>
                                 <ul></ul>
                             </li>

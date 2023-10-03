@@ -253,7 +253,10 @@ ul{
 	.color{
 		width: 20px;
 		height: 20px;
-
+		&.large {
+			background: blue;
+		}
+	
 		&.valid {
 			background: green;
 		}
@@ -265,6 +268,9 @@ ul{
 		&.not {
 			background: red;
 		}
+	}
+	.large {
+		color: blue;
 	}
 	.valid {
 		color: green;

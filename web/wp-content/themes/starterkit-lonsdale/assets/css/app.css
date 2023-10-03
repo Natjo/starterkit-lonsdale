@@ -1261,6 +1261,9 @@ a img.aligncenter {
     width: 20px;
     height: 20px;
 }
+.trains .color.large {
+    background: blue;
+}
 .trains .color.valid {
     background: green;
 }
@@ -1269,6 +1272,9 @@ a img.aligncenter {
 }
 .trains .color.not {
     background: red;
+}
+.trains .large {
+    color: blue;
 }
 .trains .valid {
     color: green;
