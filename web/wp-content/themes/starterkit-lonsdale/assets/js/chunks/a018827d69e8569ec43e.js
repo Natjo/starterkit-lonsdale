@@ -385,7 +385,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   var blur = function blur(input) {
     var hours = input.parentNode.querySelector('.hours').value;
     var minutes = input.parentNode.querySelector('.minutes').value;
-    var value = Number(hours) + Number(minutes / 100);
 
     if (hours.length > 0 && minutes.length > 0) {
       var key = input.closest('form').dataset.type;
@@ -400,27 +399,29 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         try {
           for (_iterator.s(); !(_step = _iterator.n()).done;) {
             var time = _step.value;
-            var depart = Number(time['depart'].replace(':', '.'));
 
             if (!match) {
-              var diff = depart - value;
-              diff = dateDiff1("".concat(hours, ":").concat(minutes), time['depart']);
+              var diff = dateDiff1("".concat(hours, ":").concat(minutes), time['depart']);
               var correspondance = dateDiff("".concat(hours, ":").concat(minutes), time['depart']);
+              var classe = 'not';
 
               if (diff <= 80 && diff > 40) {
                 match = true;
-                msg += "<li class=\"large\"><b>".concat(diff + "-" + bus, "</b> (").concat(datas[bus]['name'], ") ").concat(time['depart'], " - ").concat(time['arriver'], " (").concat(correspondance, " de correspondance)</li>");
+                classe = 'large';
               }
 
               if (diff <= 40 && diff > 20) {
                 match = true;
-                msg += "<li class=\"valid\"><b>".concat(diff + "-" + bus, "</b> (").concat(datas[bus]['name'], ") ").concat(time['depart'], " - ").concat(time['arriver'], " (").concat(correspondance, " de correspondance)</li>");
+                classe = 'valid';
               } else if (diff <= 20 && diff > 15) {
                 match = true;
-                msg += "<li class=\"risque\"><b>".concat(diff + "-" + bus, "</b> (").concat(datas[bus]['name'], ") ").concat(time['depart'], " - ").concat(time['arriver'], " (").concat(correspondance, "  de correspondance)</li>");
+                classe = 'risque';
               } else if (diff <= 15 && diff > 5) {
                 match = true;
-                msg += "<li class=\"not\"><b>".concat(diff + "-" + bus, "</b> (").concat(datas[bus]['name'], ") ").concat(time['depart'], " - ").concat(time['arriver'], " (").concat(correspondance, "  de correspondance)</li>");
+              }
+
+              if (match) {
+                msg += "<li class=\"".concat(classe, "\"><b>").concat(bus, "</b> (").concat(datas[bus]['name'], ") ").concat(time['depart'], " - ").concat(time['arriver'], " (").concat(correspondance, " de correspondance)</li>");
               }
             }
           }
@@ -498,4 +499,4 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 /***/ })
 
 }]);
-//# sourceMappingURL=6b94f10bcc8349fdac1d.js.map
+//# sourceMappingURL=a018827d69e8569ec43e.js.map

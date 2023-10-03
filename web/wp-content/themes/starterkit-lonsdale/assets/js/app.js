@@ -12110,7 +12110,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 			if (chunkId === "assets_js_modules_slider_js") return "./js/chunks/ecb066317053c592687a.js";
 /******/ 			if (chunkId === "assets_js_strates_contact_js") return "./js/chunks/e4f5556d2ef581bb733f.js";
 /******/ 			if (chunkId === "assets_js_strates_news_js") return "./js/chunks/50149cda326ee533394c.js";
-/******/ 			if (chunkId === "assets_js_strates_sliders_js") return "./js/chunks/6b94f10bcc8349fdac1d.js";
+/******/ 			if (chunkId === "assets_js_strates_sliders_js") return "./js/chunks/a018827d69e8569ec43e.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

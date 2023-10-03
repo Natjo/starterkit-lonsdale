@@ -139,7 +139,6 @@ export default (el) => {
         return `${diff.hour > 0 ? diff.hour + 'h' : ''}${diff.min}min`;
     }
 
-
     function dateDiff1(time1, titme2) {
         const date1 = new Date(`0001-01-01 ${time1}:00`);
         const date2 = new Date(`0001-01-01 ${titme2}:00`);
@@ -157,11 +156,9 @@ export default (el) => {
         return Number(`${(diff.hour * 60) + diff.min}`);
     }
 
-
     const blur = (input) => {
         const hours = input.parentNode.querySelector('.hours').value;
         const minutes = input.parentNode.querySelector('.minutes').value;
-        const value = Number(hours) + Number(minutes / 100);
 
         if (hours.length > 0 && minutes.length > 0) {
             const key = input.closest('form').dataset.type;
@@ -169,35 +166,36 @@ export default (el) => {
             for (let bus in datas) {
                 let match = false;
                 for (let time of datas[bus][key]) {
-                    const depart = Number(time['depart'].replace(':', '.'));
                     if (!match) {
-                        let diff = depart - value;
-                        diff = dateDiff1(`${hours}:${minutes}`, time['depart']);
+                        let diff = dateDiff1(`${hours}:${minutes}`, time['depart']);
                         let correspondance = dateDiff(`${hours}:${minutes}`, time['depart']);
+                        let classe = 'not';
+
                         if (diff <= 80 && diff > 40) {
                             match = true;
-                            msg += `<li class="large"><b>${diff + "-" +bus}</b> (${datas[bus]['name']}) ${time['depart']} - ${time['arriver']} (${correspondance} de correspondance)</li>`;
+                            classe = 'large';
                         }
                         if (diff <= 40 && diff > 20) {
                             match = true;
-                            msg += `<li class="valid"><b>${diff + "-" +bus}</b> (${datas[bus]['name']}) ${time['depart']} - ${time['arriver']} (${correspondance} de correspondance)</li>`;
+                            classe = 'valid';
                         }
                         else if (diff <= 20 && diff > 15) {
                             match = true;
-                            msg += `<li class="risque"><b>${diff + "-" +bus}</b> (${datas[bus]['name']}) ${time['depart']} - ${time['arriver']} (${correspondance}  de correspondance)</li>`;
+                            classe = 'risque';
                         }
                         else if (diff <= 15 && diff > 5) {
                             match = true;
-                            msg += `<li class="not"><b>${diff + "-" +bus}</b> (${datas[bus]['name']}) ${time['depart']} - ${time['arriver']} (${correspondance}  de correspondance)</li>`;
                         }
-                      
+
+                        if (match) {
+                            msg += `<li class="${classe}"><b>${bus}</b> (${datas[bus]['name']}) ${time['depart']} - ${time['arriver']} (${correspondance} de correspondance)</li>`;
+                        }
                     }
                 }
             }
 
             input.parentNode.parentNode.querySelector('ul').innerHTML = msg ? msg : '<li>--</li>';
-        } 
-
+        }
     }
 
 
