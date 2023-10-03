@@ -136,7 +136,7 @@ export default (el) => {
         tmp = Math.floor((tmp - diff.min) / 60);
         diff.hour = tmp % 24;
 
-        return `${diff.hour > 0 ? diff.hour + 'h' : ''}${diff.min}min`;
+        return `${diff.hour > 0 ? diff.hour + 'h' : ''}${Number(diff.min) > 10 ? ''+diff.min : "0"+diff.min}min`;
     }
 
     function dateDiff1(time1, titme2) {

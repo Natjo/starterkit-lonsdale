@@ -365,7 +365,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     diff.min = tmp % 60;
     tmp = Math.floor((tmp - diff.min) / 60);
     diff.hour = tmp % 24;
-    return "".concat(diff.hour > 0 ? diff.hour + 'h' : '').concat(diff.min, "min");
+    return "".concat(diff.hour > 0 ? diff.hour + 'h' : '').concat(Number(diff.min) > 10 ? '' + diff.min : "0" + diff.min, "min");
   }
 
   function dateDiff1(time1, titme2) {
@@ -499,4 +499,4 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 /***/ })
 
 }]);
-//# sourceMappingURL=a018827d69e8569ec43e.js.map
+//# sourceMappingURL=3442583ccc681a05ade1.js.map
