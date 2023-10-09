@@ -20,7 +20,9 @@ function Slider(slider) {
     let downX;
     let length = 1;
     let paddingLeft;
-
+    let isMove = false;
+    let number;
+    
     const getLength = () => {
         length = 0;
         for (let i = 0; i < items.length; i++) {
@@ -73,14 +75,16 @@ function Slider(slider) {
     };
 
     const mouseMove = e => {
-        content.classList.add('onswipe');
+        !isMove && content.classList.add('onswipe');
         content.scrollTo(-e.clientX + offsetX, 0);
+        isMove = true;
     };
 
     const resize = () => {
         slider.style.setProperty('--ctr-left', `${slider.getBoundingClientRect().left}px`);
         slider.style.setProperty('--ctr-width', `${slider.offsetWidth}px`);
         paddingLeft = slider.offsetLeft + parseInt(getComputedStyle(slider).getPropertyValue('--padding-left') * 10);
+        number = 1 + parseInt(getComputedStyle(slider).getPropertyValue('--nb'));
         getLength();
         goto();
     };
@@ -110,16 +114,20 @@ function Slider(slider) {
         const itempos = items[index].offsetLeft - paddingLeft;
         let diff = itempos - (content.scrollWidth - content.offsetWidth);
         if (diff < 0) diff = 0;
-        fakeScrollTo(itempos - diff);
-        /*content.scrollTo({
-            left: itempos - diff,
-            behavior: 'smooth'
-        });*/
+        if (!isTouch) {
+            fakeScrollTo(itempos - diff);
+        } else {
+            content.scrollTo({
+                left: itempos - diff,
+                behavior: 'smooth'
+            });
+        }
     };
 
     function getIndex() {
+        index = -1;
         items.forEach(item => {
-            if (item.offsetLeft < content.scrollLeft + paddingLeft + 100) index = index + 1;
+            if (item.offsetLeft < content.scrollLeft + content.offsetWidth / number) index = index + 1;
         });
         if (offsetX - downX > content.scrollLeft) index = index - 1;
         if (index <= 0) index = 0;
@@ -127,12 +135,13 @@ function Slider(slider) {
     }
 
     const mouseUp = e => {
-        index = 0;
-        getIndex();
-        goto();
         window.removeEventListener('mousemove', mouseMove);
         window.removeEventListener('mouseup', mouseUp);
         content.classList.remove('onswipe');
+        if (!isMove) return;
+        getIndex();
+        goto();
+        isMove = false;
     };
 
     const mouseDown = val => {
@@ -174,8 +183,8 @@ function Slider(slider) {
             window.addEventListener('resize', resize, { passive: true });
         } else {
             content.classList.add('touchable');
-            content.addEventListener("scroll", () => {
-                index = -1;
+
+            content.addEventListener('scroll', () => {
                 getIndex();
                 controlStatus();
             }, { passive: true });

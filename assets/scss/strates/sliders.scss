@@ -1,5 +1,26 @@
 .strate-sliders {
 
+	hr {
+		border: none;
+		border-bottom: 1px dashed #a9a9a9;
+		margin: 0;
+	}
+
+	section {
+
+		padding-top: 60px;
+		padding-bottom: 60px;
+
+		header {
+			margin-bottom: 30px;
+		}
+
+		p {
+			margin-top: 10px;
+		}
+	}
+
+	// common
 	.slider {
 		display: grid;
 
@@ -46,28 +67,6 @@
 			}
 		}
 	}
-
-	hr {
-		border: none;
-		border-bottom: 1px dashed #a9a9a9;
-		margin: 0;
-	}
-
-	section {
-
-		padding-top: 60px;
-		padding-bottom: 60px;
-
-		header {
-			margin-bottom: 30px;
-		}
-
-		p {
-			margin-top: 10px;
-		}
-	}
-
-	h2 {}
 
 	// auto width
 	.slider0 {
@@ -202,13 +201,15 @@
 			background: pink;
 			width: 100%;
 			aspect-ratio: 1;
-			width: calc((var(--ctr-width) - (var(--nb) - 1) * var(--gap)) / var(--nb));
 		}
 
 		@media (max-width: 767px) {
 			.slider-content {
 				margin-left: calc(-1 * var(--ctr-left));
 				margin-right: calc(-1 * var(--ctr-left));
+			}
+			.item{
+				width: calc((var(--ctr-width) - (var(--nb) - 1) * var(--gap)) / var(--nb));
 			}
 
 			@media (min-width: 468px) {
@@ -235,43 +236,62 @@
 }
 
 
-// train paris avigon
-.trains {
 
-header{
-ul{
-	display: grid;
-	gap: 5px;
-	
-}
-	li{
-		display: flex;
-		align-items: center;
-		gap: 10px;
+
+
+// train paris avigon
+.trains {display: none;;
+
+	header {
+		h2 {
+			margin-bottom: 20px;
+		}
+
+		.list-color {
+			display: grid;
+			gap: 5px;
+			margin-bottom: 20px;
+
+			li {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+		}
+
+		.list-day {
+			display: flex;
+			gap: 10px;
+		}
+
+
 	}
-}
-	.color{
+
+	.color {
 		width: 20px;
 		height: 20px;
+
 		&.large {
 			background: blue;
 		}
-	
+
 		&.valid {
 			background: green;
 		}
-	
+
 		&.risque {
 			background: orange;
 		}
-	
+
 		&.not {
 			background: red;
 		}
 	}
+
 	.large {
 		color: blue;
 	}
+
 	.valid {
 		color: green;
 	}
@@ -309,7 +329,11 @@ ul{
 		}
 	}
 
-	h2 {
+	h3 {
+		margin-bottom: 10px;
+	}
+
+	p {
 		margin-bottom: 20px;
 	}
 

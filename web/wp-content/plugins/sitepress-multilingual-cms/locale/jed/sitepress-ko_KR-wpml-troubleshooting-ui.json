@@ -3,9 +3,7 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "domain": "messages"
          },
          "Preparing...": [
             "준비 중..."
@@ -21,6 +19,15 @@
          ],
          "Cancel in-progress automatic jobs": [
             "진행 중인 자동 작업을 취소합니다"
+         ],
+         "Domain name has been updated": [
+            "도메인 이름이 업데이트되었습니다"
+         ],
+         "Domain name update has been failed": [
+            "도메인 이름을 업데이트하지 못했습니다"
+         ],
+         "Update domain name in language switcher settings": [
+            "언어 변환기 설정에서 도메인 이름을 업데이트하세요"
          ],
          "Refresh license data to recognise license update": [
             "라이선스 업데이트를 인식할 수 있도록 라이선스 데이터를 새로 고칩니다"

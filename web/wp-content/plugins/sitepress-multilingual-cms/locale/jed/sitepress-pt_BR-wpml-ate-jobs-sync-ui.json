@@ -3,9 +3,7 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "domain": "messages"
          },
          "Sending for translation": [
             "Enviando para tradução"
@@ -227,6 +225,10 @@
          ],
          "Start translating everything": [
             "Comece a traduzir tudo"
+         ],
+         "%1$d language": [
+            "%1$d idioma",
+            "%1$d idiomas"
          ],
          "Please wait...": [
             "Por favor, aguarde..."

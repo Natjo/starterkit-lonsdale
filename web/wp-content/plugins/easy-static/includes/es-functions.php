@@ -420,7 +420,11 @@ function loadPage($file)
 
     $html = file_get_contents($file, false, stream_context_create($arrContextOptions));
 
-    if ($host !== $_SERVER['SERVER_NAME']) {
+    /*if ($host !== $_SERVER['SERVER_NAME']) {
+        $html = str_replace($host, $_SERVER['SERVER_NAME'], $html);
+    }*/
+
+    if (ENV_LOCAL) {
         $html = str_replace($host, $_SERVER['SERVER_NAME'], $html);
     }
 

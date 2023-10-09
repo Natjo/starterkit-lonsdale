@@ -3,9 +3,7 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "domain": "messages"
          },
          "There was an error when trying to pause your Automatic Translation. Please try again later or contact our support.": [
             "Beim Pausieren Ihrer automatischen Übersetzung ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie unser Supportteam."
@@ -90,6 +88,10 @@
          ],
          "Start translating everything": [
             "Jetzt alles übersetzen"
+         ],
+         "%1$d language": [
+            "%1$d Sprache",
+            "%1$d Sprachen"
          ],
          "Please wait...": [
             "Bitte warten..."
@@ -226,20 +228,20 @@
          "You decide what to translate and who'll translate it": [
             "Sie entscheiden, was übersetzt werden soll und wer es übersetzen soll."
          ],
-         "Translate it yourself": [
+         "Translate yourself": [
             "Selbst übersetzen"
          ],
-         "Assign it to translators that are users of your site": [
-            "Übersetzern zuteilen, die Benutzer Ihrer Website sind"
+         "Use automatic translation on the content you choose": [
+            "Automatische Übersetzung für ausgewählte Inhalte verwenden"
          ],
-         "Send it to a professional translation service": [
-            "An einen professionellen Übersetzungsdienst senden"
+         "Work with translators that are users of your site": [
+            "Von Website-Benutzern übersetzen lassen"
          ],
          "or": [
             "oder"
          ],
-         "Translate it automatically using machine translation": [
-            "Automatisch mit maschineller Übersetzung übersetzen"
+         "Send to professional translation services": [
+            "An professionelle Übersetzungsdienste senden"
          ],
          "Save settings": [
             "Einstellungen speichern"
@@ -481,6 +483,12 @@
          "Learn more": [
             "Mehr erfahren"
          ],
+         "On": [
+            "Ein"
+         ],
+         "Off": [
+            "Aus"
+         ],
          "You must use the <b>Advanced Translation Editor</b> if you want to translate your content automatically.": [
             "Wenn Sie Ihre Inhalte automatisch übersetzen lassen möchten, müssen Sie den <b>erweiterten Übersetzungseditor</b> verwenden."
          ],
@@ -603,9 +611,6 @@
          ],
          "Ranking": [
             "Ranking"
-         ],
-         "You need to have a valid account in order to continue.": [
-            "Sie müssen ein gültiges Konto haben, um fortfahren zu können."
          ]
       }
    }

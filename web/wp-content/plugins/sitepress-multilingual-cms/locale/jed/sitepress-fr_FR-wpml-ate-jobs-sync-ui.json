@@ -4,8 +4,7 @@
       "messages": {
          "": {
             "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "lang": "fr_FR"
          },
          "Sending for translation": [
             "Envoi à la traduction"

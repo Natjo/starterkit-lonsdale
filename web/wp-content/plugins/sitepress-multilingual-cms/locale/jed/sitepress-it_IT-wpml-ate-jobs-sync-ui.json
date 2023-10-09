@@ -4,8 +4,7 @@
       "messages": {
          "": {
             "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "lang": "it_IT"
          },
          "Sending for translation": [
             "Invio in traduzione"
@@ -70,8 +69,16 @@
          "Your default language, %s, must be mapped to a supported language in order to use automatic translation.": [
             "Per utilizzare la traduzione automatica, la lingua predefinita (%s) deve essere associata a una lingua supportata."
          ],
+         "Your language, %s, must be mapped to a supported language in order to use automatic translation.": [
+            "La tua lingua, %s, deve essere associata a una lingua supportata per poter utilizzare la traduzione automatica.",
+            "Le lingue seguenti sul tuo sito devono essere associate a una lingua supportata per poter utilizzare la traduzione automatica: %s"
+         ],
          "Content in those languages: %s, cannot be automatically translated unless you map them to a language that's different from the default.": [
             "Il contenuto in quelle lingue: %s, non può essere tradotto automaticamente a meno che non le associ a una lingua che sia diversa da quella di default."
+         ],
+         "%d translation waiting for review": [
+            "%d traduzione in attesa di revisione",
+            "%d traduzioni in attesa di revisione"
          ],
          "Account credits used": [
             "Crediti dell'account utilizzati"
@@ -114,6 +121,9 @@
          ],
          "Fix it": [
             "Sistemalo"
+         ],
+         "Pause": [
+            "Pausa"
          ],
          "There was an error when trying to pause your Automatic Translation. Please try again later or contact our support.": [
             "Si è verificato un errore nella messa in pausa della tua traduzione automatica. Riprova più tardi o contatta la nostra assistenza."
@@ -216,6 +226,10 @@
          ],
          "Start translating everything": [
             "Inizia a tradurre tutto"
+         ],
+         "%1$d language": [
+            "%1$d lingua",
+            "%1$d lingue"
          ],
          "Please wait...": [
             "Attendere..."

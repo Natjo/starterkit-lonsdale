@@ -3,9 +3,7 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "domain": "messages"
          },
          "There was an error when trying to pause your Automatic Translation. Please try again later or contact our support.": [
             "Ett fel inträffade när du försökte pausa den automatiska översättningen. Försök igen senare eller kontakta supporten."
@@ -90,6 +88,10 @@
          ],
          "Start translating everything": [
             "Börja översätta allt"
+         ],
+         "%1$d language": [
+            "%1$d språk",
+            "%1$d språk"
          ],
          "Please wait...": [
             "Vänta..."
@@ -226,20 +228,20 @@
          "You decide what to translate and who'll translate it": [
             "Du bestämmer vad som ska översättas och vem som ska översätta det"
          ],
-         "Translate it yourself": [
-            "Översätt det själv"
+         "Translate yourself": [
+            "Översätt själv"
          ],
-         "Assign it to translators that are users of your site": [
-            "Tilldela det till översättare som använder din webbplats"
+         "Use automatic translation on the content you choose": [
+            "Använd automatisk översättning på det innehåll du väljer"
          ],
-         "Send it to a professional translation service": [
-            "Skicka det till en professionell översättningstjänst"
+         "Work with translators that are users of your site": [
+            "Arbeta med översättare som är användare på din webbplats"
          ],
          "or": [
             "eller"
          ],
-         "Translate it automatically using machine translation": [
-            "Översätt automatiskt med maskinöversättning"
+         "Send to professional translation services": [
+            "Skicka till professionella översättningstjänster"
          ],
          "Save settings": [
             "Spara inställningar"
@@ -481,6 +483,12 @@
          "Learn more": [
             "Läs mer"
          ],
+         "On": [
+            "På"
+         ],
+         "Off": [
+            "Från"
+         ],
          "You must use the <b>Advanced Translation Editor</b> if you want to translate your content automatically.": [
             "Du måste använda den <b>Avancerade översättningsredigeraren</b> om du vill översätta ditt innehåll automatiskt."
          ],
@@ -603,9 +611,6 @@
          ],
          "Ranking": [
             "Placering"
-         ],
-         "You need to have a valid account in order to continue.": [
-            "Du måste ha ett giltigt konto för att fortsätta."
          ]
       }
    }

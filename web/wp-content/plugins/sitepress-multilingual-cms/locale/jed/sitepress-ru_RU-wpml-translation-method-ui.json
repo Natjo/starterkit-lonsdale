@@ -3,9 +3,7 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "domain": "messages"
          },
          "There was an error when trying to pause your Automatic Translation. Please try again later or contact our support.": [
             "Произошла ошибка при попытке приостановить Автоматический перевод. Повторите попытку позже или свяжитесь с нашей службой поддержки."
@@ -90,6 +88,10 @@
          ],
          "Start translating everything": [
             "Начать перевод всего"
+         ],
+         "%1$d language": [
+            "%1$d язык",
+            "%1$d языка(ов)"
          ],
          "Please wait...": [
             "Пожалуйста, подождите..."
@@ -226,20 +228,20 @@
          "You decide what to translate and who'll translate it": [
             "Вы сами решаете, что переводить и кто это будет переводить"
          ],
-         "Translate it yourself": [
-            "Переведите это сами"
+         "Translate yourself": [
+            "Самостоятельный перевод"
          ],
-         "Assign it to translators that are users of your site": [
-            "Назначьте это переводчикам, которые являются пользователями вашего сайта"
+         "Use automatic translation on the content you choose": [
+            "Пользуйтесь автоматическим переводом определенного контента"
          ],
-         "Send it to a professional translation service": [
-            "Отправьте это в службу профессионального перевода"
+         "Work with translators that are users of your site": [
+            "Сотрудничайте с переводчиками, являющимися пользователями вашего сайта"
          ],
          "or": [
             "или"
          ],
-         "Translate it automatically using machine translation": [
-            "Переведите это автоматически с помощью машинного перевода"
+         "Send to professional translation services": [
+            "Отправляйте профессиональным переводческим сервисам"
          ],
          "Save settings": [
             "Сохранить настройки"
@@ -481,6 +483,12 @@
          "Learn more": [
             "Подробнее"
          ],
+         "On": [
+            "Вкл"
+         ],
+         "Off": [
+            "Выкл"
+         ],
          "You must use the <b>Advanced Translation Editor</b> if you want to translate your content automatically.": [
             "Вы должны использовать <b>Расширенный редактор переводов</b>, если хотите автоматически переводить свой контент."
          ],
@@ -603,9 +611,6 @@
          ],
          "Ranking": [
             "Рейтинг"
-         ],
-         "You need to have a valid account in order to continue.": [
-            "Чтобы продолжить, вам необходимо иметь действующую учетную запись."
          ]
       }
    }

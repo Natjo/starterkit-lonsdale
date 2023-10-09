@@ -28,46 +28,51 @@ export default (el) => {
 
 
 
+
+
+
+
+    
     // trains
     const btns_add = el.querySelectorAll('.btn-add');
     const btns_reset = el.querySelectorAll('.btn-reset');
-    const inputs = el.querySelectorAll('input');
+    const inputs = el.querySelectorAll('.strate-content input');
 
     const datas = {
-        906: {
-            name: 'Avignon - Ile sur la sorgue',
-            go: [
-                {
-                    depart: '9:40',
-                    arriver: '10:30'
-                },
-                {
-                    depart: '17:20',
-                    arriver: '18:30'
-                }
-            ],
-            back: [
-                {
-                    depart: '9:15',
-                    arriver: '10:30'
-
-                },
-                {
-                    depart: '16:30',
-                    arriver: '18:30'
-                }
-            ]
-        },
-        907: {
+        TER: {
             name: 'Avignon - Cavaillon',
             go: [
                 {
-                    depart: '12:20',
-                    arriver: '13:30'
+                    depart: '10:41',
+                    arriver: '11:23'
                 },
                 {
-                    depart: '17:15',
-                    arriver: '18:30'
+                    depart: '12:38',
+                    arriver: '13:17'
+                },
+                {
+                    depart: '14:44',
+                    arriver: '15:25'
+                },
+                {
+                    depart: '15:13',
+                    arriver: '17:23'
+                },
+                {
+                    depart: '15:41',
+                    arriver: '17:23'
+                },
+                {
+                    depart: '16:41',
+                    arriver: '17:32'
+                },
+                {
+                    depart: '17:10',
+                    arriver: '18:32'
+                },
+                {
+                    depart: '20:12',
+                    arriver: '21:00'
                 }
             ],
             back: [
@@ -86,37 +91,37 @@ export default (el) => {
             go: [
                 {
                     depart: '9:45',
-                    arriver: '10:45'
+                    arriver: '10:26'
                 },
                 {
                     depart: '15:55',
-                    arriver: '16:55'
+                    arriver: '16:36'
                 },
                 {
                     depart: '16:30',
-                    arriver: '17:30'
+                    arriver: '17:11'
                 },
                 {
                     depart: '18:20',
-                    arriver: '19:30'
+                    arriver: '19:01'
                 }
             ],
             back: [
                 {
                     depart: '8:48',
-                    arriver: '9:45'
+                    arriver: '9:35'
                 },
                 {
                     depart: '13:28',
-                    arriver: '14:55'
+                    arriver: '14:15'
                 },
                 {
                     depart: '14:03',
-                    arriver: '15:30'
+                    arriver: '14:50'
                 },
                 {
                     depart: '17:13',
-                    arriver: '18:30'
+                    arriver: '18:00'
                 }
             ]
         }
@@ -136,7 +141,7 @@ export default (el) => {
         tmp = Math.floor((tmp - diff.min) / 60);
         diff.hour = tmp % 24;
 
-        return `${diff.hour > 0 ? diff.hour + 'h' : ''}${Number(diff.min) > 10 ? ''+diff.min : "0"+diff.min}min`;
+        return `${diff.hour > 0 ? diff.hour + 'h' : ''}${Number(diff.min) > 10 ? '' + diff.min : "0" + diff.min}min`;
     }
 
     function dateDiff1(time1, titme2) {

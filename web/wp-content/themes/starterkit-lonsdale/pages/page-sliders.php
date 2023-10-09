@@ -19,7 +19,7 @@ $mail_error = !empty($mail['error']) ? true : false;
 
 
 
-    <section class="strate strate-sliders" data-module="strates/sliders">https://codepen.io/natjo/pen/rNQeaOd
+    <section class="strate strate-sliders" data-module="strates/sliders">
         <template id="time">
             <li>
                 <div class="time">
@@ -28,31 +28,39 @@ $mail_error = !empty($mail['error']) ? true : false;
                 <ul></ul>
             </li>
         </template>
-
         <section class="strate trains container">
             <header>
                 <h2 class="title-2">Trains</h2>
-                <ul>
+                <ul class="list-color">
                     <li>
-                        <div class="color large"></div> entre 1h20min et 40min avant
+                        <div class="color large"></div> 1h20min et 40min avant
                     </li>
                     <li>
-                        <div class="color valid"></div> entre 40min et 20min avant
+                        <div class="color valid"></div> 40min et 20min avant
                     </li>
                     <li>
-                        <div class="color risque"></div> orange: entre 20min et 15min avant<br>
+                        <div class="color risque"></div>  20min et 15min avant<br>
                     </li>
                     <li>
-                        <div class="color not"></div> orange: entre 15min et 5min avant<br>
+                        <div class="color not"></div>  15min et 5min avant<br>
                     </li>
+                </ul>
+                <ul class="list-day">
+                    <li><input type="radio" name="day"><label>Lundi</label></li>
+                    <li><input type="radio" name="day"><label>Mardi</label></li>
+                    <li><input type="radio" name="day"><label>Mercredi</label></li>
+                    <li><input type="radio" name="day"><label>Jeudi</label></li>
+                    <li><input type="radio" name="day"><label>Vendredi</label></li>
+                    <li><input type="radio" name="day"><label>Samedi</label></li>
+                    <li><input type="radio" name="day" checked><label>Dimanche</label></li>
                 </ul>
             </header>
 
             <div class="strate-content">
-            <form data-type="go">
+                <form data-type="go">
                     <fieldset>
-                        <h2 class="title-3">De la gare d'Avignon</h2>
-
+                        <h3 class="title-3">De la gare d'Avignon</h3>
+                        <p>Mettre l'horaire d'arrivée à Avignon TGV</p>
                         <ol>
                             <li>
                                 <div class="time">
@@ -90,7 +98,8 @@ $mail_error = !empty($mail['error']) ? true : false;
 
                 <form data-type="back">
                     <fieldset>
-                        <h2 class="title-3">Retour Avignon - Paris</h2>
+                        <h3 class="title-3">Retour Avignon - Paris</h3>
+                        <p>Mettre l'horaire de départ d'Avignon TGV</p>
 
                         <ol>
                             <li>
@@ -132,6 +141,9 @@ $mail_error = !empty($mail['error']) ? true : false;
 
 
 
+        <section class="container">
+        https://codepen.io/natjo/pen/rNQeaOd
+        </section>
 
         <section class="container">
             <header>
@@ -152,7 +164,6 @@ $mail_error = !empty($mail['error']) ? true : false;
                         <img src="<?= THEME_ASSETS ?>img/sliders/slider0/181-660x354.jpg" alt="">
                     </li>
                     <li class="item" aria-label="3 of 6">
-
                         <img src="<?= THEME_ASSETS ?>img/sliders/slider0/251-560x354.jpg" alt="">
                     </li>
                     <li class="item" aria-label="4 of 6">
@@ -161,7 +172,6 @@ $mail_error = !empty($mail['error']) ? true : false;
                     <li class="item" aria-label="5 of 6">
                         <img src="<?= THEME_ASSETS ?>img/sliders/slider0/378-536x354.jpg" alt="">
                     </li>
-
                 </ul>
             </div>
         </section>

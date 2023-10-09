@@ -3,9 +3,7 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "domain": "messages"
          },
          "Advanced": [
             "מתקדם"
@@ -109,8 +107,29 @@
          "Current language background": [
             "רקע שפה נוכחית"
          ],
+         "Full name": [
+            "שם מלא"
+         ],
          "Code": [
             "קוד"
+         ],
+         "Justify items left": [
+            "יישר פריטים לשמאל"
+         ],
+         "Justify items center": [
+            "יישר פריטים למרכז"
+         ],
+         "Justify items right": [
+            "יישר פריטים לימין"
+         ],
+         "Justify items space between": [
+            "יישר רווח בין פריטים"
+         ],
+         "Horizontal": [
+            "אופקי"
+         ],
+         "Vertical": [
+            "אנכי"
          ],
          "Normal": [
             "רגיל"
@@ -136,20 +155,14 @@
          "displays the WPML Language Switcher": [
             "מציג את מחליף השפה של WPML"
          ],
+         "Displays the WPML Language Switcher. <br/> Learn <a>how to translate this block</a>.": [
+            "מציג את מחליף השפה של WPML. <br/> למד <a>כיצד לתרגם בלוק זה</a>."
+         ],
          "Navigation Language Switcher": [
             "מחליף שפה בניווט"
          ],
          "Reset all": [
             "אפס הכל"
-         ],
-         "Minimum value is : ": [
-            "ערך מינימום הוא:"
-         ],
-         "Maximum value is : ": [
-            "ערך מקסימום הוא:"
-         ],
-         "Value must be a number!": [
-            "ערך חייב להיות מספר!"
          ]
       }
    }

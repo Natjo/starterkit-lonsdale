@@ -5,7 +5,7 @@ class WPML_LS_Templates {
 	const CONFIG_FILE = 'config.json';
 	const OPTION_NAME = 'wpml_language_switcher_template_objects';
 
-	/** @var string|null $uploads_path */
+	/** @var string $uploads_path */
 	private $uploads_path;
 
 	/**
@@ -13,11 +13,14 @@ class WPML_LS_Templates {
 	 */
 	private $wpml_file;
 
-	/** @var array<string, WPML_LS_Template>|false $templates Collection of WPML_LS_Template */
+	/** @var array $templates Collection of WPML_LS_Template */
 	private $templates = false;
 
 	/** @var string $ds */
 	private $ds = DIRECTORY_SEPARATOR;
+
+	/** @var boolean $are_templates_loaded_from_cache */
+	private $are_templates_loaded_from_cache = false;
 
 	public function __construct( WPML_File $wpml_file = null ) {
 		if ( ! $wpml_file ) {
@@ -27,42 +30,47 @@ class WPML_LS_Templates {
 		$this->wpml_file = $wpml_file;
 	}
 
-	/**
-	 * @return void
-	 */
 	public function init_hooks() {
-		add_action( 'after_setup_theme', array( $this, 'after_setup_theme_action' ) );
+		add_action( 'after_setup_theme', array( $this, 'action_after_setup_theme_action' ) );
 		add_action( 'activated_plugin', array( $this, 'activated_plugin_action' ) );
 		add_action( 'deactivated_plugin', array( $this, 'activated_plugin_action' ) );
 		add_action( 'switch_theme', array( $this, 'activated_plugin_action' ) );
 	}
 
+	public function action_after_setup_theme_action() {
+		$this->after_setup_theme_action();
+	}
+
 	/**
-	 * @return array<string, WPML_LS_Template>
+	 * @return boolean
+	 */
+	public function are_templates_loaded_from_cache() {
+		return $this->are_templates_loaded_from_cache;
+	}
+
+	/**
+	 * @return array
 	 */
 	public function after_setup_theme_action() {
 		return $this->init_available_templates();
 	}
 
-	/**
-	 * @return void
-	 */
 	public function activated_plugin_action() {
 		delete_option( self::OPTION_NAME );
 	}
 
 	/**
-	 * @param null|string[] $in_array
+	 * @param null|array $in_array
 	 *
-	 * @return array<string, WPML_LS_Template>
+	 * @return array
 	 */
 	public function get_templates( $in_array = null ) {
 		if ( null === $in_array ) {
-			$ret = $this->templates ?: [];
+			$ret = $this->templates;
 		} else {
 			// PHP 5.3 Bug https://bugs.php.net/bug.php?id=34857º
 			$in_array = $in_array ? array_combine( $in_array, $in_array ) : $in_array;
-			$ret      = array_intersect_key( $this->templates ?: [], $in_array );
+			$ret      = array_intersect_key( $this->templates, $in_array );
 		}
 		return $ret;
 	}
@@ -81,9 +89,6 @@ class WPML_LS_Templates {
 		return $ret;
 	}
 
-	/**
-	 * @return array<string, array>
-	 */
 	public function get_all_templates_data() {
 		$ret = array();
 
@@ -96,7 +101,7 @@ class WPML_LS_Templates {
 	}
 
 	/**
-	 * @return array<string, WPML_LS_Template>
+	 * @return array
 	 */
 	private function init_available_templates() {
 		$is_admin_ui_page = isset( $_GET['page'] ) && WPML_LS_Admin_UI::get_page_hook() === $_GET['page'];
@@ -125,7 +130,10 @@ class WPML_LS_Templates {
 
 			array_unshift( $dirs_to_scan, $wpml_core_path, $theme_path, $child_theme_path, $uploads_path );
 
-			$templates_paths = $this->scan_template_paths( $dirs_to_scan );
+			// We want to save only raw array data without WPML_LS_Template objects.
+			// If we save with objects some WP CLI tools like search-replace will not process those serialized objects.
+			$templates_array_data = [];
+			$templates_paths      = $this->scan_template_paths( $dirs_to_scan );
 
 			foreach ( $templates_paths as $template_path ) {
 				$template_path = $this->wpml_file->fix_dir_separator( $template_path );
@@ -138,14 +146,14 @@ class WPML_LS_Templates {
 					$tpl['name']     = isset( $config['name'] ) ? $config['name'] : null;
 					$tpl['name']     = $this->get_unique_name( $tpl['name'], $template_path );
 					$tpl['slug']     = sanitize_title_with_dashes( $tpl['name'] );
-					$tpl['base_uri'] = trailingslashit( $this->wpml_file->get_uri_from_path( $template_path ) );
+					$tpl['base_uri'] = trailingslashit( $this->wpml_file->get_uri_from_path( $template_path, false ) );
 					$tpl['css']      = $this->get_files( 'css', $template_path, $config );
 					$tpl['js']       = $this->get_files( 'js', $template_path, $config );
 
 					$tpl['flags_base_uri'] = isset( $config['flags_dir'] ) // todo: check with ../
-						? $this->wpml_file->get_uri_from_path( $template_path . $this->ds . $config['flags_dir'] ) : null;
+						? $this->wpml_file->get_uri_from_path( $template_path . $this->ds . $config['flags_dir'], false ) : null;
 					$tpl['flags_base_uri'] = ! isset( $tpl['flags_base_uri'] ) && file_exists( $template_path . $this->ds . 'flags' )
-						? $this->wpml_file->get_uri_from_path( $template_path . $this->ds . 'flags' ) : $tpl['flags_base_uri'];
+						? $this->wpml_file->get_uri_from_path( $template_path . $this->ds . 'flags', false ) : $tpl['flags_base_uri'];
 
 					$tpl['flag_extension'] = isset( $config['flag_extension'] )
 						? $config['flag_extension'] : null;
@@ -160,19 +168,20 @@ class WPML_LS_Templates {
 					$tpl['force_settings'] = isset( $config['settings'] )
 						? $config['settings'] : array();
 
-					$this->templates[ $tpl['slug'] ] = new WPML_LS_Template( $tpl );
+					$templates_array_data[ $tpl['slug'] ] = $tpl;
+					$this->templates[ $tpl['slug'] ]      = new WPML_LS_Template( $tpl );
 				}
 			}
-			update_option( self::OPTION_NAME, $this->templates );
+			$this->save_templates( $templates_array_data );
 		}
 
 		return $this->templates;
 	}
 
 	/**
-	 * @param string[] $dirs_to_scan
+	 * @param array $dirs_to_scan
 	 *
-	 * @return string[]
+	 * @return array
 	 */
 	private function scan_template_paths( $dirs_to_scan ) {
 		$templates_paths = array();
@@ -182,10 +191,7 @@ class WPML_LS_Templates {
 				continue;
 			}
 			$files = scandir( $dir );
-			if ( ! $files ) {
-				continue;
-			}
-			$files = array_diff( $files, array( '..', '.' ) );
+			$files = $files ? array_diff( $files, array( '..', '.' ) ) : [];
 			if ( count( $files ) > 0 ) {
 				foreach ( $files as $file ) {
 					$template_path = $dir . '/' . $file;
@@ -205,16 +211,14 @@ class WPML_LS_Templates {
 	/**
 	 * @param string $template_path
 	 *
-	 * @return array<mixed>
+	 * @return array
 	 */
 	private function parse_template_config( $template_path ) {
 		$config             = array();
 		$configuration_file = $template_path . $this->ds . self::CONFIG_FILE;
 		if ( file_exists( $configuration_file ) ) {
 			$json_content = file_get_contents( $configuration_file );
-			if ( $json_content ) {
-				$config = json_decode( $json_content, true );
-			}
+			$config       = $json_content ? json_decode( $json_content, true ) : [];
 		}
 
 		return $config;
@@ -223,24 +227,25 @@ class WPML_LS_Templates {
 	/**
 	 * @param string $ext
 	 * @param string $template_path
-	 * @param array<mixed>  $config
+	 * @param array  $config
 	 *
-	 * @return string[]
+	 * @return array|null
 	 */
 	private function get_files( $ext, $template_path, $config ) {
-		$resources = array();
+		$resources    = array();
+		$trimProtocol = false;
 
 		if ( isset( $config[ $ext ] ) ) {
 			$config[ $ext ] = is_array( $config[ $ext ] ) ? $config[ $ext ] : array( $config[ $ext ] );
 			foreach ( $config[ $ext ] as $file ) {
 				$file        = untrailingslashit( $template_path ) . $this->ds . $file;
-				$resources[] = $this->wpml_file->get_uri_from_path( $file );
+				$resources[] = $this->wpml_file->get_uri_from_path( $file, $trimProtocol );
 			}
 		} else {
 			$search_path = $template_path . $this->ds . '*.' . $ext;
 			if ( glob( $search_path ) ) {
 				foreach ( glob( $search_path ) as $file ) {
-					$resources[] = $this->wpml_file->get_uri_from_path( $file );
+					$resources[] = $this->wpml_file->get_uri_from_path( $file, $trimProtocol );
 				}
 			}
 		}
@@ -262,18 +267,18 @@ class WPML_LS_Templates {
 		if ( strpos( $path, $this->wpml_file->fix_dir_separator( get_template_directory() ) ) === 0 ) {
 			$theme = wp_get_theme();
 			$name  = $theme . ' - ' . $name;
-		} elseif ( strpos( $path, $this->wpml_file->fix_dir_separator( $this->get_uploads_path() ?: '' ) ) === 0 ) {
+		} elseif ( strpos( $path, $this->wpml_file->fix_dir_separator( $this->get_uploads_path() ) ) === 0 ) {
 			$name = __( 'Uploads', 'sitepress' ) . ' - ' . $name;
 		} elseif (
 			strpos( $path, $this->wpml_file->fix_dir_separator( WPML_PLUGINS_DIR ) ) === 0
 			&& ! $this->is_core_template( $path )
 		) {
 			$plugin_dir = $this->wpml_file->fix_dir_separator( WPML_PLUGINS_DIR );
-			$plugin_dir = preg_replace( '#' . preg_quote( $plugin_dir ) . '#', '', $path, 1 ) ?: '';
+			$plugin_dir = preg_replace( '#' . preg_quote( $plugin_dir ) . '#', '', $path, 1 );
 			$plugin_dir = ltrim( $plugin_dir, $this->ds );
 			$plugin_dir = explode( $this->ds, $plugin_dir );
 
-			if ( $plugin_dir !== false && isset( $plugin_dir[0] ) ) {
+			if ( isset( $plugin_dir[0] ) ) {
 				$require = ABSPATH . 'wp-admin' . $this->ds . 'includes' . $this->ds . 'plugin.php';
 				require_once $require;
 				foreach ( get_plugins() as $slug => $plugin ) {
@@ -299,15 +304,32 @@ class WPML_LS_Templates {
 		return strpos( $path, $this->wpml_file->fix_dir_separator( WPML_PLUGIN_PATH ) ) === 0;
 	}
 
-	/**
-	 * @return array<string, WPML_LS_Template>
-	 */
 	private function get_templates_from_transient() {
-		$templates = get_option( self::OPTION_NAME );
-		if ( $templates && ! $this->are_template_paths_valid( $templates ) ) {
-			$templates = false;
+		$this->are_templates_loaded_from_cache = false;
+		$templates                             = get_option( self::OPTION_NAME );
+
+		if ( $templates ) {
+			foreach ( $templates as $slug => $data ) {
+				if ( is_array( $data ) ) {
+					$templates[ $slug ] = new WPML_LS_Template( $data );
+				}
+			}
+
+			if ( $templates && ! $this->are_template_paths_valid( $templates ) ) {
+				return false;
+			}
+
+			$this->are_templates_loaded_from_cache = true;
 		}
+
 		return $templates;
+	}
+
+	/**
+	 * @param array $data
+	 */
+	private function save_templates( $data ) {
+		update_option( self::OPTION_NAME, $data );
 	}
 
 	/**

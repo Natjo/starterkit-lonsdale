@@ -125,11 +125,30 @@ msgstr ""
 msgid "Translate automatically"
 msgstr ""
 
-#: src/js/translationDashboard/sending-to-translation/components/HowToTranslate.js:35
+#: src/js/translationDashboard/sending-to-translation/components/HowToTranslate.js:37
 msgid "How do you want to translate?"
 msgstr ""
 
-#: src/js/translationDashboard/sending-to-translation/components/HowToTranslate.js:44
+#: src/js/translationDashboard/sending-to-translation/components/HowToTranslate.js:55
+msgid "Assign to a translator"
+msgstr ""
+
+#: src/js/translationDashboard/sending-to-translation/components/HowToTranslate.js:55
+msgid "Translate myself"
+msgstr ""
+
+#: src/js/translationDashboard/sending-to-translation/components/HowToTranslate.js:60
+msgid "You do not need translation credits to translate content yourself."
+msgstr ""
+
+#: src/js/translationDashboard/sending-to-translation/components/HowToTranslate.js:87
+msgid ""
+"You can only automatically translate content from your site's default "
+"language (English), to your site's other languages. Deselect content in "
+"your site's secondary languages to proceed."
+msgstr ""
+
+#: src/js/translationDashboard/sending-to-translation/components/HowToTranslate.js:92
 #. %s is the name of the default language. </a>
 msgid ""
 "You can only automatically translate content from your primary language "
@@ -137,16 +156,14 @@ msgid ""
 "to switch to %s."
 msgstr ""
 
-#: src/js/translationDashboard/sending-to-translation/components/HowToTranslate.js:60
-msgid "Assign to a translator"
+#: src/js/translationDashboard/sending-to-translation/components/LanguageRow.js:49
+msgid ""
+"Selected content includes items that were originally created in this "
+"language. Deselect these items to proceed."
 msgstr ""
 
-#: src/js/translationDashboard/sending-to-translation/components/HowToTranslate.js:60
-msgid "Translate myself"
-msgstr ""
-
-#: src/js/translationDashboard/sending-to-translation/components/HowToTranslate.js:65
-msgid "You do not need translation credits to translate content yourself."
+#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:100
+msgid "Add to Translation Queue"
 msgstr ""
 
 #: src/js/translationDashboard/sending-to-translation/components/SendButton.js:17
@@ -165,36 +182,38 @@ msgstr ""
 msgid "Selected content is already translated"
 msgstr ""
 
-#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:73
+#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:21
+msgid ""
+"Selected content includes items in a language other than your site's "
+"default language."
+msgstr ""
+
+#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:74
 msgid "Choose at least one translation action"
 msgstr ""
 
-#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:77
+#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:78
 msgid "Duplicate"
 msgstr ""
 
-#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:87
+#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:88
 msgid "Start translating and duplicating"
 msgstr ""
 
-#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:89
+#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:90
 msgid "Add to Translation Basket and duplicate"
 msgstr ""
 
-#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:91
+#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:92
 msgid "Add to Translation Queue and duplicate"
 msgstr ""
 
-#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:95
+#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:96
 msgid "Start translating"
 msgstr ""
 
-#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:97
+#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:98
 msgid "Add to Translation Basket"
-msgstr ""
-
-#: src/js/translationDashboard/sending-to-translation/components/SendButton.js:99
-msgid "Add to Translation Queue"
 msgstr ""
 
 #: src/js/translationDashboard/sending-to-translation/components/TranslationReviewModal.js:37

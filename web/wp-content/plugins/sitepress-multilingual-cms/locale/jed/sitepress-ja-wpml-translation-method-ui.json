@@ -3,9 +3,7 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "domain": "messages"
          },
          "There was an error when trying to pause your Automatic Translation. Please try again later or contact our support.": [
             "自動翻訳を一時停止しようとしたときにエラーが発生しました。少したってからもう一度お試しいただくか、当社サポートまでお問い合わせください。"
@@ -90,6 +88,10 @@
          ],
          "Start translating everything": [
             "すべての翻訳を開始する"
+         ],
+         "%1$d language": [
+            "%1$d 言語",
+            "%1$d 言語"
          ],
          "Please wait...": [
             "お待ちください..."
@@ -226,26 +228,26 @@
          "You decide what to translate and who'll translate it": [
             "何を翻訳するか、誰が翻訳するかを決定できます"
          ],
-         "Translate it yourself": [
+         "Translate yourself": [
             "自分で翻訳する"
          ],
-         "Assign it to translators that are users of your site": [
-            "サイトのユーザーである翻訳者に割り当てる"
+         "Use automatic translation on the content you choose": [
+            "選択したコンテンツに自動翻訳を使用する"
          ],
-         "Send it to a professional translation service": [
-            "プロの翻訳サービスに送信する"
+         "Work with translators that are users of your site": [
+            "あなたのサイトのユーザーである翻訳者と一緒に取り組む"
          ],
          "or": [
             "または"
          ],
-         "Translate it automatically using machine translation": [
-            "機械翻訳で自動的に翻訳する"
+         "Send to professional translation services": [
+            "専門翻訳サービスに送る"
          ],
          "Save settings": [
             "設定を保存する"
          ],
          "Continue": [
-            "続行"
+            "続ける"
          ],
          "Start over": [
             "最初からやり直す"
@@ -365,7 +367,7 @@
             "hreflang"
          ],
          "Encode url?": [
-            "URLをエンコードしますか？"
+            "URLをエンコードしますか？\r\n"
          ],
          "Flags must be:": [
             "フラッグは必須："
@@ -480,6 +482,12 @@
          ],
          "Learn more": [
             "詳しい情報を学ぶ"
+         ],
+         "On": [
+            "オン"
+         ],
+         "Off": [
+            "オフ"
          ],
          "You must use the <b>Advanced Translation Editor</b> if you want to translate your content automatically.": [
             "コンテンツを自動的に翻訳する場合は、<b>高度な翻訳エディター</b>を使用する必要があります。"
@@ -603,9 +611,6 @@
          ],
          "Ranking": [
             "ランキング"
-         ],
-         "You need to have a valid account in order to continue.": [
-            "続行するには、有効なアカウントが必要です。"
          ]
       }
    }

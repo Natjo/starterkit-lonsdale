@@ -3,9 +3,7 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "domain": "messages"
          },
          "From:": [
             "De:"
@@ -130,20 +128,20 @@
          "You decide what to translate and who'll translate it": [
             "Você decide o que traduzir e quem traduzirá"
          ],
-         "Translate it yourself": [
-            "Traduza você mesmo"
+         "Translate yourself": [
+            "Traduzir você mesmo"
          ],
-         "Assign it to translators that are users of your site": [
-            "Atribua a tradutores que são usuários do seu site"
+         "Use automatic translation on the content you choose": [
+            "Use a tradução automática no conteúdo que você escolher"
          ],
-         "Send it to a professional translation service": [
-            "Envie para um serviço de tradução profissional"
+         "Work with translators that are users of your site": [
+            "Trabalhe com tradutores que são usuários do seu site"
          ],
          "or": [
             "ou"
          ],
-         "Translate it automatically using machine translation": [
-            "Traduza automaticamente usando a tradução automática"
+         "Send to professional translation services": [
+            "Envie para serviços de tradução profissionais"
          ],
          "user": [
             "usuário"
@@ -400,6 +398,88 @@
          "Language switcher customization": [
             "Personalização de seletor de idioma"
          ],
+         "Your current setup will use a lot of translation credits": [
+            "Sua configuração atual usará muitos créditos de tradução"
+         ],
+         "You decided to <b>Translate Everything Automatically</b> on a <span class=\"warning\">development site</span>": [
+            "Você decidiu <b>Traduzir Tudo Automaticamente</b> em um <span class=\"warning\">site de desenvolvimento</span>"
+         ],
+         "You decided to <b>Translate Everything Automatically:</b>": [
+            "Você decidiu <b>Traduzir Tudo Automaticamente:</b>"
+         ],
+         "10,000 credits assigned by default to development sites": [
+            "10.000 créditos atribuídos por padrão a sites de desenvolvimento"
+         ],
+         "posts, pages...": [
+            "publicações, páginas..."
+         ],
+         "translated to": [
+            "traduzido para"
+         ],
+         "<b>%1$d</b> language": [
+            "<b>%1$d</b> idioma",
+            "<b>%1$d</b> idiomas"
+         ],
+         "will cost approximately": [
+            "custará aproximadamente"
+         ],
+         "credits": [
+            "créditos"
+         ],
+         "Loading details...": [
+            "Carregando detalhes..."
+         ],
+         "Hide details": [
+            "Ocultar detalhes"
+         ],
+         "Show details": [
+            "Mostrar detalhes"
+         ],
+         "Your current setup will use approximately <b>%s</b> credits": [
+            "Sua configuração atual usará aproximadamente <b>%s</b> créditos"
+         ],
+         "What do you want to do?": [
+            "O que você deseja fazer?"
+         ],
+         "Since this is a development site, you may not want to spend credits on dummy content.": [
+            "Como este é um site de desenvolvimento, talvez você não queira gastar créditos em conteúdo fictício."
+         ],
+         "Continue with this setup": [
+            "Continuar com esta configuração"
+         ],
+         "WPML will automatically translate your site’s content. When your credits run out, you can purchase more or sign up for pay-as-you-go to continue using automatic translation.": [
+            "O WPML traduzirá automaticamente o conteúdo do seu site. Quando seus créditos acabarem, você poderá comprar mais ou assinar o pré-pago para continuar usando a tradução automática."
+         ],
+         "Make changes": [
+            "Fazer alterações"
+         ],
+         "You can use fewer credits by adjusting some of the settings you selected during setup.": [
+            "Você pode usar menos créditos ajustando algumas das configurações selecionadas durante a configuração."
+         ],
+         "Reduce the number of translation languages": [
+            "Reduzir o número de idiomas de tradução"
+         ],
+         "The more languages you have on your site, the more credits it costs to translate. <b>You can always add more languages later.</b>": [
+            "Quanto mais idiomas você tiver em seu site, mais créditos custará para traduzir. <b>Você poderá sempre adicionar mais idiomas depois.</b>"
+         ],
+         "Change site languages": [
+            "Alterar idiomas do site"
+         ],
+         "Change your translation mode": [
+            "Altere seu modo de tradução"
+         ],
+         "<b>Translate What You Choose</b> gives you more control over what gets translated, and you can still use automatic translation.": [
+            "<b>Traduzir o que escolher</b> oferece mais controle sobre o que é traduzido e você ainda pode usar a tradução automática."
+         ],
+         "Change translation mode": [
+            "Alterar modo de tradução"
+         ],
+         "I'm OK with using this many translation credits,": [
+            "Usar esses créditos de tradução é suficiente para mim."
+         ],
+         "let's proceed and translate the whole site automatically.": [
+            "Vamos prosseguir e traduzir todo o site automaticamente."
+         ],
          "Default language": [
             "Idioma padrão"
          ],
@@ -439,17 +519,17 @@
          "Are you ready to start translating now?": [
             "Pronto para começar a traduzir agora?"
          ],
-         "Yes!": [
-            "Sim!"
+         "Yes, start translating!": [
+            "Sim, comece a traduzir!"
          ],
-         "Start translating my site now. WPML will use your automatic translation credits.": [
-            "Comece a traduzir meu site agora. O WPML usará seus créditos de tradução automática."
+         "WPML will translate your site for you using your automatic translation credits.": [
+            "O WPML traduzirá seu site usando seus créditos de tradução automática."
          ],
-         "No. I need to do some changes first": [
-            "Não. Preciso fazer algumas alterações primeiro"
+         "No, my content isn't finalized yet": [
+            "Não, meu conteúdo ainda não está finalizado"
          ],
-         "When you’re ready, you can start automatic translation from the Translation Management Dashboard.": [
-            "Quando estiver pronto, você pode iniciar a tradução automática no Painel de Gerenciamento de Tradução."
+         "When you're ready, start automatic translation from the Translation Management Dashboard.": [
+            "Quando estiver pronto, inicie a tradução automática no Painel de Gerenciamento de Tradução."
          ],
          "Improve your site’s translations using helpful plugins": [
             "Melhore as traduções do seu site usando plugins úteis"
@@ -514,18 +594,6 @@
          "A new language could not be added correctly": [
             "Um novo idioma não pôde ser adicionado corretamente"
          ],
-         "Languages": [
-            "Idiomas"
-         ],
-         "URL Format": [
-            "Formato de URL"
-         ],
-         "Register WPML": [
-            "Registrar o WPML"
-         ],
-         "Translation Mode": [
-            "Modo de tradução"
-         ],
          "Support": [
             "Suporte"
          ],
@@ -549,6 +617,18 @@
          ],
          "Finish": [
             "Concluir"
+         ],
+         "Languages": [
+            "Idiomas"
+         ],
+         "URL Format": [
+            "Formato de URL"
+         ],
+         "Register WPML": [
+            "Registrar o WPML"
+         ],
+         "Translation Mode": [
+            "Modo de tradução"
          ],
          "Settings": [
             "Configurações"

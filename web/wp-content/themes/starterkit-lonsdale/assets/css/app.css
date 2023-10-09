@@ -1054,6 +1054,21 @@ a img.aligncenter {
     }
 }
 
+.strate-sliders hr {
+    border: none;
+    border-bottom: 1px dashed #a9a9a9;
+    margin: 0;
+}
+.strate-sliders section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+.strate-sliders section header {
+    margin-bottom: 30px;
+}
+.strate-sliders section p {
+    margin-top: 10px;
+}
 .strate-sliders .slider {
     display: grid;
 }
@@ -1092,21 +1107,6 @@ a img.aligncenter {
 }
 .strate-sliders .slider .slider-pagination button.active {
     background: gray;
-}
-.strate-sliders hr {
-    border: none;
-    border-bottom: 1px dashed #a9a9a9;
-    margin: 0;
-}
-.strate-sliders section {
-    padding-top: 60px;
-    padding-bottom: 60px;
-}
-.strate-sliders section header {
-    margin-bottom: 30px;
-}
-.strate-sliders section p {
-    margin-top: 10px;
 }
 .strate-sliders .slider0 .slider-content {
     margin-left: calc(-1 * var(--ctr-left));
@@ -1223,12 +1223,14 @@ a img.aligncenter {
     background: pink;
     width: 100%;
     aspect-ratio: 1;
-    width: calc((var(--ctr-width) - (var(--nb) - 1) * var(--gap)) / var(--nb));
 }
 @media (max-width: 767px) {
     .strate-sliders .slider5 .slider-content {
         margin-left: calc(-1 * var(--ctr-left));
         margin-right: calc(-1 * var(--ctr-left));
+    }
+    .strate-sliders .slider5 .item {
+        width: calc((var(--ctr-width) - (var(--nb) - 1) * var(--gap)) / var(--nb));
     }
 }
 @media (max-width: 767px) and (min-width: 468px) {
@@ -1248,13 +1250,24 @@ a img.aligncenter {
     }
 }
 
-.trains header ul {
+.trains {
+    display: none;
+}
+.trains header h2 {
+    margin-bottom: 20px;
+}
+.trains header .list-color {
     display: grid;
     gap: 5px;
+    margin-bottom: 20px;
 }
-.trains header li {
+.trains header .list-color li {
     display: flex;
     align-items: center;
+    gap: 10px;
+}
+.trains header .list-day {
+    display: flex;
     gap: 10px;
 }
 .trains .color {
@@ -1304,7 +1317,10 @@ a img.aligncenter {
     align-items: center;
     height: 26px;
 }
-.trains h2 {
+.trains h3 {
+    margin-bottom: 10px;
+}
+.trains p {
     margin-bottom: 20px;
 }
 .trains form {

@@ -27,7 +27,7 @@ webpackBase.optimization = {
         ),
     ],
 };
-
+/*
 webpackBase.plugins.push(
     new ImageminPlugin({
         jpegtran: {
@@ -55,5 +55,5 @@ webpackBase.plugins.push(
         },
     }),
 );
-
+*/
 module.exports = webpackBase;

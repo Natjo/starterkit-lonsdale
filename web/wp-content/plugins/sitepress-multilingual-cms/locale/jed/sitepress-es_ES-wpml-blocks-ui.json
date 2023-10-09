@@ -4,8 +4,7 @@
       "messages": {
          "": {
             "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "lang": "es_ES"
          },
          "Advanced": [
             "Avanzada"
@@ -109,8 +108,29 @@
          "Current language background": [
             "Fondo de idioma actual"
          ],
+         "Full name": [
+            "Nombre completo"
+         ],
          "Code": [
             "Código"
+         ],
+         "Justify items left": [
+            "Justificar los elementos a la izquierda"
+         ],
+         "Justify items center": [
+            "Justificar los elementos al centro"
+         ],
+         "Justify items right": [
+            "Justificar los elementos a la derecha"
+         ],
+         "Justify items space between": [
+            "Justificar el espacio de los elementos entre"
+         ],
+         "Horizontal": [
+            "Horizontal"
+         ],
+         "Vertical": [
+            "Vertical"
          ],
          "Normal": [
             "Normal"
@@ -144,6 +164,9 @@
          ],
          "displays the WPML Language Switcher": [
             "muestra el selector de idioma de WPML"
+         ],
+         "Displays the WPML Language Switcher. <br/> Learn <a>how to translate this block</a>.": [
+            "Muestra el Selector de idioma de WPML. <br/> Más información sobre <a>cómo traducir este bloque</a>."
          ],
          "Navigation Language Switcher": [
             "Selector de idioma de navegación"

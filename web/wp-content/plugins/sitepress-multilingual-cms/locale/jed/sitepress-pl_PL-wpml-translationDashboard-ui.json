@@ -4,8 +4,7 @@
       "messages": {
          "": {
             "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "lang": "pl"
          },
          "There was an error when trying to pause your Automatic Translation. Please try again later or contact our support.": [
             "Podczas próby wstrzymania tłumaczenia automatycznego wystąpił błąd. Spróbuj ponownie później lub skontaktuj się z naszym działem pomocy."
@@ -91,9 +90,6 @@
          "How do you want to translate?": [
             "Jak chcesz tłumaczyć?"
          ],
-         "You can only automatically translate content from your primary language (%s) to other languages. Use the language switcher at the top of this page to switch to %s.": [
-            "Możesz przetłumaczyć automatycznie wyłącznie zawartość w Twoim języku podstawowym (%s) na inne języki. Użyj przełącznika języków u góry tej strony, aby przełączyć na język %s."
-         ],
          "Assign to a translator": [
             "Zleć tłumaczowi"
          ],
@@ -102,6 +98,18 @@
          ],
          "You do not need translation credits to translate content yourself.": [
             "Aby tłumaczyć samodzielnie, nie potrzebujesz kredytów na tłumaczenia."
+         ],
+         "You can only automatically translate content from your site's default language (English), to your site's other languages. Deselect content in your site's secondary languages to proceed.": [
+            "Możesz automatycznie tłumaczyć treści tylko z domyślnego języka witryny (angielskiego) na inne języki witryny. Aby kontynuować, usuń zaznaczenie treści w dodatkowych językach witryny."
+         ],
+         "You can only automatically translate content from your primary language (%s) to other languages. Use the language switcher at the top of this page to switch to %s.": [
+            "Możesz przetłumaczyć automatycznie wyłącznie zawartość w Twoim języku podstawowym (%s) na inne języki. Użyj przełącznika języków u góry tej strony, aby przełączyć na język %s."
+         ],
+         "Selected content includes items that were originally created in this language. Deselect these items to proceed.": [
+            "Wybrana treść zawiera elementy, które zostały stworzone w tym języku. Odznacz te elementy, aby kontynuować."
+         ],
+         "Add to Translation Queue": [
+            "Dodaj do Kolejki tłumaczeń"
          ],
          "Select a post or page to translate": [
             "Wybierz wpis lub stronę do tłumaczenia"
@@ -114,6 +122,9 @@
          ],
          "Selected content is already translated": [
             "Wybrana zawartość jest już przetłumaczona"
+         ],
+         "Selected content includes items in a language other than your site's default language.": [
+            "Wybrana treść zawiera elementy w języku innym niż domyślny język witryny."
          ],
          "Choose at least one translation action": [
             "Wybierz co najmniej jedną czynność tłumaczenia"
@@ -135,9 +146,6 @@
          ],
          "Add to Translation Basket": [
             "Dodaj do koszyka tłumaczeń"
-         ],
-         "Add to Translation Queue": [
-            "Dodaj do Kolejki tłumaczeń"
          ],
          "One more thing...": [
             "Jeszcze jedno..."

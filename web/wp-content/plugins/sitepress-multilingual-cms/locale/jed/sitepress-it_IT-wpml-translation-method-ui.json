@@ -4,8 +4,7 @@
       "messages": {
          "": {
             "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "lang": "it_IT"
          },
          "There was an error when trying to pause your Automatic Translation. Please try again later or contact our support.": [
             "Si è verificato un errore nella messa in pausa della tua traduzione automatica. Riprova più tardi o contatta la nostra assistenza."
@@ -32,7 +31,7 @@
             "Traduci tutto automaticamente: attivo"
          ],
          "Pause": [
-            "Metti in pausa, arresta"
+            "Pausa"
          ],
          "Pause automatic translation": [
             "Metti in pausa la traduzione automatica"
@@ -90,6 +89,10 @@
          ],
          "Start translating everything": [
             "Inizia a tradurre tutto"
+         ],
+         "%1$d language": [
+            "%1$d lingua",
+            "%1$d lingue"
          ],
          "Please wait...": [
             "Attendere..."
@@ -226,20 +229,20 @@
          "You decide what to translate and who'll translate it": [
             "Decidi tu cosa tradurre e chi lo tradurrà"
          ],
-         "Translate it yourself": [
-            "Traduci da solo"
+         "Translate yourself": [
+            "Traduci da te"
          ],
-         "Assign it to translators that are users of your site": [
-            "Assegna a traduttori che sono utenti del tuo sito"
+         "Use automatic translation on the content you choose": [
+            "Usa la traduzione automatica sul contenuto di tua scelta"
          ],
-         "Send it to a professional translation service": [
-            "Invia a un servizio di traduzione professionale"
+         "Work with translators that are users of your site": [
+            "Lavora con traduttori che sono utenti del tuo sito"
          ],
          "or": [
             "o"
          ],
-         "Translate it automatically using machine translation": [
-            "Traduci automaticamente usando la traduzione automatica"
+         "Send to professional translation services": [
+            "Invia a servizi di traduzione professionale"
          ],
          "Save settings": [
             "Salva le impostazioni"
@@ -481,6 +484,12 @@
          "Learn more": [
             "Maggiori informazioni"
          ],
+         "On": [
+            "On"
+         ],
+         "Off": [
+            "Off"
+         ],
          "You must use the <b>Advanced Translation Editor</b> if you want to translate your content automatically.": [
             "Devi usare l'<b>editor di traduzione avanzata</b> se vuoi tradurre il tuo contenuto automaticamente."
          ],
@@ -603,9 +612,6 @@
          ],
          "Ranking": [
             "Classificazione"
-         ],
-         "You need to have a valid account in order to continue.": [
-            "Per continuare, devi avere un account valido."
          ]
       }
    }

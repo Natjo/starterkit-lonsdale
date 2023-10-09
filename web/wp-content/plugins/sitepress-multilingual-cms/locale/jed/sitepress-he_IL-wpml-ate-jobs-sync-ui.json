@@ -3,9 +3,7 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "domain": "messages"
          },
          "Sending for translation": [
             "שליחה לתרגום"
@@ -70,8 +68,16 @@
          "Your default language, %s, must be mapped to a supported language in order to use automatic translation.": [
             "על שפת ברירת המחדל שלך, %s, להיות ממופית לשפה נתמכת כדי להשתמש בתרגום אוטומטי."
          ],
+         "Your language, %s, must be mapped to a supported language in order to use automatic translation.": [
+            "השפה שלך, %s, חייבתלהיות ממופה לשפה נתמכת כדי להשתמש בתרגום אוטומטי.",
+            "על השפות הבאות באתר שלך להיות ממופות לשפה נתמכת כדי להשתמש בתרגום אוטומטי: %s"
+         ],
          "Content in those languages: %s, cannot be automatically translated unless you map them to a language that's different from the default.": [
             "תוכן בשפות אלו: %s, לא מתאימים לתרגום אוטומטי אלא אם תמפה אותם לשפה השונה מברירת המחדל."
+         ],
+         "%d translation waiting for review": [
+            "תרגום %d ממתין לבדיקה",
+            "%d תרגומים ממתינים לבדיקה"
          ],
          "Account credits used": [
             "נקודות זכות של החשבון שנעשה בהן שימוש"
@@ -219,6 +225,10 @@
          ],
          "Start translating everything": [
             "התחל לתרגם הכל"
+         ],
+         "%1$d language": [
+            "שפה %1$d",
+            "%1$d שפות"
          ],
          "Please wait...": [
             "המתן..."

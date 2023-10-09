@@ -4,8 +4,7 @@
       "messages": {
          "": {
             "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "lang": "pl"
          },
          "Connect this site to your %s account": [
             "Połącz tę witrynę ze swoim kontem %s"

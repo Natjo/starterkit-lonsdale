@@ -3,9 +3,7 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "domain": "messages"
          },
          "There was an error when trying to pause your Automatic Translation. Please try again later or contact our support.": [
             "자동 번역을 일시 중지하는 중에 오류가 발생했습니다. 나중에 다시 시도하거나 지원팀에 문의하세요."
@@ -90,6 +88,10 @@
          ],
          "Start translating everything": [
             "모든 항목 번역 시작"
+         ],
+         "%1$d language": [
+            "%1$d개 언어",
+            "%1$d개 언어"
          ],
          "Please wait...": [
             "잠시 기다려 주세요..."
@@ -226,20 +228,20 @@
          "You decide what to translate and who'll translate it": [
             "무엇을 번역하고 누가 번역할지 결정합니다"
          ],
-         "Translate it yourself": [
+         "Translate yourself": [
             "직접 번역"
          ],
-         "Assign it to translators that are users of your site": [
-            "사이트의 사용자인 번역가에게 배정"
+         "Use automatic translation on the content you choose": [
+            "선택한 콘텐츠에 대해 자동 번역 사용"
          ],
-         "Send it to a professional translation service": [
-            "전문 번역 서비스로 전송"
+         "Work with translators that are users of your site": [
+            "사이트의 사용자인 번역가와 작업"
          ],
          "or": [
             "또는"
          ],
-         "Translate it automatically using machine translation": [
-            "기계 번역을 사용하여 자동 번역"
+         "Send to professional translation services": [
+            "전문 번역 서비스로 보내기"
          ],
          "Save settings": [
             "설정 저장"
@@ -481,6 +483,12 @@
          "Learn more": [
             "자세한 정보"
          ],
+         "On": [
+            "켬"
+         ],
+         "Off": [
+            "끔"
+         ],
          "You must use the <b>Advanced Translation Editor</b> if you want to translate your content automatically.": [
             "콘텐츠를 자동으로 번역하려면 <b>고급 번역 편집기</b>를 사용해야 합니다."
          ],
@@ -603,9 +611,6 @@
          ],
          "Ranking": [
             "순위"
-         ],
-         "You need to have a valid account in order to continue.": [
-            "계속하려면 올바른 계정이 있어야 합니다."
          ]
       }
    }

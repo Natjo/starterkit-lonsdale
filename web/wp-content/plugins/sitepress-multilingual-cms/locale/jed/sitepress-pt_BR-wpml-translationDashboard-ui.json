@@ -3,9 +3,7 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "domain": "messages"
          },
          "There was an error when trying to pause your Automatic Translation. Please try again later or contact our support.": [
             "Ocorreu um erro ao tentar pausar sua tradução automática. Tente novamente mais tarde ou entre em contato com nosso suporte."
@@ -91,9 +89,6 @@
          "How do you want to translate?": [
             "Como você deseja traduzir?"
          ],
-         "You can only automatically translate content from your primary language (%s) to other languages. Use the language switcher at the top of this page to switch to %s.": [
-            "Você só pode traduzir automaticamente conteúdo do seu idioma principal (%s) para outros idiomas. Use o seletor de idiomas no topo desta página para mudar para %s."
-         ],
          "Assign to a translator": [
             "Atribuir a um tradutor"
          ],
@@ -102,6 +97,18 @@
          ],
          "You do not need translation credits to translate content yourself.": [
             "Você não precisa de créditos de tradução para traduzir o conteúdo por conta própria."
+         ],
+         "You can only automatically translate content from your site's default language (English), to your site's other languages. Deselect content in your site's secondary languages to proceed.": [
+            "Você só pode traduzir automaticamente o conteúdo do idioma padrão do seu site (inglês) para os outros idiomas do seu site. Desmarque o conteúdo nos idiomas secundários do seu site para continuar."
+         ],
+         "You can only automatically translate content from your primary language (%s) to other languages. Use the language switcher at the top of this page to switch to %s.": [
+            "Você só pode traduzir automaticamente conteúdo do seu idioma principal (%s) para outros idiomas. Use o seletor de idiomas no topo desta página para mudar para %s."
+         ],
+         "Selected content includes items that were originally created in this language. Deselect these items to proceed.": [
+            "O conteúdo selecionado inclui itens que foram originalmente criados neste idioma. Desmarque esses itens para prosseguir."
+         ],
+         "Add to Translation Queue": [
+            "Adicionar à Fila de Tradução"
          ],
          "Select a post or page to translate": [
             "Selecione um post ou página para traduzir"
@@ -114,6 +121,9 @@
          ],
          "Selected content is already translated": [
             "O conteúdo selecionado já está traduzido"
+         ],
+         "Selected content includes items in a language other than your site's default language.": [
+            "O conteúdo selecionado inclui itens em um idioma diferente do idioma padrão do seu site."
          ],
          "Choose at least one translation action": [
             "Escolha pelo menos uma ação de tradução"
@@ -135,9 +145,6 @@
          ],
          "Add to Translation Basket": [
             "Adicionar à Cesta de Tradução"
-         ],
-         "Add to Translation Queue": [
-            "Adicionar à Fila de Tradução"
          ],
          "One more thing...": [
             "Mais uma coisa..."

@@ -3,9 +3,7 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "domain": "messages"
          },
          "There was an error when trying to pause your Automatic Translation. Please try again later or contact our support.": [
             "حدث خطأ أثناء محاولة إيقاف ترجمتك الآلية مؤقتًا. يُرجى إعادة المحاولة لاحقًا أو التواصل مع فريق الدعم لدينا."
@@ -90,6 +88,10 @@
          ],
          "Start translating everything": [
             "بدء ترجمة كل شيء"
+         ],
+         "%1$d language": [
+            "%1$d لغة",
+            "%1$d لغات"
          ],
          "Please wait...": [
             "يُرجى الانتظار..."
@@ -226,20 +228,20 @@
          "You decide what to translate and who'll translate it": [
             "أنت من يقرر المحتوى المراد ترجمته ومن سيقوم بترجمته"
          ],
-         "Translate it yourself": [
-            "ترجمته بنفسك"
+         "Translate yourself": [
+            "ترجم بنفسك"
          ],
-         "Assign it to translators that are users of your site": [
-            "تعيينه إلى مترجمين من مستخدمي موقعك"
+         "Use automatic translation on the content you choose": [
+            "استخدام الترجمة الآلية على المحتوى الذي تختاره"
          ],
-         "Send it to a professional translation service": [
-            "إرساله إلى خدمة ترجمة احترافية"
+         "Work with translators that are users of your site": [
+            "متوافق مع المترجمين الذين قاموا بالتسجيل كمستخدمين على موقعك"
          ],
          "or": [
             "أو"
          ],
-         "Translate it automatically using machine translation": [
-            "ترجمته آليًا باستخدام خدمة الترجمة الآلية"
+         "Send to professional translation services": [
+            "إرسال إلى خدمات الترجمة الاحترافية"
          ],
          "Save settings": [
             "حفظ الإعدادات"
@@ -481,6 +483,12 @@
          "Learn more": [
             "تعرف على المزيد"
          ],
+         "On": [
+            "تشغيل"
+         ],
+         "Off": [
+            "إيقاف"
+         ],
          "You must use the <b>Advanced Translation Editor</b> if you want to translate your content automatically.": [
             "يجب عليك استخدام <b>محرر الترجمة المتقدم</b> إذا كنت تريد ترجمة محتواك آليًا."
          ],
@@ -603,9 +611,6 @@
          ],
          "Ranking": [
             "الترتيب"
-         ],
-         "You need to have a valid account in order to continue.": [
-            "يجب أن يكون لديك حساب صالح لتتمكن من المتابعة."
          ]
       }
    }

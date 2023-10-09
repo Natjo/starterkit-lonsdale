@@ -3,9 +3,7 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "domain": "messages"
          },
          "Advanced": [
             "Avançado"
@@ -24,6 +22,9 @@
          ],
          "Color": [
             "Cor"
+         ],
+         "%": [
+            "%"
          ],
          "Dimensions": [
             "Dimensões"
@@ -94,9 +95,6 @@
          "Typography": [
             "Tipografia"
          ],
-         "All %s": [
-            "Todos %s"
-         ],
          "Background": [
             "Fundo"
          ],
@@ -112,8 +110,29 @@
          "Current language background": [
             "Plano de fundo do idioma atual"
          ],
+         "Full name": [
+            "Nome completo"
+         ],
          "Code": [
             "Código"
+         ],
+         "Justify items left": [
+            "Justificar itens à esquerda"
+         ],
+         "Justify items center": [
+            "Justificar itens ao centro"
+         ],
+         "Justify items right": [
+            "Justificar itens à direita"
+         ],
+         "Justify items space between": [
+            "Justificar itens entre espaços"
+         ],
+         "Horizontal": [
+            "Horizontal"
+         ],
+         "Vertical": [
+            "Vertical"
          ],
          "Normal": [
             "Normal"
@@ -147,6 +166,9 @@
          ],
          "displays the WPML Language Switcher": [
             "exibe o seletor de idioma do WPML."
+         ],
+         "Displays the WPML Language Switcher. <br/> Learn <a>how to translate this block</a>.": [
+            "Exibe o Seletor de Idioma do WPML. <br/> Saiba <a>como traduzir este bloco</a>."
          ],
          "Navigation Language Switcher": [
             "Seletor de idioma de navegação"

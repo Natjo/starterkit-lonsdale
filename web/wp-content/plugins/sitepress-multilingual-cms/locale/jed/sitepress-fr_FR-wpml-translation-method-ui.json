@@ -4,8 +4,7 @@
       "messages": {
          "": {
             "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "lang": "fr_FR"
          },
          "There was an error when trying to pause your Automatic Translation. Please try again later or contact our support.": [
             "Une erreur est survenue en mettant la Traduction automatique sur pause. Veuillez réessayer plus tard ou contactez notre assistance."
@@ -230,26 +229,26 @@
          "You decide what to translate and who'll translate it": [
             "C'est vous qui décidez quoi traduire et qui va traduire"
          ],
-         "Translate it yourself": [
-            "Traduire soi-même"
+         "Translate yourself": [
+            "Traduire vous-même"
          ],
-         "Assign it to translators that are users of your site": [
-            "Assigner aux traducteurs qui sont des utilisateurs de votre site"
+         "Use automatic translation on the content you choose": [
+            "Utilisez la traduction automatique pour les contenus que vous sélectionnez."
          ],
-         "Send it to a professional translation service": [
-            "Envoyer à un service de traduction professionnel"
+         "Work with translators that are users of your site": [
+            "Travaillez avec les traducteurs qui sont des utilisateurs de votre site"
          ],
          "or": [
             "ou"
          ],
-         "Translate it automatically using machine translation": [
-            "Traduire automatiquement à l'aide de la traduction automatique"
+         "Send to professional translation services": [
+            "Envoyer à des services de traduction professionnels"
          ],
          "Save settings": [
             "Sauvegarder les paramètres"
          ],
          "Continue": [
-            "Continuer"
+            "Poursuivre"
          ],
          "Start over": [
             "Recommencer"
@@ -485,6 +484,12 @@
          "Learn more": [
             "En savoir plus"
          ],
+         "On": [
+            "Activé"
+         ],
+         "Off": [
+            "Desactivé"
+         ],
          "You must use the <b>Advanced Translation Editor</b> if you want to translate your content automatically.": [
             "Si vous souhaitez faire traduire vos contenus automatiquement, utilisez l’<b>Éditeur de traduction avancé</b>."
          ],
@@ -607,9 +612,6 @@
          ],
          "Ranking": [
             "Classement"
-         ],
-         "You need to have a valid account in order to continue.": [
-            "Vous devez détenir un compte valide pour pouvoir poursuivre."
          ]
       }
    }

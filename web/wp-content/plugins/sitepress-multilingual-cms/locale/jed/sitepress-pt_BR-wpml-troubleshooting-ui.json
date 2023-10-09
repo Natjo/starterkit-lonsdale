@@ -3,9 +3,7 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "domain": "messages"
          },
          "Preparing...": [
             "Preparando..."
@@ -21,6 +19,15 @@
          ],
          "Cancel in-progress automatic jobs": [
             "Cancele os trabalhos automáticos em andamento"
+         ],
+         "Domain name has been updated": [
+            "O nome de domínio foi atualizado"
+         ],
+         "Domain name update has been failed": [
+            "Falha ao atualizar nome de domínio"
+         ],
+         "Update domain name in language switcher settings": [
+            "Atualize o nome de domínio nas configurações do seletor de idioma"
          ],
          "Refresh license data to recognise license update": [
             "Atualize os dados da licença para reconhecer a atualização da licença"

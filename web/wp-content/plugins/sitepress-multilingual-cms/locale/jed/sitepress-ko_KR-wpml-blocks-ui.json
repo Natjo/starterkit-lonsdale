@@ -3,9 +3,7 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "domain": "messages"
          },
          "Advanced": [
             "고급"
@@ -94,9 +92,6 @@
          "Typography": [
             "타이포그래피"
          ],
-         "All %s": [
-            "모든 %s"
-         ],
          "Background": [
             "배경"
          ],
@@ -112,8 +107,29 @@
          "Current language background": [
             "현재 언어 배경"
          ],
+         "Full name": [
+            "전체 이름"
+         ],
          "Code": [
             "코드"
+         ],
+         "Justify items left": [
+            "아이템을 왼쪽 정렬"
+         ],
+         "Justify items center": [
+            "아이템을 가운데 정렬"
+         ],
+         "Justify items right": [
+            "아이템을 오른쪽 정렬"
+         ],
+         "Justify items space between": [
+            "아이템을 양 끝에 배치하고 동일한 간격 유지"
+         ],
+         "Horizontal": [
+            "가로"
+         ],
+         "Vertical": [
+            "세로"
          ],
          "Normal": [
             "기본"
@@ -147,6 +163,9 @@
          ],
          "displays the WPML Language Switcher": [
             "WPML 언어 변환기를 표시합니다"
+         ],
+         "Displays the WPML Language Switcher. <br/> Learn <a>how to translate this block</a>.": [
+            "WPML 언어 변환기를 표시합니다. <br/> <a>이 블록을 번역하는 방법</a>을 알아보세요."
          ],
          "Navigation Language Switcher": [
             "탐색 언어 변환기"

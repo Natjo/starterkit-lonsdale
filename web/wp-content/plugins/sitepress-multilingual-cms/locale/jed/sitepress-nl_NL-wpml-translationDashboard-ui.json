@@ -3,9 +3,7 @@
    "locale_data": {
       "messages": {
          "": {
-            "domain": "messages",
-            "plural_forms": "nplurals=2; plural=(n != 1);",
-            "lang": "en"
+            "domain": "messages"
          },
          "There was an error when trying to pause your Automatic Translation. Please try again later or contact our support.": [
             "Er is een fout opgetreden bij het pauzeren van je Automatische Vertaling. Probeer het later nog eens of neem contact op met onze helpdesk."
@@ -91,9 +89,6 @@
          "How do you want to translate?": [
             "Hoe wil je het vertalen?"
          ],
-         "You can only automatically translate content from your primary language (%s) to other languages. Use the language switcher at the top of this page to switch to %s.": [
-            "Je kunt inhoud alleen automatisch vertalen van je primaire taal (%s) naar andere talen. Gebruik de taalschakelaar bovenaan deze pagina om over te schakelen naar %s."
-         ],
          "Assign to a translator": [
             "Aan een vertaler toewijzen"
          ],
@@ -102,6 +97,18 @@
          ],
          "You do not need translation credits to translate content yourself.": [
             "Je hebt geen vertaalcredits nodig om zelf inhoud te vertalen."
+         ],
+         "You can only automatically translate content from your site's default language (English), to your site's other languages. Deselect content in your site's secondary languages to proceed.": [
+            "Je kunt alleen automatisch inhoud vertalen vanuit de standaardtaal van je site (Engels), naar de andere talen van je site. Deselecteer inhoud in de secundaire talen van je site om verder te gaan."
+         ],
+         "You can only automatically translate content from your primary language (%s) to other languages. Use the language switcher at the top of this page to switch to %s.": [
+            "Je kunt inhoud alleen automatisch vertalen van je primaire taal (%s) naar andere talen. Gebruik de taalschakelaar bovenaan deze pagina om over te schakelen naar %s."
+         ],
+         "Selected content includes items that were originally created in this language. Deselect these items to proceed.": [
+            "Geselecteerde inhoud bevat items die oorspronkelijk in deze taal zijn gemaakt. Deselecteer deze items om verder te gaan."
+         ],
+         "Add to Translation Queue": [
+            "Toevoegen aan vertaalwachtrij"
          ],
          "Select a post or page to translate": [
             "Selecteer een bericht of pagina om te vertalen"
@@ -114,6 +121,9 @@
          ],
          "Selected content is already translated": [
             "Geselecteerde inhoud is al vertaald"
+         ],
+         "Selected content includes items in a language other than your site's default language.": [
+            "Geselecteerde inhoud bevat items in een andere taal dan de standaardtaal van je site."
          ],
          "Choose at least one translation action": [
             "Kies minstens een vertaalactie"
@@ -135,9 +145,6 @@
          ],
          "Add to Translation Basket": [
             "Toevoegen aan het vertaalmandje"
-         ],
-         "Add to Translation Queue": [
-            "Toevoegen aan vertaalwachtrij"
          ],
          "One more thing...": [
             "Nog één ding..."
