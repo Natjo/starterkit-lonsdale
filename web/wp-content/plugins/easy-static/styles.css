@@ -1,12 +1,10 @@
 #pages-list th:nth-last-child(4),
 #pages-list td:nth-last-child(4) {
-   width:350px;
+    width: 350px;
 }
 
 #pages-list th:nth-last-child(3),
-#pages-list td:nth-last-child(3) {
- 
-}
+#pages-list td:nth-last-child(3) {}
 
 #pages-list th:nth-last-child(2),
 #pages-list td:nth-last-child(2) {
@@ -19,7 +17,8 @@
     width: 100px;
     text-align: center;
 }
-#pages.disabled{
+
+#pages.disabled {
     pointer-events: none;
     opacity: .6;
 }
@@ -28,14 +27,17 @@
 .info-update {
     color: green !important;
 }
+
 .info-update:before {
-    content:'✓';
+    content: '✓';
 }
+
 .info-update.error {
     color: red !important;
 }
+
 .info-update.error:before {
-    content:'x';
+    content: 'x';
 }
 
 /*export*/
@@ -47,6 +49,8 @@
     white-space: nowrap;
     margin-left: 2px;
     margin-right: 2px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .es-action.disabled {
@@ -148,4 +152,94 @@
 
 .switch:checked+label:after {
     content: 'Mode static active';
+}
+
+#es-main {
+    hr {
+        margin-top: 40px;
+        margin-bottom: 30px;
+    }
+
+    h2 {
+        margin-bottom: 10px;
+    }
+
+    header {
+        margin-bottom: 20px;
+    }
+
+
+    .es-auth {
+        display: grid;
+        grid-gap: 10px;
+
+        label {
+            font-weight: 800;
+            margin-bottom: 4px;
+            display: block;
+        }
+    }
+
+    .list-pages {
+
+        border: 1px solid #c3c4c7;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+
+        .list-pages-item:nth-child(even) {
+
+            background-color: #fff;
+
+
+
+        }
+
+        .list-pages-row {
+
+            display: flex;
+
+
+
+            .list-pages-link {
+                padding: 10px;
+                width: 350px;
+            }
+
+            .list-pages-url {
+                padding: 10px;
+            }
+
+            .list-pages-type {
+                padding: 10px;
+                margin-left: auto;
+                width: 100px;
+                text-align: center;
+            }
+
+            .list-pages-active {
+                padding: 10px;
+                width: 100px;
+                text-align: center;
+            }
+        }
+
+
+        details[open] {
+            .list-pages-row {}
+
+            >summary {
+                .list-pages-link:after {
+                    content: "▲";
+                }
+            }
+
+        }
+
+        summary {
+            .list-pages-link:after {
+                content: "▼";
+                margin-left: 5px;
+                font-size: 10px;
+            }
+        }
+    }
 }

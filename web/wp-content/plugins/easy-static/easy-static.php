@@ -2,68 +2,126 @@
 /*
 Plugin Name: Easy static
 Description: Generate static site
-Version: 1
+Version: 1.1
 Author: Martin Jonathan
 */
 
 global $wpdb;
 global $host;
 global $authentification;
-//global $hostfinal;
-//$hostfinal = $_SERVER['SERVER_NAME'];
+global $table;
 
+$homepageID = get_option('page_on_front');
+$homepagePost   = get_post($homepageID);
+$home_folder = $homepagePost->post_name; // "homepage";
 $url = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'];
 
-// add easy_static_host to options
-$result_host = $wpdb->get_results("SELECT * FROM " . $table_prefix . "options WHERE option_name = 'easy_static_host'");
+// Create table easystatic if not exist
+$charset_collate = $wpdb->get_charset_collate();
+$table =  $table_prefix . "easystatic";
+if (!$wpdb->get_var("SHOW TABLES LIKE '$table'") == $table) {
+    $sql = "CREATE TABLE $table (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        option tinytext NOT NULL,
+        value tinytext NOT NULL,
+        PRIMARY KEY  (id)
+      ) $charset_collate;";
+
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+}
+
+// Create options
+$result_host = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'host'");
 if (empty($result_host)) {
-    $table_options = $wpdb->prefix . 'options';
-    $data = array('option_name' => "easy_static_host", 'option_value' => $url);
+    $data = array('option' => "host", 'value' => $url);
     $format = array('%s', '%s');
-    $wpdb->insert($table_options, $data, $format);
+    $wpdb->insert($table, $data, $format);
 }
-
-$host = $result_host[0]->option_value;
-
-
-// add easy_static_active to options
-$easy_static_active = $wpdb->get_results("SELECT * FROM " . $table_prefix . "options WHERE option_name = 'easy_static_active'");
+$easy_static_active = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'active'");
 if (empty($easy_static_active)) {
-    $table_options = $wpdb->prefix . 'options';
-    $data = array('option_name' => "easy_static_active", 'option_value' => false);
+    $data = array('option' => "active", 'value' => false);
     $format = array('%s', '%d');
-    $wpdb->insert($table_options, $data, $format);
+    $wpdb->insert($table, $data, $format);
 }
-
-// auth if htaccess
-$authentification = array(
-    'active' => isset($_SERVER['PHP_AUTH_USER']) ? true : false,
-    'user' =>  "groupama-ra-2022",
-    'password' => "aer3aech7Aequ6ae"
-);
-
-
-
-// add easy_static_slug to options
-$easy_static_sluge = $wpdb->get_results("SELECT * FROM " . $table_prefix . "options WHERE option_name = 'easy_static_slug'");
-if (empty($easy_static_sluge)) {
-    $table_options = $wpdb->prefix . 'options';
-    $data = array('option_name' => "easy_static_slug", 'option_value' => "/");
+$easy_static_user = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'user'");
+if (empty($easy_static_user)) {
+    $data = array('option' => "user", 'value' => "");
     $format = array('%s', '%s');
-    $wpdb->insert($table_options, $data, $format);
+    $wpdb->insert($table, $data, $format);
+}
+$easy_static_password = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'password'");
+if (empty($easy_static_password)) {
+    $data = array('option' => "password", 'value' => "");
+    $format = array('%s', '%s');
+    $wpdb->insert($table, $data, $format);
+}
+$easy_static_slug = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'slug'");
+if (empty($easy_static_slug)) {
+    $data = array('option' => "slug", 'value' => "/");
+    $format = array('%s', '%s');
+    $wpdb->insert($table, $data, $format);
+}
+$easy_static_minify = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'minify'");
+if (empty($easy_static_minify)) {
+    $data = array('option' => "minify", 'value' => false);
+    $format = array('%s', '%d');
+    $wpdb->insert($table, $data, $format);
+}
+$easy_static_localisfolder = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'localisfolder'");
+if (empty($easy_static_localisfolder)) {
+    $data = array('option' => "localisfolder", 'value' => false);
+    $format = array('%s', '%d');
+    $wpdb->insert($table, $data, $format);
 }
 
+$host = $result_host[0]->value;
 
-/* A METTRE DANS web/index.php
-// load static if exist or if no generate var available
-if(empty($_GET['generate'])){
-if (file_exists(__DIR__ . '/wp-content/easy-static/static/' . $_SERVER['REQUEST_URI'] . '/index.html')) {
-echo file_get_contents(__DIR__ . '/wp-content/easy-static/static/' . $_SERVER['REQUEST_URI'] . '/index.html');
-exit;   
-}
-} */
+
+global $isminify;
+$minify = $wpdb->get_results("SELECT * FROM " . $table  . " WHERE option = 'minify'");
+$localisfolder = $wpdb->get_results("SELECT * FROM " . $table  . " WHERE option = 'localisfolder'");
+$isminify =  $minify[0]->value === "true" ? true : false;
+
+
 // Include mfp-functions.php, use require_once to stop the script if mfp-functions.php is not found
 require_once plugin_dir_path(__FILE__) . 'includes/es-functions.php';
 
 require_once plugin_dir_path(__FILE__) . 'includes/es-admin-ajax.php';
-?>
+
+
+// Create page when saving page or post
+add_action('save_post', 'wpdocs_notify_subscribers', 10, 3);
+
+function wpdocs_notify_subscribers($post_id, $post, $update)
+{
+    global $easy_static_active;
+
+    if ($easy_static_active[0]->value) {
+        if ($post->post_type == "page" || $post->post_type == "post") {
+            if ($post->static_active) {
+                save($post);
+            }
+        }
+    }
+}
+
+// save acf option
+function clear_advert_main_transient($post_id)
+{
+    global $easy_static_active;
+    $screen = get_current_screen();
+    if ($easy_static_active[0]->value) {
+        if ($screen->base === "toplevel_page_acf-options-parametres") {
+            // if (strpos($screen->id, "acf-options-adverts") == true) {
+            $post_types = postTypes();
+
+            $posts = queryPosts();
+
+            create($posts, $post_types);
+
+            upToDate($posts);
+        }
+    }
+}
+add_action('acf/save_post', 'clear_advert_main_transient', 20);

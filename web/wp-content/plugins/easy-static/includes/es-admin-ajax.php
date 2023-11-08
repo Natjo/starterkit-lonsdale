@@ -7,7 +7,7 @@ function static_change_status_callback()
 {
     checkNonce('test_nonce');
     $response = array();
-    global $wpdb;
+    global $table;
 
     /** TODO */
     if ($_POST['status'] == "true") {
@@ -20,13 +20,13 @@ function static_change_status_callback()
         }
 
         $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
-        $sql = "UPDATE " . $wpdb->prefix . "options SET option_value = '1' WHERE option_name = 'easy_static_active'";
+        $sql = "UPDATE " . $table . " SET value = '1' WHERE option = 'active'";
         mysqli_query($link, $sql);
         mysqli_close($link);
     } else {
         rename(WP_CONTENT_DIR . '/easy-static/static/', WP_CONTENT_DIR . '/easy-static/static-disabled-/');
         $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
-        $sql = "UPDATE " . $wpdb->prefix . "options SET option_value = '0' WHERE option_name = 'easy_static_active'";
+        $sql = "UPDATE " . $table . " SET value = '0' WHERE option = 'active'";
         mysqli_query($link, $sql);
         mysqli_close($link);
     }
@@ -66,6 +66,7 @@ function static_posts_his_active_callback()
 {
     global $host;
     global $table_prefix;
+    global $isminify;
     checkNonce('test_nonce');
     $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
     $sql = "UPDATE " . $table_prefix . "posts SET static_active = " . $_POST['status'] . " WHERE ID = " . $_POST['id'];
@@ -76,17 +77,25 @@ function static_posts_his_active_callback()
 
     // create or remove index.html
     if ($_POST['status'] == "true") {
-       
-        if ($folder === "home/" || $folder === "homepage/") {
+
+        if ($folder === "accueil/" || $folder === "home/" || $folder === "homepage/") {
             $html = loadPage("https://" . $host . "/?generate=true");
-            file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', "TinyMinify::html($html)");
+            if ($isminify === true) {
+                file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', TinyMinify::html($html));
+            } else {
+                file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', $html);
+            }
         } else {
             $html = loadPage("https://" . $host . "/" . locale() . $folder . "?generate=true");
             mkdir(WP_CONTENT_DIR . "/easy-static/static/" . $folder, 0755, true);
-            file_put_contents(WP_CONTENT_DIR . "/easy-static/static/" . $folder . 'index.html', TinyMinify::html($html));
+            if ($isminify === true) {
+                file_put_contents(WP_CONTENT_DIR . "/easy-static/static/" . $folder . 'index.html', TinyMinify::html($html));
+            } else {
+                file_put_contents(WP_CONTENT_DIR . "/easy-static/static/" . $folder . 'index.html', $html);
+            }
         }
     } else {
-        if ($folder === "home/" || $folder === "homepage/") {
+        if ($folder === "accueil/" || $folder === "home/" || $folder === "homepage/") {
             unlink(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html');
         } else {
             unlink(WP_CONTENT_DIR . '/easy-static/static/' . $folder . 'index.html');
@@ -110,7 +119,7 @@ function test_callback()
     $post_types = postTypes();
 
     $posts = queryPosts();
-   //print_r($posts);
+    //print_r($posts);
 
     create($posts, $post_types, $_POST['status']);
 
@@ -128,7 +137,7 @@ function test_callback()
 
 add_action('wp_ajax_static_change_host', 'static_change_host_callback');
 add_action('wp_ajax_nopriv_static_change_host', 'static_change_host_callback');
-
+/*
 function static_change_host_callback()
 {
     global $table_prefix;
@@ -138,11 +147,23 @@ function static_change_host_callback()
     $sql = "UPDATE " . $table_prefix . "options SET option_value = '$host' WHERE option_name ='easy_static_host' ";
     mysqli_query($link, $sql);
     mysqli_close($link);
+}*/
+function static_change_host_callback()
+{
+    global $table;
+    checkNonce('test_nonce');
+    $host = $_POST['host'];
+    $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
+    $sql = "UPDATE " . $table . " SET value = '$host' WHERE option ='host' ";
+    mysqli_query($link, $sql);
+    mysqli_close($link);
 }
 
 
-
-/// Export pages and rewrite urls
+/**
+ * Export pages and rewrite urls
+ * cta gégérer les pages
+ */
 
 add_action('wp_ajax_static_export_pages', 'static_export_pages_callback');
 add_action('wp_ajax_nopriv_static_export_pages', 'static_export_pages_callback');
@@ -157,6 +178,8 @@ function static_export_pages_callback()
     $posts = queryPosts();
 
     global $host;
+    global $home_folder;
+    global  $isminify;
 
     // create pages pagination
     foreach ($post_types as $post_type) {
@@ -187,16 +210,15 @@ function static_export_pages_callback()
                 $parent_slug = get_post_field('post_name', $post->post_parent);
                 $folder =  $parent_slug . "/" . $post->post_name . "/";
             }
-            if ($folder === "home/" || $folder === "homepage/") {
-            $html = loadPage("https://" . $host . "/?generate=true");
-            }
-            else{
-                $html = loadPage("https://" . $host . "/" . locale() . $folder . "?generate=true"); 
+
+            if ($folder === "accueil/" || $folder === "home/" || $folder === "homepage/") {
+                $html = loadPage("https://" . $host . "/?generate=true");
+            } else {
+                $html = loadPage("https://" . $host . "/" . locale() . $folder . "?generate=true");
             }
 
             // 1: uploads
             $test = str_replace($currentUrl . "wp-content/uploads/", "/" . $newUrlSlug . "/uploads/", $html);
-
 
             // 2: themes
             $test = str_replace($currentUrl . "wp-content/themes/" . $theme_slug . "/assets/", "/" . $newUrlSlug . "/assets/", $test);
@@ -216,11 +238,19 @@ function static_export_pages_callback()
             $test = str_replace('"/"', '"/' . $newUrlSlug . '/"', $test);
 
 
-            if ($folder === "home/" || $folder === "homepage/") {
-                file_put_contents(WP_CONTENT_DIR . '/easy-static/export/' . locale() . 'index.html', TinyMinify::html($test));
+            if ($folder === $home_folder . "/") {
+                if ($isminify === true) {
+                    file_put_contents(WP_CONTENT_DIR . '/easy-static/export/' . locale() . 'index.html', TinyMinify::html($test));
+                } else {
+                    file_put_contents(WP_CONTENT_DIR . '/easy-static/export/' . locale() . 'index.html', $test);
+                }
             } else {
                 mkdir(WP_CONTENT_DIR . "/easy-static/export/" . locale() . $folder, 0755, true);
-                file_put_contents(WP_CONTENT_DIR . "/easy-static/export/" .  locale() . $folder . 'index.html', TinyMinify::html($test));
+                if ($isminify === true) {
+                    file_put_contents(WP_CONTENT_DIR . "/easy-static/export/" .  locale() . $folder . 'index.html', TinyMinify::html($test));
+                } else {
+                    file_put_contents(WP_CONTENT_DIR . "/easy-static/export/" .  locale() . $folder . 'index.html', $test);
+                }
             }
         }
     }
@@ -264,9 +294,9 @@ add_action('wp_ajax_nopriv_static_export_slug', 'static_export_slug_callback');
 
 function static_export_slug_callback()
 {
-    global $wpdb;
+    global $table;
     $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
-    $sql = "UPDATE " . $wpdb->prefix . "options SET option_value = '" . $_POST['slug'] . "' WHERE option_name = 'easy_static_slug'";
+    $sql = "UPDATE " . $table . " SET value = '" . $_POST['slug'] . "' WHERE option = 'slug'";
     mysqli_query($link, $sql);
     mysqli_close($link);
 }
@@ -342,4 +372,62 @@ function static_export_download_remove_callback()
     rm_rf(WP_CONTENT_DIR . '/easy-static/export.zip');
     $response['ready'] =  true;
     wp_send_json($response);
+}
+
+
+
+/**
+ * Authentification
+ */
+
+add_action('wp_ajax_static_authentification', 'static_authentification_callback');
+add_action('wp_ajax_nopriv_static_authentification', 'static_authentification_callback');
+
+function static_authentification_callback()
+{
+    global $table;
+    checkNonce('test_nonce');
+    $user = $_POST['user'];
+    $password = $_POST['password'];
+
+    $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
+    $sql = "UPDATE " . $table . " SET value = '$user' WHERE option ='user' ";
+    mysqli_query($link, $sql);
+    mysqli_close($link);
+
+    $link_password = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
+    $sql = "UPDATE " . $table . " SET value = '$password' WHERE option ='password' ";
+    mysqli_query($link_password, $sql);
+    mysqli_close($link_password);
+}
+
+
+/**
+ * Options
+ */
+add_action('wp_ajax_static_minify', 'static_minify_callback');
+add_action('wp_ajax_nopriv_static_minify', 'static_minify_callback');
+function static_minify_callback()
+{
+    global $table;
+    checkNonce('test_nonce');
+    $minify = $_POST['minify'];
+
+    $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
+    $sql = "UPDATE " . $table . " SET value = '$minify' WHERE option ='minify' ";
+    mysqli_query($link, $sql);
+    mysqli_close($link);
+}
+add_action('wp_ajax_static_localisfolder', 'static_localisfolder_callback');
+add_action('wp_ajax_nopriv_static_localisfolder', 'static_localisfolder_callback');
+function static_localisfolder_callback()
+{
+    global $table;
+    checkNonce('test_nonce');
+    $localisfolder = $_POST['localisfolder'];
+
+    $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
+    $sql = "UPDATE " . $table . " SET value = '$localisfolder' WHERE option ='localisfolder' ";
+    mysqli_query($link, $sql);
+    mysqli_close($link);
 }

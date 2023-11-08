@@ -13,7 +13,7 @@ $mail_error = !empty($mail['error']) ? true : false;
 
 <main id="main" role="main" tabindex="-1" class="">
     <?php
-    $args['title'] = "Sliders";
+    $args['title'] = get_the_title();
     get_template_part('template-parts/heros/hero', 'page', $args);
     ?>
 

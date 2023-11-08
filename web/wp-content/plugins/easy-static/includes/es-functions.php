@@ -9,7 +9,6 @@ function mfp_Add_My_Admin_Link()
         'Easy static', // Title of the page
         'Easy static', // Text to show on the menu link
         'manage_options', // Capability requirement to see the link
-        //'easy-static/includes/es-first-acp-page.php', // The 'slug' - file to display when clicking the link
         'easy-static/includes/es-index.php', // The 'slug' - file to display when clicking the link
         '',
         'dashicons-text-page',
@@ -367,6 +366,7 @@ function copyfolder($from, $to)
 }
 
 //
+/*
 function zipFolder($rootPath, $filefinal)
 {
 
@@ -374,7 +374,7 @@ function zipFolder($rootPath, $filefinal)
     $zip->open($filefinal, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
     // Create recursive directory iterator
-    /** @var SplFileInfo[] $files */
+
     $files = new RecursiveIteratorIterator(
         new RecursiveDirectoryIterator($rootPath),
         RecursiveIteratorIterator::LEAVES_ONLY
@@ -389,6 +389,7 @@ function zipFolder($rootPath, $filefinal)
     }
     $zip->close();
 }
+*/
 
 //
 function loadPage($file)
@@ -401,14 +402,15 @@ function loadPage($file)
             "verify_peer" => false,
             "verify_peer_name" => false,
         ),
-        /*'http' => array (
+        /*
+        'http' => array (
         	'header' => 'Authorization: Basic ' . base64_encode("groupama-ra-2022:aer3aech7Aequ6ae")
-    	)*/
-        /*  'header' =>
-            "Accept-language: en"*/
+    	)
+        'header' => "Accept-language: en"
+        */
     );
-    
-    if ($authentification['active'] === true) {
+
+    if (ENV_PREPROD_LONSDALE) {
         $user_pass = $authentification["user"] . ':' . $authentification["password"];
         $arrContextOptions['http'] =  array(
             'header' => array(
@@ -420,9 +422,9 @@ function loadPage($file)
 
     $html = file_get_contents($file, false, stream_context_create($arrContextOptions));
 
-    /*if ($host !== $_SERVER['SERVER_NAME']) {
-        $html = str_replace($host, $_SERVER['SERVER_NAME'], $html);
-    }*/
+    //if ($host !== $_SERVER['SERVER_NAME']) {
+    //  $html = str_replace($host, $_SERVER['SERVER_NAME'], $html);
+    // }
 
     if (ENV_LOCAL) {
         $html = str_replace($host, $_SERVER['SERVER_NAME'], $html);
@@ -458,12 +460,10 @@ function locale()
 
 function tr($posts, $post_types)
 {
-
+    global  $home_folder;
     $markup = "";
+
     foreach ($posts as $post) {
-        //  $origin = date_create($post->post_modified);
-        //   $target = date_create($post->static_generate);
-        //  $upToDate = $origin < $target ? true : false;
         $slug = $post->post_name;
 
         if (in_array($post->post_type, $post_types)) {
@@ -474,25 +474,18 @@ function tr($posts, $post_types)
             $parent_slug = get_post_field('post_name', $post->post_parent);
             $slug = $parent_slug . "/" . $post->post_name;
         }
-        /* if ($slug === 'homepage') {
-            $exist  = (file_exists(WP_CONTENT_DIR . '/easy-static/static/' . locale() . '/index.html'))  ? true : false;
-        } else {
-            $exist  = (file_exists(WP_CONTENT_DIR . '/easy-static/static/' . locale() . $slug . '/index.html'))  ? true : false;
-        }*/
+
         $markup .= '<tr>';
-        if ($slug === "home" || $slug === "homepage") {
-            $markup .= '<td><a href="/" target="_blank">' . $post->post_title . '</a></td>';
-            $markup .= "<td>/</td>";
+        if ($slug === $home_folder) {
+            $markup .= '<td><a href="/' . locale() . '" target="_blank">' . $post->post_title . '</a></td>';
+            $markup .= "<td>/" . locale() . "</td>";
         } else {
             $markup .= '<td><a href="/' . locale() . $slug . '/" target="_blank">' . $post->post_title . '</a></td>';
             $markup .= "<td>" . locale() . $slug  . "</td>";
         }
 
-
-
         $markup .= "<td>" . $post->post_type  . "</td>";
         $markup .= '<td><input data-slug="' . $slug . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></td>';
-        // $markup .= (($upToDate && $exist) ?  '<td class="info-update"></td>' : '<td class="info-update error"></td>');
         $markup .= "</tr>";
     }
     return $markup;
@@ -562,9 +555,7 @@ function ctpPages($post_type)
     if ($has_pagination) {
         for ($i = 1; $i <= $totalPages; $i++) {
             $pp = locale() . $slug . "/page/" . $i . "/";
-
             $html = loadPage("https://" . $host . "/" . $pp . "?generate=true");
-            //echo  $html;
             mkdir(WP_CONTENT_DIR . '/easy-static/static/' .  $pp, 0755, true);
             file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . $pp . 'index.html', TinyMinify::html($html));
         }
@@ -572,12 +563,57 @@ function ctpPages($post_type)
 }
 
 /**
- * 
+ * Save post or page 
+ */
+function save($post)
+{
+    global $host;
+    global $home_folder;
+    global $isminify;
+
+    //TODO regenere parent et/ou page avec pager
+    if ($post->static_active) {
+
+        $folder = $post->post_name . "/";
+        /*if (in_array($post->post_type, $post_types)) {
+            $post_type_object = get_post_type_object($post->post_type);
+            $folder =  $post_type_object->rewrite['slug'] . "/" . $post->post_name . "/";
+        }*/
+
+        /*if ($post->post_parent) {
+            $parent_slug = get_post_field('post_name', $post->post_parent);
+            $folder =  $parent_slug . "/" . $post->post_name . "/";
+        }*/
+
+        if ($folder === $home_folder . "/") {
+            $html = loadPage("https://" . $host . "/" . locale() . "?generate=true");
+            if ($isminify === true) {
+                file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', TinyMinify::html($html));
+            } else {
+                file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', $html);
+            }
+        } else {
+            $html = loadPage("https://" . $host . "/" . locale() . $folder . "?generate=true");
+            if (!is_dir(WP_CONTENT_DIR . "/easy-static/static/" . locale() . $folder)) {
+                mkdir(WP_CONTENT_DIR . "/easy-static/static/" . locale() . $folder, 0755, true);
+            }
+            if ($isminify === true) {
+                file_put_contents(WP_CONTENT_DIR . "/easy-static/static/" .  locale() . $folder . 'index.html', TinyMinify::html($html));
+            } else {
+                file_put_contents(WP_CONTENT_DIR . "/easy-static/static/" .  locale() . $folder . 'index.html', $html);
+            }
+        }
+    }
+}
+
+/**
+ * Creation pages
  */
 function create($posts, $post_types)
 {
     global $host;
-
+    global $home_folder;
+    global $isminify;
 
     rm_rf(WP_CONTENT_DIR . '/easy-static/static/' . locale());
     mkdir(WP_CONTENT_DIR . '/easy-static/static/' . locale(), 0755, true);
@@ -605,19 +641,23 @@ function create($posts, $post_types)
                 $folder =  $parent_slug . "/" . $post->post_name . "/";
             }
 
-            // pop/fr/
-            // pop/
-            // 
-            echo "https://" . $host . "/" . locale() . $folder . "?generate=true";
-            if ($folder === "home/" || $folder === "homepage/") {
+            if ($folder === $home_folder . "/") {
+                // echo "https://" . $host . "/" . locale() . "?generate=true";
                 $html = loadPage("https://" . $host . "/" . locale() . "?generate=true");
-                file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', TinyMinify::html($html));
+                if ($isminify === true) {
+                    file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', TinyMinify::html($html));
+                } else {
+                    file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', $html);
+                }
             } else {
                 $html = loadPage("https://" . $host . "/" . locale() . $folder . "?generate=true");
                 mkdir(WP_CONTENT_DIR . "/easy-static/static/" . locale() . $folder, 0755, true);
-                file_put_contents(WP_CONTENT_DIR . "/easy-static/static/" .  locale() . $folder . 'index.html', TinyMinify::html($html));
+                if ($isminify === true) {
+                    file_put_contents(WP_CONTENT_DIR . "/easy-static/static/" .  locale() . $folder . 'index.html', TinyMinify::html($html));
+                } else {
+                    file_put_contents(WP_CONTENT_DIR . "/easy-static/static/" .  locale() . $folder . 'index.html', $html);
+                }
             }
         }
     }
-
 }

@@ -38,7 +38,7 @@ checkbox_static_active.forEach((el) => {
         if (!el.checked) {
             el.value = 0;
         } else {
-           // el.parentNode.parentNode.querySelector('.info-update').classList.remove('error');
+            // el.parentNode.parentNode.querySelector('.info-update').classList.remove('error');
             el.value = 1;
         }
 
@@ -213,7 +213,7 @@ link_download_uploads.addEventListener('click', () => {
     }, 300);
 });
 
-// remov ezip
+// remove zip
 const btn_zip_remove = document.getElementById('es-zip-remove');
 btn_zip_remove.onclick = () => {
     btn_zip_remove.classList.add('loading');
@@ -226,4 +226,63 @@ btn_zip_remove.onclick = () => {
     xhr.onload = () => {
         btn_zip_remove.classList.remove('loading');
     }
+}
+
+
+// Authentification
+const auth_user_input = document.getElementById("es-auth-user");
+const auth_password_input = document.getElementById("es-auth-password");
+function authentification() {
+    const data = new FormData();
+    data.append('action', "static_authentification");
+    data.append('nonce', nonce);
+    data.append('user', auth_user_input.value);
+    data.append('password', auth_password_input.value);
+    const xhr = new XMLHttpRequest();
+    xhr.open("post", ajax_url, true);
+    xhr.send(data);
+    xhr.onload = () => {
+
+    }
+}
+auth_user_input.onchange = () => {
+    authentification()
+}
+auth_password_input.onchange = () => {
+    authentification()
+}
+
+
+// Options
+const minify = document.getElementById("es-option-minify");
+const localisfolder = document.getElementById("es-option-localisfolder");
+
+function _minify() {
+    const data = new FormData();
+    data.append('action', "static_minify");
+    data.append('nonce', nonce);
+    data.append('minify', minify.checked);
+    const xhr = new XMLHttpRequest();
+    xhr.open("post", ajax_url, true);
+    xhr.send(data);
+    xhr.onload = () => {
+    }
+}
+function _localisfolder() {
+    const data = new FormData();
+    data.append('action', "static_localisfolder");
+    data.append('nonce', nonce);
+    data.append('localisfolder', localisfolder.checked);
+    const xhr = new XMLHttpRequest();
+    xhr.open("post", ajax_url, true);
+    xhr.send(data);
+    xhr.onload = () => {
+    }
+}
+
+minify.onchange = () => {
+    _minify();
+}
+localisfolder.onchange = () => {
+    _localisfolder()
 }
