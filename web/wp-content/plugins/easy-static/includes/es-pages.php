@@ -36,8 +36,13 @@
         $post_types = get_post_types($args, $output, $operator);
 
         foreach ($post_types as $key => $post) {
+            //  print_r($post_types);
             echo $post->rewrite["slug"];
+
             array_push($cpts_slug, $post->rewrite["slug"]);
+            // array_push($cpts_slug, $post->name);
+           // echo $post;
+           //  array_push($cpts_slug, $post);
         }
 
         // Display cpts pages
@@ -59,7 +64,7 @@
                     foreach ($posts->posts as $post) {
                         $html .= '
                         <div class="list-pages-row">
-                        <div class="list-pages-link">-<a target="_blank" href="/' . locale() . $cpt . "/". $post->post_name . '">' . $post->post_title . '</a></div>
+                        <div class="list-pages-link">-<a target="_blank" href="/' . locale() . $cpt . "/" . $post->post_name . '">' . $post->post_title . '</a></div>
                         <div class="list-pages-url">' . locale() . $cpt . "/" . $post->post_name . '</div>
                         <div class="list-pages-type">' . $post->post_type . '</div>
                         <div class="list-pages-active "><input type="checkbox"></div>
@@ -82,7 +87,9 @@
         wp_reset_postdata();
 
         foreach ($posts->posts as $post) {
+           //   print_r($post);
             $child = cptsPages($cpts_slug, $post->post_name);
+
             if ($child !== "") {
                 echo '
              <details open class="list-pages-row list-pages-item">

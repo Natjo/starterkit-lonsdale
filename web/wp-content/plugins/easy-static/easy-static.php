@@ -2,7 +2,7 @@
 /*
 Plugin Name: Easy static
 Description: Generate static site
-Version: 1.1
+Version: 1.2
 Author: Martin Jonathan
 */
 
@@ -83,6 +83,12 @@ $minify = $wpdb->get_results("SELECT * FROM " . $table  . " WHERE option = 'mini
 $localisfolder = $wpdb->get_results("SELECT * FROM " . $table  . " WHERE option = 'localisfolder'");
 $isminify =  $minify[0]->value === "true" ? true : false;
 
+// authentification
+$user = $wpdb->get_results("SELECT * FROM " . $table  . " WHERE option = 'user'");
+$password = $wpdb->get_results("SELECT * FROM " . $table  . " WHERE option = 'password'");
+$authentification["user"] =  $user[0]->value;
+$authentification["password"] = $password[0]->value;
+
 
 // Include mfp-functions.php, use require_once to stop the script if mfp-functions.php is not found
 require_once plugin_dir_path(__FILE__) . 'includes/es-functions.php';
@@ -91,6 +97,7 @@ require_once plugin_dir_path(__FILE__) . 'includes/es-admin-ajax.php';
 
 
 // Create page when saving page or post
+/*
 add_action('save_post', 'wpdocs_notify_subscribers', 10, 3);
 
 function wpdocs_notify_subscribers($post_id, $post, $update)
@@ -105,8 +112,9 @@ function wpdocs_notify_subscribers($post_id, $post, $update)
         }
     }
 }
-
+*/
 // save acf option
+/*
 function clear_advert_main_transient($post_id)
 {
     global $easy_static_active;
@@ -125,3 +133,4 @@ function clear_advert_main_transient($post_id)
     }
 }
 add_action('acf/save_post', 'clear_advert_main_transient', 20);
+*/

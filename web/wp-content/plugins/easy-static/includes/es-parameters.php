@@ -22,20 +22,15 @@
 
         </header>
 
-        <?php
-        $user = $wpdb->get_results("SELECT * FROM " . $table  . " WHERE option = 'user'");
-        $password = $wpdb->get_results("SELECT * FROM " . $table  . " WHERE option = 'password'");
-        ?>
-
         <div class="es-auth">
             <div>
                 <label for="">User</label>
-                <input type="text" id="es-auth-user" value="<?= $user[0]->value ?>">
+                <input type="text" id="es-auth-user" value="<?= $authentification["user"] ?>">
             </div>
 
             <div>
                 <label for="">Password</label>
-                <input type="password" id="es-auth-password" value="<?= $password[0]->value ?>">
+                <input type="password" id="es-auth-password" value="<?= $authentification["password"] ?>">
             </div>
         </div>
     </section>
