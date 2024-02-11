@@ -19,7 +19,6 @@
     <section>
         <header>
             <h2>Htaccess preprod</h2>
-
         </header>
 
         <div class="es-auth">

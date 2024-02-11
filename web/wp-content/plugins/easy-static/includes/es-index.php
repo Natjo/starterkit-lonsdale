@@ -1,14 +1,15 @@
 <?php
-
 global $wpdb;
 global $table_prefix;
 global $table;
 $nonce = wp_create_nonce('test_nonce');
 
-
-// Test if isStatic
-$easy_static_active = $wpdb->get_results("SELECT * FROM " . $table  . " WHERE option = 'active'");
-$isStatic = $easy_static_active[0]->value === "0" ? false : true;
+// force to disable static dir if static disabled
+if (!$isStatic) {
+    if (is_dir(WP_CONTENT_DIR . '/easy-static/static/')) {
+        rename(WP_CONTENT_DIR . '/easy-static/static/', WP_CONTENT_DIR . '/easy-static/static-disabled-/');
+    }
+}
 
 // create column (static_active,static_generate) in posts
 $table_posts = $wpdb->prefix . 'posts';
@@ -57,7 +58,13 @@ if (strpos($index, '/* easy-static */') !== false) {
 <div class="wrap" id="es-main" data-static="<?= $isStatic ? true : false; ?>" data-nonce="<?= $nonce ?>" data-ajaxurl="<?= AJAX_URL ?>">
     <h1>Static website</h1>
 
-   <!--  
+    <?php if (!empty($haschange) && !empty($isStatic)) : ?>
+        <div class="es-notice notice-warning">
+            <p>Vous avez efféctué des modifications, vous devez regenerer les pages.</p>
+        </div>
+    <?php endif; ?>
+
+    <!--  
         TODO
         add htaccess cache files
     -->

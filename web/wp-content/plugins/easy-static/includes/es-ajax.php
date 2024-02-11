@@ -1,10 +1,4 @@
 <?php
-
-
-
-//$url= 'https://172.19.0.3';
-//$url = 'https://starterkit.code';
-
 $url = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'];
 
 function loadPage($url)

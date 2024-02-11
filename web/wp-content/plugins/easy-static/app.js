@@ -12,7 +12,11 @@ toogle_status.checked = Boolean(main.getAttribute('data-static'));
 
 btn_generate.onclick = () => {
     document.getElementById('pages').classList.add('disabled');
+    if (document.querySelector('.es-notification')) {
+        document.querySelector('.es-notification').remove();
+    }
 
+    // set haschange to true if page/post is edited
     btn_generate.classList.add('loading');
     const data = new FormData();
     data.append('action', "test");
@@ -27,6 +31,8 @@ btn_generate.onclick = () => {
 
         const response = JSON.parse(xhr.responseText);
         pages_result.innerHTML = response.markup;
+
+        window.location.reload();
     }
 }
 
@@ -80,9 +86,8 @@ toogle_status.onchange = () => {
     xhr.onload = () => {
         btn_generate.disabled = false;
         toogle_status.disabled = false;
-
+        window.location.reload();
     }
-
 }
 
 

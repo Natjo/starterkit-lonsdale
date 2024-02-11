@@ -1,13 +1,15 @@
 <?php
-
 // Hook the 'admin_menu' action hook, run the function named 'mfp_Add_My_Admin_Link()'
 // Add a new top level menu link to the ACP
 add_action('admin_menu', 'mfp_Add_My_Admin_Link');
 function mfp_Add_My_Admin_Link()
 {
+    global $haschange;
+    global $isStatic;
+
     add_menu_page(
         'Easy static', // Title of the page
-        'Easy static', // Text to show on the menu link
+        $haschange && $isStatic ?  'Easy static <span class="awaiting-mod es-notification">!</span>' : 'Easy static',// Text to show on the menu link
         'manage_options', // Capability requirement to see the link
         'easy-static/includes/es-index.php', // The 'slug' - file to display when clicking the link
         '',
@@ -614,6 +616,12 @@ function create($posts, $post_types)
     global $host;
     global $home_folder;
     global $isminify;
+    global $table;
+
+    $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
+    $sql = "UPDATE " . $table . " SET value = false WHERE option ='haschange' ";
+    mysqli_query($link, $sql);
+    mysqli_close($link);
 
     rm_rf(WP_CONTENT_DIR . '/easy-static/static/' . locale());
     mkdir(WP_CONTENT_DIR . '/easy-static/static/' . locale(), 0755, true);
