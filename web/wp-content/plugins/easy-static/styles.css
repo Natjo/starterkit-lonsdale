@@ -273,3 +273,23 @@
     mask-image: url("img/alert.svg");
     background: #d63638;
 }
+
+.es-cpt-infos{
+    background: #3c434a;
+    display:flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: space-between;
+    color: #fff;
+    padding:15px 20px 5px;
+    line-height: 1;
+    font-weight: 200;
+}
+.es-cpt-infos ul{
+    display:flex;
+    gap: 20px;
+}
+.es-cpt-infos h2{
+    margin-top: 0;
+    color: #fff;
+}

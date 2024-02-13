@@ -9,7 +9,7 @@ function mfp_Add_My_Admin_Link()
 
     add_menu_page(
         'Easy static', // Title of the page
-        $haschange && $isStatic ?  'Easy static <span class="awaiting-mod es-notification">!</span>' : 'Easy static',// Text to show on the menu link
+        $haschange && $isStatic ?  'Easy static <span class="awaiting-mod es-notification">!</span>' : 'Easy static', // Text to show on the menu link
         'manage_options', // Capability requirement to see the link
         'easy-static/includes/es-index.php', // The 'slug' - file to display when clicking the link
         '',
@@ -553,10 +553,11 @@ function ctpPages($post_type)
     $post_type_object = get_post_type_object($post_type);
     $slug = $post_type_object->rewrite['slug'];
     $has_pagination = $post_type_object->has_pagination;
+    $pagination_folder = $post_type_object->pagination_folder;
 
     if ($has_pagination) {
         for ($i = 1; $i <= $totalPages; $i++) {
-            $pp = locale() . $slug . "/page/" . $i . "/";
+            $pp = locale() . $slug . "/" . $pagination_folder . "/" . $i . "/";
             $html = loadPage("https://" . $host . "/" . $pp . "?generate=true");
             mkdir(WP_CONTENT_DIR . '/easy-static/static/' .  $pp, 0755, true);
             file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . $pp . 'index.html', TinyMinify::html($html));

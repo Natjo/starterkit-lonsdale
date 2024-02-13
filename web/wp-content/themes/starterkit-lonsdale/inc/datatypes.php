@@ -37,6 +37,7 @@ function create_cpt()
         'can_export' => true,
         'has_archive' => false,
         'has_pagination' => true,
+        'pagination_folder' => "page",//see function url rewrite
         'posts_per_page' => get_option('posts_per_page'),
         'hierarchical' => false,
         'show_in_rest' => true,
