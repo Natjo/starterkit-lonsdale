@@ -5,7 +5,7 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: SEO, XML sitemap, Content analysis, Readability, Schema
 Tested up to: 6.4
-Stable tag: 21.5
+Stable tag: 22.0
 Requires PHP: 7.2.5
 
 Improve your WordPress SEO: Write better content and have a fully optimized WordPress site using the Yoast SEO plugin.
@@ -211,7 +211,7 @@ Take your WordPress SEO to new heights with these powerful Yoast SEO add-ons:
 
 * [Yoast News SEO](https://yoa.st/1uv): Amplify your visibility and performance in Google News, allowing your news website to reach a broader audience.
 
-* [Yoast WooCommerce SEO](https://yoa.st/3rh): Enhance your online shop's discoverability with extra tools and functionality designed specifically for online shops, helping you drive more targeted traffic and dominate the search results for your products.
+* [Yoast WooCommerce SEO](https://yoa.st/3rh): Enhance your online shop's discoverability with extra tools and functionality designed specifically for online stores, helping you drive more targeted traffic and dominate the search results for your products. Comes with generative AI tools to help you write great titles and meta descriptions for your products! Also, use WooCommerce SEO to easily import and export global identifiers like GTIN8, UPC, and ISBN for your products.
 
 ### BUG REPORTS
 
@@ -342,61 +342,52 @@ Your question has most likely been answered on our help center: [yoast.com/help/
 
 == Changelog ==
 
-= 21.5 =
+= 22.0 =
 
-Release date: 2023-10-31
+Release date: 2024-02-06
 
-Yoast SEO 21.5 is out today! In this release, you'll find improvements to our inclusive language feature, updates to handling RSS feeds and much more. Find out more about what's new in Yoast SEO 21.5 in [our release post](https://yoa.st/release-31-10-23)!
-
-#### Enhancements
-
-* Adds support for the new `wp_attachment_pages_enabled` option introduced by WordPress 6.4, reducing the chances of inconsistencies with Yoast SEO's own \"Enable media pages\" setting.
-* Improves the _inclusive language_ analysis by making the feedback more clear and consistent, refining the list of targeted phrases, and adding more alternatives for some of the non-inclusive phrases. Specifically, this includes the following changes:
-	* Aligns the traffic light color and written feedback for all phrases.
-	* Makes some feedback strings more accurate by replacing the word ‘overgeneralizing’ with ‘harmful’.
-	* Adds ‘Rom’ and ‘Roma’ as additional alternatives to ‘gypsy’.
-	* Adds additional alternatives to ‘homosexuals’.
-	* Improves the feedback shown for the phrases ‘abnormal behaviour’, ‘behaviourally normal’, and ‘behaviourally abnormal’.
-	* Improves the feedback shown for the word ‘minorities’.
-	* Removes ‘narcissistic’ as a targeted phrase when followed by ‘personality disorder’.
-	* Removes ‘Ebonics’ and ‘normal behaviour’ from the list of targeted phrases.
-* Removes the automatic `rel=nofollow` attribute for links in the RSS feed.
+Yoast SEO 22.0 is out today. This release comes with many behind-the-scenes improvements and general enhancements. Find out more about what's new in Yoast SEO 22.0 in [our release post](https://yoa.st/release-6-2-24)!
 
 #### Bugfixes
 
-* Fixes a bug where console warnings about incorrect prop types would be shown on the integrations page.
+* Fixes a bug where the `get_head` REST route would return a `rest_invalid_param` if the URL contains a multiple words search string. Props to @lucymtc.
+* Fixes a bug where using a `blog` prefix in the permalink structure with _Strip category base_ enabled would prevent the blog page from being accessible.
+
+= 21.9.1 =
+
+Release date: 2024-01-25
+
+#### Bugfixes
+
+* Fixes a bug where a fatal error would occur when upgrading Yoast SEO on certain setups.
+* Fixes a bug where the image tag would be missing in the home page entry of the XML sitemap when using a static front page.
+
+= 21.9 =
+
+Release date: 2024-01-23
+
+We've just released Yoast SEO 21.9. This release comes with many behind-the-scenes improvements and general enhancements. Find out more about what's new in Yoast SEO 21.9 in [our release post](https://yoa.st/release-23-1-24)!
+
+#### Enhancements
+
+* Adds a filter to add images to the front page in sitemaps.
+* Adds a filter to allow adding images to terms in sitemaps.
+* Clears rewrite rules only for the strip category base option.
+* Removes the clearing of rewrite rules on every option update.
+* Replaces the sitemap rewrite rules mechanism, props to [felixarntz](https://github.com/felixarntz).
+
+#### Bugfixes
+
+* Fixes a bug where a post would be saved when trying to dismiss a notification while editing.
+* Fixes a bug where editing a product would either crash or be slow when there is a high number of registered attributes.
+* Fixes a bug where the Yoast plugin icon in the block editor would not have any horizontal spacing anymore when rendered in "compact" mode.
 
 #### Other
 
-* Prevents the Pattern Category taxonomy (introduced in WordPress 6.4) to be indexed and hides it in the settings page.
-* Improves the FAQ block description by removing any reference to the previous restriction of one block per post.
-* Improves the inline documentation for the `WPSEO_Option` class. Props to [costdev](https://github.com/costdev).
-* Leverages Script Strategy feature to add the async attribute to the `wordproof` script in case WordPress version is 6.3 or higher. Props to [adamsilverstein](https://github.com/adamsilverstein).
-* Sets the WordPress tested up to version to 6.4.
-
-= 21.4 =
-
-Release date: 2023-10-17
-
-We've just released Yoast SEO 21.4. In this release, we've focused on general enhancements and fixes to improve how your WordPress SEO plugin functions. Find out more about what's new in Yoast SEO 21.4 in [our release post](https://yoa.st/release-17-10-23)!
-
-#### Enhancements
-
-* Introduces more robust HTML processing and highlighting for the _keyphrase density_ and _single H1_ assessments.
-* Improves the keyphrase matching in the _keyphrase density_ assessment.
-* Improves keyphrase matching in Japanese by being able to match keyphrase occurrences that contain upper case characters.
-* Updates the list of HTML elements that should be excluded from the content analysis.
-* Improves performance in getting the primary term. Props to [nlemoine](https://github.com/nlemoine).
-* Prevent database update requests on page loads when the site representation settings contain conflicting data. Props to [jboonstra](https://github.com/jboonstra).
-
-#### Bugfixes
-
-* Fixes a bug where highlighting was not applied to keyphrase occurrences that contained different types of apostrophes than `'`.
-* Fixes a bug where PHP notice would happen when the sitemap index is generated on MySQL 8+.
-* Fixes a bug where resource cleanup regarding emojis would cause a fatal error when enabling the `Remove emoji scripts` option in the _crawl optimization_ settings. Props to [MishaBelikov](https://github.com/MishaBelikov).
-* Fixes a bug where sentences would not be highlighted when square brackets were present in the same sentence.
-* Fixes a bug where the first-time configuration' site representation logo button would not be translated. Props to [fxbenard](https://github.com/fxbenard).
-* Fixes a bug where the _single title_ assessment would be triggered when adding a H1 without text.
+* Be explicit about required PHP extensions.
+* Improves PHP 8.2 compatibility.
+* Sets the minimum supported WordPress version to 6.3.
+* Removes the `WEBPAGE_HASH` constant that had been deprecated in Yoast SEO 19.3 (July 2022).
 
 = Earlier versions =
 For the changelog of earlier versions, please refer to [the changelog on yoast.com](https://yoa.st/yoast-seo-changelog).

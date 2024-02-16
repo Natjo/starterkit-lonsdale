@@ -1,7 +1,15 @@
 <?php
+define(
+    "actualites_slugByLang",
+    [
+        "fr" => 'actualites',
+        "en" => 'news',
+    ]
+);
+
 function create_cpt()
 {
-    // Actualités - news
+    // Actualités - type -> news
     $labelsNews = array(
         'name' => 'Actualités',
         'singular_name' => 'Actualités',
@@ -23,7 +31,6 @@ function create_cpt()
         'remove_featured_image' => 'Retirer l\'image',
         'use_featured_image' => 'Utiliser cette image',
     );
-
     $argsNews = array(
         'labels' => $labelsNews,
         'menu_icon' => 'dashicons-megaphone',
@@ -37,7 +44,7 @@ function create_cpt()
         'can_export' => true,
         'has_archive' => false,
         'has_pagination' => true,
-        'pagination_folder' => "page",//see function url rewrite
+        'pagination_folder' => "page", //see function url rewrite
         'posts_per_page' => get_option('posts_per_page'),
         'hierarchical' => false,
         'show_in_rest' => true,
@@ -45,17 +52,37 @@ function create_cpt()
         'capability_type' => 'post',
         'taxonomies' => array(''),
         'rewrite' => array(
-            'slug' => 'actualites',
+            'slug' => actualites_slugByLang[apply_filters('wpml_current_language', null)],
             'with_front' => true,
         ),
     );
     register_post_type('news', $argsNews);
 
+    // Rewrite rules for pagination page
+    add_action('init', 'news_rewrite_url');
+    function news_rewrite_url()
+    {
+        add_rewrite_tag('%paged%', '([^&]+)');
+
+        $dataLangs = apply_filters('wpml_active_languages', NULL, 'orderby=id&order=asc');
+
+        foreach ($dataLangs as $dataLang) {
+            add_rewrite_rule(
+                actualites_slugByLang[$dataLang['code']] . '/page/([^/]+)',
+                'index.php?pagename=' . actualites_slugByLang[$dataLang['code']] . '&paged=$matches[1]',
+                'top'
+            );
+        }
+    }
 }
-add_action( 'init', 'create_cpt', 0 );
+
+add_action('init', 'create_cpt', 0);
 
 
-function create_taxo() {
+
+
+function create_taxo()
+{
 
     $labelsTest = array(
         'name'                       => 'Catégories',
@@ -77,6 +104,6 @@ function create_taxo() {
         'query_var'             => false,
         'show_in_rest' => true,
     );
-    register_taxonomy( 'Catégories', 'news', $argsTest );
+    register_taxonomy('Catégories', 'news', $argsTest);
 }
-add_action( 'init', 'create_taxo', 0 );
+add_action('init', 'create_taxo', 0);

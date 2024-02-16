@@ -49,4 +49,5 @@
             <li><input id="es-option-localisfolder" type="checkbox" <?= $localisfolder[0]->value === "true" ? "checked" : "" ?>><label>Multilangue local (default) est un dossier</label></li>
         </ul>
     </section>
+
 </section>

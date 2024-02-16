@@ -60,13 +60,14 @@ function scripts_site()
         define('PARAMSDATA', $dataToBePassed);
     }
 }
-function add_defer_attribute($tag, $handle) {
-    if ( 'script-js' !== $handle )
-      return $tag;
-    return str_replace( ' src', ' async src', $tag );
-  }
-  
-  add_filter('script_loader_tag', 'add_defer_attribute', 10, 2);
+function add_defer_attribute($tag, $handle)
+{
+    if ('script-js' !== $handle)
+        return $tag;
+    return str_replace(' src', ' async src', $tag);
+}
+
+add_filter('script_loader_tag', 'add_defer_attribute', 10, 2);
 
 
 /*
@@ -97,18 +98,7 @@ function remove_page_class($wp_list_pages)
  * CPT
  */
 
-// Rewrite rules for news page
-add_action('init', 'news_rewrite_url');
-function news_rewrite_url()
-{
-    add_rewrite_tag('%paged%', '([^&]+)');
 
-    add_rewrite_rule(
-        'actualites/page/([^/]+)',
-        'index.php?pagename=actualites&paged=$matches[1]',
-        'top'
-    );
-}
 
 
 /*
@@ -142,7 +132,7 @@ if (!function_exists('juiz_mce_before_init')) {
                 'title' => 'Bouton',
                 'inline' => 'a',
                 'classes' => 'btn-1'
-            ), 
+            ),
         );
         $styles['style_formats'] = json_encode($style_formats);
 
@@ -188,9 +178,11 @@ function my_phpmailer_configuration($phpmailer)
 
 // Mailjet create contact
 require_once __DIR__ . '/../../../vendor/autoload.php';
+
 use \Mailjet\Resources;
 
-function mailJetAddContact($name, $email){
+function mailJetAddContact($name, $email)
+{
     $mj = new \Mailjet\Client('a16fb8f8858b28ba57a608c6a9452130', 'f44139b1ddfd76f738181b51e3c50101', true, ['version' => 'v3']);
     $body = [
         'IsExcludedFromCampaigns' => "true",

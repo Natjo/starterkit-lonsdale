@@ -442,7 +442,10 @@ class WPML_TM_Translation_Status_Display {
 		}
 
 		// We add the lang parameter to the return url to return from CTE to the post list in the same language.
-		return add_query_arg( [ 'lang' => Languages::getCurrentCode() ], $url );
+		return add_query_arg( [
+			'lang'    => Languages::getCurrentCode(),
+			'referer' => 'ate',
+		], $url );
 	}
 
 	/**

@@ -4,6 +4,11 @@ global $table_prefix;
 global $table;
 $nonce = wp_create_nonce('test_nonce');
 
+/* ICL_LANGUAGE_CODE
+if (defined("ICL_LANGUAGE_CODE")) {
+    define(ICL_LANGUAGE_CODE, null);
+}*/
+
 // force to disable static dir if static disabled
 if (!$isStatic) {
     if (is_dir(WP_CONTENT_DIR . '/easy-static/static/')) {
@@ -82,6 +87,7 @@ if (strpos($index, '/* easy-static */') !== false) {
         <a href="#pages" class="nav-tab nav-tab-active">Pages</a>
         <a href="#parameters" class="nav-tab">Paramètres</a>
         <a href="#export" class="nav-tab">Export</a>
+        <a href="#help" class="nav-tab">Help</a>
     </nav>
 
     <br>
@@ -91,6 +97,8 @@ if (strpos($index, '/* easy-static */') !== false) {
     <?php include 'es-pages.php'; ?>
 
     <?php include 'es-export.php'; ?>
+
+    <?php include 'es-help.php'; ?>
 </div>
 
 <script src="<?= wp_guess_url() ?>/wp-content/plugins/easy-static/app.js"></script>

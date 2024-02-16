@@ -6,7 +6,6 @@ use WPML\Ajax\IHandler;
 use WPML\Collect\Support\Collection;
 use WPML\FP\Either;
 use WPML\FP\Lst;
-use WPML\LIB\WP\Option;
 use WPML\TM\ATE\API\FingerprintGenerator;
 use WPML\TM\ATE\ClonedSites\Lock;
 use WPML\TM\ATE\ClonedSites\SecondaryDomains;

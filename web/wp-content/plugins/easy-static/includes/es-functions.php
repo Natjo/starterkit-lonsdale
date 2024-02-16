@@ -459,8 +459,60 @@ function locale()
     }
     return $locale;
 }
+function listPages()
+{
+    function sousPages($posts, $id, $parent)
+    {
+        foreach ($posts as $post) {
+            $html = "";
+            if ($id === $post->post_parent) {
+                $html .= '
+                <div class="list-pages-row">
+                <div class="list-pages-link">-<a target="_blank" href="/' . $parent . "/".$post->post_name . '">' . $post->post_title . '</a></div>
+                <div class="list-pages-url">' . $parent . "/". $post->post_name . '</div>
+                <div class="list-pages-type">' . $post->post_type . '</div>
+                <div class="list-pages-active "><input type="checkbox"></div>
+                </div>';
+            }
+            return $html;
+        }
+    }
 
-function tr($posts, $post_types)
+    $args = array(
+        'post_type' => "page",
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+        'orderby' => 'modified',
+        'post_status' => 'publish'
+    );
+    $posts = new WP_Query($args);
+    wp_reset_postdata();
+
+    foreach ($posts->posts as $post) {
+        //   print_r($post);
+        $child = sousPages($posts->posts, $post->ID, locale() . $post->post_name);
+
+        if ($child !== "") {
+            echo '
+         <details open class="list-pages-row list-pages-item">
+         <summary class="list-pages-row">
+         <div class="list-pages-link"><a target="_blank" href="/' . locale() . $post->post_name . '">' . $post->post_title . '</a></div>
+         <div class="list-pages-url">' . locale() . $post->post_name . '</div>
+         <div class="list-pages-type">' . $post->post_type . '</div>
+         <div class="list-pages-active "><input type="checkbox"></div>
+         </summary>' . $child . '</details>';
+        } else {
+            echo '
+        <div  class="list-pages-row list-pages-item">
+        <div class="list-pages-link"><a target="_blank" href="/' . locale() . $post->post_name . '">' . $post->post_title . '</a></div>
+        <div class="list-pages-url">' . locale() . $post->post_name . '</div>
+        <div class="list-pages-type">' . $post->post_type . '</div>
+        <div class="list-pages-active "><input type="checkbox"></div>
+        </div>';
+        }
+    }
+}
+function tr($posts)
 {
     global  $home_folder;
     $markup = "";
@@ -468,30 +520,63 @@ function tr($posts, $post_types)
     foreach ($posts as $post) {
         $slug = $post->post_name;
 
-        if (in_array($post->post_type, $post_types)) {
-            $post_type_object = get_post_type_object($post->post_type);
-            $slug = $post_type_object->rewrite['slug'] . "/" . $post->post_name;
-        }
-        if ($post->post_parent) {
-            $parent_slug = get_post_field('post_name', $post->post_parent);
-            $slug = $parent_slug . "/" . $post->post_name;
-        }
+        if ($post->post_type == "page" && !$post->post_parent) {
+            if ($post->post_parent) {
+                $parent_slug = get_post_field('post_name', $post->post_parent);
+                $slug = $parent_slug . "/" . $post->post_name;
+            }
+            //print_r($post);
 
-        $markup .= '<tr>';
-        if ($slug === $home_folder) {
-            $markup .= '<td><a href="/' . locale() . '" target="_blank">' . $post->post_title . '</a></td>';
-            $markup .= "<td>/" . locale() . "</td>";
-        } else {
-            $markup .= '<td><a href="/' . locale() . $slug . '/" target="_blank">' . $post->post_title . '</a></td>';
-            $markup .= "<td>" . locale() . $slug  . "</td>";
-        }
+            $markup .= '<tr>';
+            if ($slug === $home_folder) {
+                $markup .= '<td><a href="/' . locale() . '" target="_blank">' . $post->post_title . '</a></td>';
+                $markup .= "<td>" . locale() . "</td>";
+            } else {
+                $markup .= '<td><a href="/' . locale() . $slug . '/" target="_blank">' . $post->post_title . '</a></td>';
+                $markup .= "<td>" . locale() . $slug  . "</td>";
+            }
 
-        $markup .= "<td>" . $post->post_type  . "</td>";
-        $markup .= '<td><input data-slug="' . $slug . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></td>';
-        $markup .= "</tr>";
+
+
+            $markup .= "<td>" . $post->post_type . ' ' . $post->post_parent . "</td>";
+            $markup .= '<td><input data-slug="' . $slug . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></td>';
+            $markup .= "</tr>";
+
+            foreach ($posts as $post1) {
+                if ($post1->post_parent == $post->ID) {
+                    $markup .= '<tr>';
+                    $markup .= '<td><a href="/' . locale() . $slug . '/" target="_blank">' . $post1->post_title . '</a></td>';
+                    $markup .= "<td>" . locale() . $slug  . "</td>";
+                    $markup .= "<td>" . $post1->post_type . ' ' . $post1->post_parent . "</td>";
+                    $markup .= '<td><input data-slug="' . $slug . '" type="checkbox" ' . ($post1->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></td>';
+                    $markup .= "</tr>";
+                }
+            }
+        }
     }
     return $markup;
 }
+
+function trCpts($posts, $post_types)
+{
+    $markup = "";
+    foreach ($posts as $post) {
+        $slug = $post->post_name;
+
+        if (in_array($post->post_type, $post_types)) {
+            $post_type_object = get_post_type_object($post->post_type);
+            $slug = $post_type_object->rewrite['slug'] . "/" . $post->post_name;
+            $markup .= '<tr>';
+            $markup .= '<td><a href="/' . locale() . $slug . '/" target="_blank">' . $post->post_title . '</a></td>';
+            $markup .= "<td>" . locale() . $slug  . "</td>";
+            $markup .= "<td>" . $post->post_type  . "</td>";
+            $markup .= '<td><input data-slug="' . $slug . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></td>';
+            $markup .= "</tr>";
+        }
+    }
+    return $markup;
+}
+
 
 function postTypes()
 {
@@ -507,9 +592,17 @@ function postTypes()
 
 function display()
 {
+    // $post_types = postTypes();
+    $posts = queryPosts();
+    return tr($posts);
+}
+
+function displayCpts()
+{
     $post_types = postTypes();
     $posts = queryPosts();
-    return tr($posts, $post_types);
+    //print_r($post_types);
+    return trCpts($posts, $post_types);
 }
 
 function upToDate($posts)
