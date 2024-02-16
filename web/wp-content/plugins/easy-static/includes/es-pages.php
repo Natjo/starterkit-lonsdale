@@ -12,8 +12,8 @@
         <div class="list-pages">
             <ul class="list-pages-header">
                 <li>Name</li>
-                <li>Slug</th>
-                <li>Type</li>
+                <li>Slug</li>
+                <li>Last modified</li>
                 <li>Static</li>
             </ul>
             <div class="list-pages-wrapper">
@@ -74,7 +74,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Slug</th>
-                        <th>type</th>
+                        <th></th>
                         <th>static</th>
                     </tr>
                 </thead>

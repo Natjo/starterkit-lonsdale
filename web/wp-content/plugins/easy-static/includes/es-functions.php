@@ -470,7 +470,7 @@ function listPages()
                 <div class="list-pages-row">
                 <div class="list-pages-link">-<a target="_blank" href="/' . $parent . "/".$post->post_name . '">' . $post->post_title . '</a></div>
                 <div class="list-pages-url">' . $parent . "/". $post->post_name . '</div>
-                <div class="list-pages-type">' . $post->post_type . '</div>
+                <div class="list-pages-type"></div>
                 <div class="list-pages-active "><input type="checkbox"></div>
                 </div>';
             }
@@ -494,11 +494,11 @@ function listPages()
 
         if ($child !== "") {
             echo '
-         <details open class="list-pages-row list-pages-item">
+         <details class="list-pages-row list-pages-item">
          <summary class="list-pages-row">
          <div class="list-pages-link"><a target="_blank" href="/' . locale() . $post->post_name . '">' . $post->post_title . '</a></div>
          <div class="list-pages-url">' . locale() . $post->post_name . '</div>
-         <div class="list-pages-type">' . $post->post_type . '</div>
+         <div class="list-pages-type"></div>
          <div class="list-pages-active "><input type="checkbox"></div>
          </summary>' . $child . '</details>';
         } else {
@@ -506,7 +506,7 @@ function listPages()
         <div  class="list-pages-row list-pages-item">
         <div class="list-pages-link"><a target="_blank" href="/' . locale() . $post->post_name . '">' . $post->post_title . '</a></div>
         <div class="list-pages-url">' . locale() . $post->post_name . '</div>
-        <div class="list-pages-type">' . $post->post_type . '</div>
+        <div class="list-pages-type"></div>
         <div class="list-pages-active "><input type="checkbox"></div>
         </div>';
         }
@@ -569,7 +569,7 @@ function trCpts($posts, $post_types)
             $markup .= '<tr>';
             $markup .= '<td><a href="/' . locale() . $slug . '/" target="_blank">' . $post->post_title . '</a></td>';
             $markup .= "<td>" . locale() . $slug  . "</td>";
-            $markup .= "<td>" . $post->post_type  . "</td>";
+            $markup .= "<td></td>";
             $markup .= '<td><input data-slug="' . $slug . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></td>';
             $markup .= "</tr>";
         }
