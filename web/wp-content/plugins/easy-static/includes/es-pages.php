@@ -1,6 +1,10 @@
+
 <section id="pages" class="tab-content">
     <header>
-        <button class="es-btn plug-static-btn-generate"><span>Generate pages</span></button> - Last generated : 12 mars 2024
+        <button class="es-btn plug-static-btn-generate"><span>Generate pages</span></button> 
+        <?php if(!empty($last_generate)) : ?>
+        <span class="es-last_generated"> Last generated : <?= date("j F Y h:m", strtotime($last_generate)) ?></span>
+        <?php endif; ?>
     </header>
     <section>
         <header>

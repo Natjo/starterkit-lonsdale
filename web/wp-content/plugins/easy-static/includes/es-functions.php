@@ -472,7 +472,7 @@ function listPages()
                 <div class="list-pages-row">
                 <div class="list-pages-link"><a target="_blank" href="/' . $parent . "/" . $post->post_name . '">' . $post->post_title . '</a></div>
                 <div class="list-pages-url">' . $parent . "/" . $post->post_name . '</div>
-                <div class="list-pages-active "><input data-slug="' .  locale() . $post->post_name . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></div>
+                <div class="list-pages-active "><input data-slug="' .  $parent . "/" . $post->post_name . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></div>
                 <div class="list-pages-type info-update"></div>
                 </div>';
             }

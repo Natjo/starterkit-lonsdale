@@ -37,10 +37,9 @@ btn_generate.onclick = () => {
 }
 
 // posts is active
-const checkbox_static_active = pages_result.querySelectorAll(".checkbox-static_active");
+const checkbox_static_active = main.querySelectorAll("#pages .checkbox-static_active");
 checkbox_static_active.forEach((el) => {
     el.onchange = () => {
-
         if (!el.checked) {
             el.value = 0;
         } else {

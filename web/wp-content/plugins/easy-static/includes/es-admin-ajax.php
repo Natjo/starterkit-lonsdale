@@ -73,20 +73,20 @@ function static_posts_his_active_callback()
     mysqli_query($link, $sql);
     mysqli_close($link);
 
-    $folder = locale() . $_POST['slug'] . "/";
+    $folder =  $_POST['slug'] . "/";
 
     // create or remove index.html
     if ($_POST['status'] == "true") {
 
-        if ($folder === "accueil/" || $folder === "home/" || $folder === "homepage/") {
+        if ($folder === locale() . "accueil/" || $folder === locale() . "home/" || $folder === locale() . "homepage/") {
             $html = loadPage("https://" . $host . "/?generate=true");
             if ($isminify === true) {
-                file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', TinyMinify::html($html));
+                file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' .  locale() . 'index.html', TinyMinify::html($html));
             } else {
                 file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', $html);
             }
         } else {
-            $html = loadPage("https://" . $host . "/" . locale() . $folder . "?generate=true");
+            $html = loadPage("https://" . $host . "/" . $folder . "?generate=true");
             mkdir(WP_CONTENT_DIR . "/easy-static/static/" . $folder, 0755, true);
             if ($isminify === true) {
                 file_put_contents(WP_CONTENT_DIR . "/easy-static/static/" . $folder . 'index.html', TinyMinify::html($html));
@@ -95,14 +95,14 @@ function static_posts_his_active_callback()
             }
         }
     } else {
-        if ($folder === "accueil/" || $folder === "home/" || $folder === "homepage/") {
+        if ($folder ===  locale() . "accueil/" || $folder === locale() . "home/" || $folder === locale() . "homepage/") {
             unlink(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html');
         } else {
             unlink(WP_CONTENT_DIR . '/easy-static/static/' . $folder . 'index.html');
         }
     }
 
-    setupToDate($_POST['id']);
+    //setupToDate($_POST['id']);
 }
 
 /**
@@ -124,6 +124,15 @@ function test_callback()
     create($posts, $post_types, $_POST['status']);
 
     upToDate($posts);
+
+    global $table;
+
+    $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
+    $sql = "UPDATE " . $table . " SET value = CURRENT_TIMESTAMP WHERE option ='generate' ";
+    mysqli_query($link, $sql);
+    mysqli_close($link);
+
+
 
     //$posts = queryPosts();
 

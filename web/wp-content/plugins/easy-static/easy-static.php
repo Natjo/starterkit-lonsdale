@@ -13,6 +13,7 @@ global $table;
 global $haschange;
 global $isStatic;
 
+
 $homepageID = get_option('page_on_front');
 $homepagePost = get_post($homepageID);
 $home_folder = $homepagePost->post_name; // "homepage";
@@ -55,6 +56,14 @@ if (empty($easy_static_user)) {
     $format = array('%s', '%s');
     $wpdb->insert($table, $data, $format);
 }
+
+$easy_static_generate = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'generate'");
+if (empty($easy_static_generate)) {
+    $data = array('option' => "generate", 'value' => "");
+    $format = array('%s', '%s');
+    $wpdb->insert($table, $data, $format);
+}
+$last_generate = $easy_static_generate[0]->value;
 
 $easy_static_password = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'password'");
 if (empty($easy_static_password)) {

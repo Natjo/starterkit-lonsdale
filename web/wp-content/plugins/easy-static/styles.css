@@ -168,7 +168,6 @@
         margin-bottom: 20px;
     }
 
-
     .es-auth {
         display: grid;
         grid-gap: 10px;
@@ -220,7 +219,7 @@
             .list-pages-link-childs {
                 .list-pages-row {
                     &:nth-child(odd) {
-                        background: rgba(0,0,0,.03);
+                        background: rgba(0, 0, 0, .03);
                     }
                 }
             }
@@ -238,101 +237,93 @@
         }
 
         .list-pages-link-childs {
-           
             padding: 0 10px 10px 10px;
 
             .list-pages-row {
-                border: 1px dotted #ccc;
-                border-bottom: none;
-
-       
-        
-
+                box-shadow: -1px -1px #ccc, 1px -1px #ccc;
 
                 &:nth-last-child(1) {
-                    border-bottom: 1px dotted #ccc;
-                }
-
-                .list-pages-link {
-                    width: 290px;
-                }
-
-                .list-pages-active {
-
-                    width: 80px;
-
+                    box-shadow: -1px -1px #ccc, 1px -1px #ccc, 0px 1px #ccc;
                 }
             }
-        }
-
-        .list-pages-row {
-            display: flex;
 
             .list-pages-link {
-                padding: 10px;
-                width: 300px;
-
-                a {
-                    text-decoration: none;
-
-                    &:hover {
-                        text-decoration: underline;
-                    }
-                }
-            }
-
-            .list-pages-url {
-                padding: 10px;
-                flex:1;
+                width: 290px;
             }
 
             .list-pages-type {
-                padding: 10px;
-                margin-left: auto;
-                width: 100px;
-                text-align: center;
+                padding-right: 0;
             }
 
             .list-pages-active {
-                padding: 10px;
                 width: 100px;
-                text-align: center;
-            }
-        }
-
-
-        details[open] {
-            .list-pages-row {}
-
-            >summary {
-                .list-pages-link:after {
-                    content: "▲";
-                }
-            }
-
-        }
-
-        summary {
-            
-            .list-pages-link{
-                cursor: pointer;
-                &:hover:after {
-                   /* color: #2782ad;*/
-                    opacity: 1;
-                }
-            }
-            .list-pages-link:after {
-                content: "▼";
-                margin-left: 5px;
-                font-size: 10px;
-                margin-left: 10px;
-                font-size: 11px;
-                opacity: .5;
-             
             }
         }
     }
+
+    .list-pages-row {
+        display: flex;
+
+        .list-pages-link {
+            padding: 10px;
+            width: 300px;
+
+            a {
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        .list-pages-url {
+            padding: 10px;
+            flex: 1;
+        }
+
+        .list-pages-type {
+            padding: 10px;
+            margin-left: auto;
+            width: 100px;
+            text-align: center;
+        }
+
+        .list-pages-active {
+            padding: 10px;
+            width: 100px;
+            text-align: center;
+        }
+    }
+
+    details[open] {
+        >summary {
+            .list-pages-link:after {
+                content: "▲"; opacity: 1;
+            }
+        }
+    }
+
+    summary {
+        .list-pages-link {
+            cursor: pointer;
+
+            &:hover:after {
+                opacity: 1;
+            }
+        }
+
+        .list-pages-link:after {
+            content: "▼";
+            margin-left: 5px;
+            font-size: 10px;
+            margin-left: 10px;
+            font-size: 11px;
+            opacity: .5;
+        }
+    }
 }
+
 
 .es-notice {
     display: flex;
@@ -390,4 +381,11 @@
 .es-cpt-infos h2 {
     margin: 0 !important;
     color: #fff;
+}
+
+.es-last_generated {
+    opacity: .9;
+    font-weight: 300;
+    font-size: 12px;
+    margin-left: 10px;
 }
