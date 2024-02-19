@@ -102,7 +102,7 @@ function static_posts_his_active_callback()
         }
     }
 
-    //setupToDate($_POST['id']);
+    setupToDate($_POST['id']);
 }
 
 /**

@@ -24,19 +24,19 @@
 }
 
 
-.info-update {
+.info-update.uptodate {
     color: green !important;
 }
 
-.info-update:before {
+.info-update.uptodate:before {
     content: '✓';
 }
 
-.info-update.error {
+.info-update {
     color: red !important;
 }
 
-.info-update.error:before {
+.info-update:before {
     content: 'x';
 }
 
@@ -204,6 +204,10 @@
                     flex: 1 0 300px;
                     text-align: left;
                 }
+
+                &:nth-child(3) {
+                    flex: 0 0 50px;
+                }
             }
         }
 
@@ -256,7 +260,7 @@
             }
 
             .list-pages-active {
-                width: 100px;
+                width: 50px;
             }
         }
     }
@@ -291,7 +295,7 @@
 
         .list-pages-active {
             padding: 10px;
-            width: 100px;
+            width: 50px;
             text-align: center;
         }
     }
@@ -299,7 +303,8 @@
     details[open] {
         >summary {
             .list-pages-link:after {
-                content: "▲"; opacity: 1;
+                content: "▲";
+                opacity: 1;
             }
         }
     }
@@ -337,12 +342,16 @@
 
 }
 
+.es-notice li {
+    margin: 0;
+}
+
 .es-notice:before {
     content: "";
     display: block;
     width: 16px;
     height: 16px;
-    margin-right: 8px;
+    margin-right: 10px;
     border: none;
     -webkit-mask-size: contain;
     mask-size: contain;

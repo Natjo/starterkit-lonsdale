@@ -65,7 +65,10 @@ if (strpos($index, '/* easy-static */') !== false) {
 
     <?php if (!empty($haschange) && !empty($isStatic)) : ?>
         <div class="es-notice notice-warning">
-            <p>Vous avez efféctué des modifications, vous devez regenerer les pages.</p>
+            <ul>
+                <li>Vous avez efféctué des modifications, de <b>page/post/cpt</b>, de <b>paramètre</b> , de <b>menu</b></li>
+                <li>Vous devez regenerer les pages.</li>
+            </ul>
         </div>
     <?php endif; ?>
 

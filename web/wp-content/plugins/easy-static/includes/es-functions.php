@@ -460,6 +460,16 @@ function locale()
     return $locale;
 }
 
+function diffdate($post){
+    $date1 = new DateTime($post->post_modified);
+    $date2 = new DateTime($post->static_generate);
+    $uptodate = "";
+    if ($date1 < $date2) {
+        $uptodate = "uptodate";
+    }
+
+    return $uptodate;
+}
 
 function listPages()
 {
@@ -468,12 +478,13 @@ function listPages()
         $html = "";
         foreach ($posts as $post) {
             if ($id === $post->post_parent) {
+                $uptodate = diffdate($post);
                 $html .= '
                 <div class="list-pages-row">
                 <div class="list-pages-link"><a target="_blank" href="/' . $parent . "/" . $post->post_name . '">' . $post->post_title . '</a></div>
                 <div class="list-pages-url">' . $parent . "/" . $post->post_name . '</div>
                 <div class="list-pages-active "><input data-slug="' .  $parent . "/" . $post->post_name . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></div>
-                <div class="list-pages-type info-update"></div>
+                <div class="list-pages-type info-update ' . $uptodate . '"></div>
                 </div>';
             }
         }
@@ -491,17 +502,18 @@ function listPages()
     wp_reset_postdata();
 
     foreach ($posts->posts as $post) {
-        //   print_r($post);
+
         $child = sousPages($posts->posts, $post->ID, locale() . $post->post_name);
+        $uptodate = diffdate($post);
 
         if ($child !== "") {
             echo '
-         <details class="list-pages-row list-pages-item">
+         <details open class="list-pages-row list-pages-item">
          <summary class="list-pages-row">
          <div class="list-pages-link"><a target="_blank" href="/' . locale() . $post->post_name . '">' . $post->post_title . '</a></div>
          <div class="list-pages-url">' . locale() . $post->post_name . '</div> 
          <div class="list-pages-active"><input data-slug="' .  locale() . $post->post_name . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></div>
-         <div class="list-pages-type info-update"></div>
+         <div class="list-pages-type info-update ' . $uptodate . '"></div>
          </summary><div class="list-pages-link-childs">' . $child . '</div></details>';
         } elseif (!$post->post_parent) {
             echo '
@@ -509,7 +521,7 @@ function listPages()
         <div class="list-pages-link"><a target="_blank" href="/' . locale() . $post->post_name . '">' . $post->post_title .  '</a></div>
         <div class="list-pages-url">' . locale() . $post->post_name . '</div>
         <div class="list-pages-active "><input data-slug="' .  locale() . $post->post_name . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></div>        
-        <div class="list-pages-type info-update"></div>
+        <div class="list-pages-type info-update ' . $uptodate . '"></div>
         </div>';
         }
     }
@@ -566,13 +578,14 @@ function trCpts($posts, $post_types)
         $slug = $post->post_name;
 
         if (in_array($post->post_type, $post_types)) {
+            $uptodate = diffdate($post);
             $post_type_object = get_post_type_object($post->post_type);
             $slug = $post_type_object->rewrite['slug'] . "/" . $post->post_name;
             $markup .= '<tr>';
             $markup .= '<td><a href="/' . locale() . $slug . '/" target="_blank">' . $post->post_title . '</a></td>';
             $markup .= "<td>" . locale() . $slug  . "</td>";
             $markup .= "<td></td>";
-            $markup .= '<td class="info-update"></td>';
+            $markup .= '<td class="info-update ' . $uptodate . '"></td>';
             $markup .= "</tr>";
         }
     }
@@ -764,4 +777,12 @@ function create($posts, $post_types)
             }
         }
     }
+}
+function hasChanged()
+{
+    global $table;
+    $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
+    $sql = "UPDATE " . $table . " SET value = true WHERE option ='haschange' ";
+    mysqli_query($link, $sql);
+    mysqli_close($link);
 }

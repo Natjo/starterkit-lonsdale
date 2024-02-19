@@ -120,39 +120,41 @@ require_once plugin_dir_path(__FILE__) . 'includes/es-functions.php';
 
 require_once plugin_dir_path(__FILE__) . 'includes/es-admin-ajax.php';
 
-
 // set haschange to true if page/post is edited
 add_action('save_post', 'wpdocs_notify_subscribers', 10, 3);
 function wpdocs_notify_subscribers($post_id, $post, $update)
 {
-    global $easy_static_active;  
-    global $table;
+    global $easy_static_active;
 
     if ($easy_static_active[0]->value) {
         if ($post->post_type == "page" || $post->post_type == "post") {
             if ($post->static_active) {
-                $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
-                $sql = "UPDATE " . $table . " SET value = true WHERE option ='haschange' ";
-                mysqli_query($link, $sql);
-                mysqli_close($link);
+                hasChanged();
             }
         }
     }
-
 }
+
+
+add_action('check_admin_referer', 'check_nav_menu_updates', 11, 1);
+
+function check_nav_menu_updates($action)
+{
+    if (('update-nav_menu' != $action) or !isset($_POST['menu-locations'])) {
+        return;
+    }
+    hasChanged();
+}
+
 
 // set haschange to true if change in parameters
 function clear_advert_main_transient($post_id)
-{   global $table;
+{
     global $easy_static_active;
     $screen = get_current_screen();
     if ($easy_static_active[0]->value) {
         if ($screen->base === "toplevel_page_acf-options-parametres") {
-            // if (strpos($screen->id, "acf-options-adverts") == true) {
-            $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DATABASE'));
-            $sql = "UPDATE " . $table . " SET value = true WHERE option ='haschange' ";
-            mysqli_query($link, $sql);
-            mysqli_close($link);
+            hasChanged();
         }
     }
 }

@@ -43,7 +43,7 @@ checkbox_static_active.forEach((el) => {
         if (!el.checked) {
             el.value = 0;
         } else {
-            // el.parentNode.parentNode.querySelector('.info-update').classList.remove('error');
+             el.parentNode.parentNode.querySelector('.info-update').classList.add('uptodate');
             el.value = 1;
         }
 
