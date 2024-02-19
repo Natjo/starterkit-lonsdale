@@ -95,13 +95,6 @@ function remove_page_class($wp_list_pages)
 
 
 /*
- * CPT
- */
-
-
-
-
-/*
  * TINY MCE
  */
 

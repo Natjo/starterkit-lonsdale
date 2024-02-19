@@ -1,9 +1,7 @@
 <section id="pages" class="tab-content">
     <header>
-        <button class="es-btn plug-static-btn-generate"><span>Generate pages</span></button>
+        <button class="es-btn plug-static-btn-generate"><span>Generate pages</span></button> - Last generated : 12 mars 2024
     </header>
-
-
     <section>
         <header>
             <h2>Pages</h2>
@@ -13,8 +11,8 @@
             <ul class="list-pages-header">
                 <li>Name</li>
                 <li>Slug</li>
-                <li>Last modified</li>
                 <li>Static</li>
+                <li>Up to date</li>
             </ul>
             <div class="list-pages-wrapper">
                 <?php listPages(); ?>
@@ -75,7 +73,8 @@
                         <th>Name</th>
                         <th>Slug</th>
                         <th></th>
-                        <th>static</th>
+                        <th>Up to date</th>
+                   
                     </tr>
                 </thead>
 

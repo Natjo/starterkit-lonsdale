@@ -196,12 +196,13 @@
                 padding: 8px 10px;
                 text-align: center;
 
-                &:nth-child(1){
-                    flex: 0 0 350px;
+                &:nth-child(1) {
+                    flex: 0 0 300px;
                     text-align: left;
                 }
-                &:nth-child(2){
-                    flex: 1 0 350px;
+
+                &:nth-child(2) {
+                    flex: 1 0 300px;
                     text-align: left;
                 }
             }
@@ -210,31 +211,79 @@
         .list-pages-wrapper {
             border: 1px solid #c3c4c7;
             box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+            background-color: #f6f7f7;
         }
 
-
-
         .list-pages-item:nth-child(even) {
-
             background-color: #fff;
 
+            .list-pages-link-childs {
+                .list-pages-row {
+                    &:nth-child(odd) {
+                        background: rgba(0,0,0,.03);
+                    }
+                }
+            }
+
+        }
+
+        .list-pages-item:nth-child(odd) {
+            .list-pages-link-childs {
+                .list-pages-row {
+                    &:nth-child(odd) {
+                        background: #fff;
+                    }
+                }
+            }
+        }
+
+        .list-pages-link-childs {
+           
+            padding: 0 10px 10px 10px;
+
+            .list-pages-row {
+                border: 1px dotted #ccc;
+                border-bottom: none;
+
+       
+        
 
 
+                &:nth-last-child(1) {
+                    border-bottom: 1px dotted #ccc;
+                }
+
+                .list-pages-link {
+                    width: 290px;
+                }
+
+                .list-pages-active {
+
+                    width: 80px;
+
+                }
+            }
         }
 
         .list-pages-row {
-
             display: flex;
-
-
 
             .list-pages-link {
                 padding: 10px;
-                width: 350px;
+                width: 300px;
+
+                a {
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
             }
 
             .list-pages-url {
                 padding: 10px;
+                flex:1;
             }
 
             .list-pages-type {
@@ -264,10 +313,22 @@
         }
 
         summary {
+            
+            .list-pages-link{
+                cursor: pointer;
+                &:hover:after {
+                   /* color: #2782ad;*/
+                    opacity: 1;
+                }
+            }
             .list-pages-link:after {
                 content: "▼";
                 margin-left: 5px;
                 font-size: 10px;
+                margin-left: 10px;
+                font-size: 11px;
+                opacity: .5;
+             
             }
         }
     }

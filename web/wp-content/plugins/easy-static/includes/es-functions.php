@@ -459,23 +459,25 @@ function locale()
     }
     return $locale;
 }
+
+
 function listPages()
 {
     function sousPages($posts, $id, $parent)
     {
+        $html = "";
         foreach ($posts as $post) {
-            $html = "";
             if ($id === $post->post_parent) {
                 $html .= '
                 <div class="list-pages-row">
-                <div class="list-pages-link">-<a target="_blank" href="/' . $parent . "/".$post->post_name . '">' . $post->post_title . '</a></div>
-                <div class="list-pages-url">' . $parent . "/". $post->post_name . '</div>
-                <div class="list-pages-type"></div>
-                <div class="list-pages-active "><input type="checkbox"></div>
+                <div class="list-pages-link"><a target="_blank" href="/' . $parent . "/" . $post->post_name . '">' . $post->post_title . '</a></div>
+                <div class="list-pages-url">' . $parent . "/" . $post->post_name . '</div>
+                <div class="list-pages-active "><input data-slug="' .  locale() . $post->post_name . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></div>
+                <div class="list-pages-type info-update"></div>
                 </div>';
             }
-            return $html;
         }
+        return $html;
     }
 
     $args = array(
@@ -497,17 +499,17 @@ function listPages()
          <details class="list-pages-row list-pages-item">
          <summary class="list-pages-row">
          <div class="list-pages-link"><a target="_blank" href="/' . locale() . $post->post_name . '">' . $post->post_title . '</a></div>
-         <div class="list-pages-url">' . locale() . $post->post_name . '</div>
-         <div class="list-pages-type"></div>
-         <div class="list-pages-active "><input type="checkbox"></div>
-         </summary>' . $child . '</details>';
-        } else {
+         <div class="list-pages-url">' . locale() . $post->post_name . '</div> 
+         <div class="list-pages-active"><input data-slug="' .  locale() . $post->post_name . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></div>
+         <div class="list-pages-type info-update"></div>
+         </summary><div class="list-pages-link-childs">' . $child . '</div></details>';
+        } elseif (!$post->post_parent) {
             echo '
         <div  class="list-pages-row list-pages-item">
-        <div class="list-pages-link"><a target="_blank" href="/' . locale() . $post->post_name . '">' . $post->post_title . '</a></div>
+        <div class="list-pages-link"><a target="_blank" href="/' . locale() . $post->post_name . '">' . $post->post_title .  '</a></div>
         <div class="list-pages-url">' . locale() . $post->post_name . '</div>
-        <div class="list-pages-type"></div>
-        <div class="list-pages-active "><input type="checkbox"></div>
+        <div class="list-pages-active "><input data-slug="' .  locale() . $post->post_name . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></div>        
+        <div class="list-pages-type info-update"></div>
         </div>';
         }
     }
@@ -570,7 +572,7 @@ function trCpts($posts, $post_types)
             $markup .= '<td><a href="/' . locale() . $slug . '/" target="_blank">' . $post->post_title . '</a></td>';
             $markup .= "<td>" . locale() . $slug  . "</td>";
             $markup .= "<td></td>";
-            $markup .= '<td><input data-slug="' . $slug . '" type="checkbox" ' . ($post->static_active ? "checked" : "") . ' name="page-' . $post->ID . '" value="' . $post->static_active  . '" class="checkbox-static_active" id="' . $post->ID . '" ></td>';
+            $markup .= '<td class="info-update"></td>';
             $markup .= "</tr>";
         }
     }
