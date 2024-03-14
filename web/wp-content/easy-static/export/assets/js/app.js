@@ -65,6 +65,14 @@ var map = {
 	"./strates/news.js": [
 		"./assets/js/strates/news.js",
 		"assets_js_strates_news_js"
+	],
+	"./strates/sliders": [
+		"./assets/js/strates/sliders.js",
+		"assets_js_strates_sliders_js"
+	],
+	"./strates/sliders.js": [
+		"./assets/js/strates/sliders.js",
+		"assets_js_strates_sliders_js"
 	]
 };
 function webpackAsyncContext(req) {
@@ -12099,9 +12107,10 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 			// return url for filenames not based on template
 /******/ 			if (chunkId === "assets_js_blocks_header-nav_js") return "./js/chunks/2c760a048cf26fc52350.js";
 /******/ 			if (chunkId === "assets_js_modules_formValidate_js") return "./js/chunks/cd1da5e53ca6b4797c44.js";
-/******/ 			if (chunkId === "assets_js_modules_slider_js") return "./js/chunks/ab1a0b9a8cf30a8820ff.js";
+/******/ 			if (chunkId === "assets_js_modules_slider_js") return "./js/chunks/ed69a3353384fc3f0986.js";
 /******/ 			if (chunkId === "assets_js_strates_contact_js") return "./js/chunks/e4f5556d2ef581bb733f.js";
-/******/ 			if (chunkId === "assets_js_strates_news_js") return "./js/chunks/cbb338d1d85d1c786059.js";
+/******/ 			if (chunkId === "assets_js_strates_news_js") return "./js/chunks/7e741131aa971d8cd621.js";
+/******/ 			if (chunkId === "assets_js_strates_sliders_js") return "./js/chunks/2e16221460a8c509b8cb.js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};
@@ -12189,7 +12198,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	
 /******/ 	/* webpack/runtime/publicPath */
 /******/ 	!function() {
-/******/ 		__webpack_require__.p = "/lorem/assets/";
+/******/ 		__webpack_require__.p = "/popo/assets/";
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */

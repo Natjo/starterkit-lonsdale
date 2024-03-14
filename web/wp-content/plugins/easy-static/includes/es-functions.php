@@ -490,6 +490,8 @@ function listPages()
         }
         return $html;
     }
+    //global $sitepress;
+  //  $sitepress->switch_lang( "en");
 
     $args = array(
         'post_type' => "page",
@@ -497,6 +499,7 @@ function listPages()
         'order' => 'DESC',
         'orderby' => 'modified',
         'post_status' => 'publish'
+    
     );
     $posts = new WP_Query($args);
     wp_reset_postdata();

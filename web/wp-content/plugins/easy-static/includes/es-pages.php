@@ -1,9 +1,14 @@
-
 <section id="pages" class="tab-content">
     <header>
-        <button class="es-btn plug-static-btn-generate"><span>Generate pages</span></button> 
-        <?php if(!empty($last_generate)) : ?>
-        <span class="es-last_generated"> Last generated : <?= date("j F Y h:m", strtotime($last_generate)) ?></span>
+        <?php if (defined("ICL_LANGUAGE_CODE")) : ?>
+            <button class="es-btn plug-static-btn-generate"><span>Generate <?= "<b>(" . apply_filters('wpml_current_language', NULL) . ")</b>"; ?> pages</span></button> 
+            <?php else : ?>
+            <button class="es-btn plug-static-btn-generate"><span>Generate pages</span></button>
+        <?php endif; ?>
+
+
+        <?php if (!empty($last_generate)) : ?>
+            <span class="es-last_generated"> Last generated : <?= date("j F Y h:m", strtotime($last_generate)) ?></span>
         <?php endif; ?>
     </header>
     <section>
@@ -78,7 +83,7 @@
                         <th>Slug</th>
                         <th></th>
                         <th>Up to date</th>
-                   
+
                     </tr>
                 </thead>
 

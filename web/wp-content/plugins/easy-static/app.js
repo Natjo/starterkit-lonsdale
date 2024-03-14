@@ -43,7 +43,7 @@ checkbox_static_active.forEach((el) => {
         if (!el.checked) {
             el.value = 0;
         } else {
-             el.parentNode.parentNode.querySelector('.info-update').classList.add('uptodate');
+            el.parentNode.parentNode.querySelector('.info-update').classList.add('uptodate');
             el.value = 1;
         }
 
@@ -158,20 +158,25 @@ relative.addEventListener('keypress', (e) => {
     if (e.which === 13) e.preventDefault();
 });
 relative.onblur = () => {
-    if (relative.innerText.length > 1) {
-        const data = new FormData();
-        data.append('action', "static_export_slug");
-        data.append('nonce', nonce);
-        data.append('slug', relative.innerText);
-        const xhr = new XMLHttpRequest();
-        xhr.open("post", ajax_url, true);
-        xhr.send(data);
-        xhr.onload = () => { }
+    // if (relative.innerText.length > 1) {
+    const data = new FormData();
+    data.append('action', "static_export_slug");
+    data.append('nonce', nonce);
+    data.append('slug', relative.innerText);
+    const xhr = new XMLHttpRequest();
+    xhr.open("post", ajax_url, true);
+    xhr.send(data);
+    xhr.onload = () => { }
+    if (document.querySelector('.es-action')) {
         document.querySelector('.es-action').classList.remove('disabled');
-
-    } else {
-        document.querySelector('.es-action').classList.add('disabled');
     }
+
+
+    /*} else {
+        if (document.querySelector('.es-action')) {
+            document.querySelector('.es-action').classList.add('disabled');
+        }
+    }*/
 }
 
 
@@ -216,6 +221,25 @@ link_download_uploads.addEventListener('click', () => {
         link_download_uploads.style.display = "none";
     }, 300);
 });
+
+// zip without uplads
+const btn_zip_no_uploads = document.getElementById('es-zip-no_upload');
+btn_zip_no_uploads.onclick = () => {
+    btn_zip_no_uploads.classList.add('loading');
+    const data = new FormData();
+    data.append('action', "static_export_download_no_uploads");
+    data.append('nonce', nonce);
+    const xhr = new XMLHttpRequest();
+    xhr.open("post", ajax_url, true);
+    xhr.send(data);
+    xhr.onload = () => {
+        const response = JSON.parse(xhr.response);
+        link_download_uploads.href = window.location.origin + "/wp-content/easy-static/export.zip";
+        link_download_uploads.dowload = "export";
+        link_download_uploads.style.display = "inline";
+        btn_zip_no_uploads.classList.remove('loading');
+    }
+}
 
 // remove zip
 const btn_zip_remove = document.getElementById('es-zip-remove');

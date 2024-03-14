@@ -73,20 +73,20 @@ function static_posts_his_active_callback()
     mysqli_query($link, $sql);
     mysqli_close($link);
 
-    $folder =  $_POST['slug'] . "/";
+    $folder = locale() . $_POST['slug'] . "/";
 
     // create or remove index.html
     if ($_POST['status'] == "true") {
 
-        if ($folder === locale() . "accueil/" || $folder === locale() . "home/" || $folder === locale() . "homepage/") {
+        if ($folder === "accueil/" || $folder === "home/" || $folder === "homepage/") {
             $html = loadPage("https://" . $host . "/?generate=true");
             if ($isminify === true) {
-                file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' .  locale() . 'index.html', TinyMinify::html($html));
+                file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', TinyMinify::html($html));
             } else {
                 file_put_contents(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html', $html);
             }
         } else {
-            $html = loadPage("https://" . $host . "/" . $folder . "?generate=true");
+            $html = loadPage("https://" . $host . "/" . locale() . $folder . "?generate=true");
             mkdir(WP_CONTENT_DIR . "/easy-static/static/" . $folder, 0755, true);
             if ($isminify === true) {
                 file_put_contents(WP_CONTENT_DIR . "/easy-static/static/" . $folder . 'index.html', TinyMinify::html($html));
@@ -95,7 +95,7 @@ function static_posts_his_active_callback()
             }
         }
     } else {
-        if ($folder ===  locale() . "accueil/" || $folder === locale() . "home/" || $folder === locale() . "homepage/") {
+        if ($folder === "accueil/" || $folder === "home/" || $folder === "homepage/") {
             unlink(WP_CONTENT_DIR . '/easy-static/static/' . locale() . 'index.html');
         } else {
             unlink(WP_CONTENT_DIR . '/easy-static/static/' . $folder . 'index.html');
@@ -199,7 +199,11 @@ function static_export_pages_callback()
     }
 
     //$newUrlSlug = "rapport-annuel-2022";
-    $newUrlSlug = $_POST['slug'];
+    if (empty($_POST['slug'])) {
+        $newUrlSlug = $_POST['slug'];
+    } else {
+        $newUrlSlug = $_POST['slug'] . "/";
+    }
 
     $currentUrl = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'] . '/';
     $currentUrlSlashed = str_replace("/", "\/", $currentUrl);
@@ -227,10 +231,10 @@ function static_export_pages_callback()
             }
 
             // 1: uploads
-            $test = str_replace($currentUrl . "wp-content/uploads/", "/" . $newUrlSlug . "/uploads/", $html);
+            $test = str_replace($currentUrl . "wp-content/uploads/", "/" . $newUrlSlug . "uploads/", $html);
 
             // 2: themes
-            $test = str_replace($currentUrl . "wp-content/themes/" . $theme_slug . "/assets/", "/" . $newUrlSlug . "/assets/", $test);
+            $test = str_replace($currentUrl . "wp-content/themes/" . $theme_slug . "/assets/", "/" . $newUrlSlug . "assets/", $test);
 
             // 3: paramsdatas
             $test = str_replace($currentUrlSlashed . "wp-content\/themes\/" . $theme_slug . "\/",  "\/" . $newUrlSlug . "\/", $test);
@@ -241,10 +245,10 @@ function static_export_pages_callback()
             $test = str_replace('<div class="otgs-development-site-front-end"><span class="icon"></span>This site is registered on <a href="https://wpml.org">wpml.org</a> as a development site.</div >', '', $test);
 
             // 4: urls
-            $test = str_replace($currentUrl, "/" . $newUrlSlug . "/", $test);
+            $test = str_replace($currentUrl, "/" . $newUrlSlug, $test);
 
             // 5: urls homepage
-            $test = str_replace('"/"', '"/' . $newUrlSlug . '/"', $test);
+            $test = str_replace('"/"', '"/' . $newUrlSlug . '"', $test);
 
 
             if ($folder === $home_folder . "/") {
@@ -278,7 +282,7 @@ function static_export_pages_callback()
 
     // app.js
     $appjs_file = file_get_contents(WP_CONTENT_DIR . "/easy-static/export/assets/js/app.js");
-    $appjs_file = str_replace("/wp-content/themes/" . $theme_slug . "/assets/", "/" . $newUrlSlug . "/assets/", $appjs_file);
+    $appjs_file = str_replace("/wp-content/themes/" . $theme_slug . "/assets/", "/" . $newUrlSlug . "assets/", $appjs_file);
     file_put_contents(WP_CONTENT_DIR . "/easy-static/export/assets/js/app.js", $appjs_file);
 
     //app.css
@@ -286,7 +290,7 @@ function static_export_pages_callback()
 
     //font:
     // $appcss_file = str_replace("/wp-content/themes/".$theme_slug."/assets/fonts/", "/" . $newUrlSlug . "/assets/fonts/", $appjs_file);
-    $appcss_file = str_replace("/wp-content/themes/" . $theme_slug . "/assets/", "/" . $newUrlSlug . "/assets/", $appcss_file);
+    $appcss_file = str_replace("/wp-content/themes/" . $theme_slug . "/assets/", "/" . $newUrlSlug . "assets/", $appcss_file);
     file_put_contents(WP_CONTENT_DIR . "/easy-static/export/assets/css/app.css", $appcss_file);
 
     wp_send_json($response);
@@ -310,7 +314,7 @@ function static_export_slug_callback()
     mysqli_close($link);
 }
 
-
+// with upload
 function zipFolder1($rootPath, $filefinal)
 {
 
@@ -351,10 +355,38 @@ function zipFolder1($rootPath, $filefinal)
     $zip->close();
 }
 
+// without upload
+function zipFolder2($rootPath, $filefinal)
+{
+
+    $zip = new ZipArchive();
+    $zip->open($filefinal, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
+
+
+    $rootPath1 = WP_CONTENT_DIR . '/easy-static/export';
+    $files1 = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($rootPath1),
+        RecursiveIteratorIterator::LEAVES_ONLY
+    );
+    foreach ($files1 as $name => $file) {
+        // Skip directories (they would be added automatically)
+        if (!$file->isDir()) {
+            $filePath = $file->getRealPath();
+            $relativePath = substr($filePath, strlen($rootPath1) + 1);
+            $zip->addFile($filePath, $relativePath);
+        }
+    }
+
+
+
+    $zip->close();
+}
+
 
 
 /**
- * Download uploads
+ * Download with uploads
  */
 
 add_action('wp_ajax_static_export_download_uploads', 'static_export_download_uploads_callback');
@@ -364,6 +396,17 @@ function static_export_download_uploads_callback()
 {
     // zipFolder(WP_CONTENT_DIR . '/uploads', WP_CONTENT_DIR . '/uploads.zip');
     zipFolder1(WP_CONTENT_DIR . '/uploads', WP_CONTENT_DIR . '/easy-static/export.zip');
+    $response['ready'] =  true;
+    wp_send_json($response);
+}
+
+add_action('wp_ajax_static_export_download_no_uploads', 'static_export_download_no_uploads_callback');
+add_action('wp_ajax_nopriv_static_export_no_download_uploads', 'static_export_download_no_uploads_callback');
+
+function static_export_download_no_uploads_callback()
+{
+    // zipFolder(WP_CONTENT_DIR . '/uploads', WP_CONTENT_DIR . '/uploads.zip');
+    zipFolder2(WP_CONTENT_DIR . '/uploads', WP_CONTENT_DIR . '/easy-static/export.zip');
     $response['ready'] =  true;
     wp_send_json($response);
 }
