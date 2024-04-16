@@ -30,35 +30,13 @@ btn_generate.onclick = () => {
         document.getElementById('pages').classList.remove('disabled');
 
         const response = JSON.parse(xhr.responseText);
-        pages_result.innerHTML = response.markup;
+        // pages_result.innerHTML = response.markup;
 
-        window.location.reload();
+        // window.location.reload();
     }
 }
 
-// posts is active
-const checkbox_static_active = main.querySelectorAll("#pages .checkbox-static_active");
-checkbox_static_active.forEach((el) => {
-    el.onchange = () => {
-        if (!el.checked) {
-            el.value = 0;
-        } else {
-            el.parentNode.parentNode.querySelector('.info-update').classList.add('uptodate');
-            el.value = 1;
-        }
 
-        const data = new FormData();
-        data.append('action', "static_posts_his_active");
-        data.append('nonce', nonce);
-        data.append('id', el.id);
-        data.append('slug', el.dataset.slug);
-        data.append('status', el.checked);
-        const xhr = new XMLHttpRequest();
-        xhr.open("post", ajax_url, true);
-        xhr.send(data);
-        xhr.onload = () => { }
-    }
-})
 
 // Switch mode 
 if (toogle_status.checked) {
@@ -90,18 +68,6 @@ toogle_status.onchange = () => {
 }
 
 
-//
-const input_host = document.getElementById("es-host");
-input_host.onchange = () => {
-    const data = new FormData();
-    data.append('action', "static_change_host");
-    data.append('nonce', nonce);
-    data.append('host', input_host.value);
-    const xhr = new XMLHttpRequest();
-    xhr.open("post", ajax_url, true);
-    xhr.send(data);
-    xhr.onload = () => { }
-}
 
 // tabs
 const tab_links = document.querySelectorAll('.nav-tab-wrapper .nav-tab');
@@ -128,41 +94,35 @@ tab_links.forEach(link => {
     }
 })
 
-
-
 /*
 export
  */
 
 const relative = document.getElementById('es-relative');
-relative.oninput = (e) => {
-
-    /* let value = relative.innerText;
-     if (value.charAt(0) === '/') {
-         value = value.substring(1)
-     }
-     if (value.charAt(value.length - 1) === "/") {
-         value = value.slice(0, -1)
-     }
-     relative.innerText = value;
-     if (relative.innerText.length > 1) {
-         document.querySelector('.es-action').classList.remove('disabled');
-
-     } else {
-         document.querySelector('.es-action').classList.add('disabled');
-     }*/
-}
 
 relative.addEventListener('keypress', (e) => {
     //if (e.which === 47)  e.preventDefault();
     if (e.which === 13) e.preventDefault();
 });
 relative.onblur = () => {
-    // if (relative.innerText.length > 1) {
+    let value = relative.innerText;
+    if (value.charAt(0) === '/') {
+        value = value.substring(1)
+    }
+    if (value.charAt(value.length - 1) === "/") {
+        value = value.slice(0, -1)
+    }
+
+    const removeAccents = str => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    value = removeAccents(value);
+    value = value.replace(/[^a-z0-9/\-_]/gmi, "");
+
+    relative.innerText = value;
+
     const data = new FormData();
     data.append('action', "static_export_slug");
     data.append('nonce', nonce);
-    data.append('slug', relative.innerText);
+    data.append('slug', value);
     const xhr = new XMLHttpRequest();
     xhr.open("post", ajax_url, true);
     xhr.send(data);
@@ -170,13 +130,6 @@ relative.onblur = () => {
     if (document.querySelector('.es-action')) {
         document.querySelector('.es-action').classList.remove('disabled');
     }
-
-
-    /*} else {
-        if (document.querySelector('.es-action')) {
-            document.querySelector('.es-action').classList.add('disabled');
-        }
-    }*/
 }
 
 
@@ -193,39 +146,11 @@ btn_download_pages.onclick = () => {
     xhr.open("post", ajax_url, true);
     xhr.send(data);
     xhr.onload = () => {
-        btn_download_pages.classList.remove('loading');
+        zip()
     }
 }
 
-// zip all
-const btn_zip_uploads = document.getElementById('es-zip-uploads');
-const link_download_uploads = document.getElementById('es-download-uploads');
-btn_zip_uploads.onclick = () => {
-    btn_zip_uploads.classList.add('loading');
-    const data = new FormData();
-    data.append('action', "static_export_download_uploads");
-    data.append('nonce', nonce);
-    const xhr = new XMLHttpRequest();
-    xhr.open("post", ajax_url, true);
-    xhr.send(data);
-    xhr.onload = () => {
-        const response = JSON.parse(xhr.response);
-        link_download_uploads.href = window.location.origin + "/wp-content/easy-static/export.zip";
-        link_download_uploads.dowload = "export";
-        link_download_uploads.style.display = "inline";
-        btn_zip_uploads.classList.remove('loading');
-    }
-}
-link_download_uploads.addEventListener('click', () => {
-    setTimeout(() => {
-        link_download_uploads.style.display = "none";
-    }, 300);
-});
-
-// zip without uplads
-const btn_zip_no_uploads = document.getElementById('es-zip-no_upload');
-btn_zip_no_uploads.onclick = () => {
-    btn_zip_no_uploads.classList.add('loading');
+function zip() {
     const data = new FormData();
     data.append('action', "static_export_download_no_uploads");
     data.append('nonce', nonce);
@@ -237,9 +162,17 @@ btn_zip_no_uploads.onclick = () => {
         link_download_uploads.href = window.location.origin + "/wp-content/easy-static/export.zip";
         link_download_uploads.dowload = "export";
         link_download_uploads.style.display = "inline";
-        btn_zip_no_uploads.classList.remove('loading');
+        btn_download_pages.classList.remove('loading');
     }
 }
+
+const link_download_uploads = document.getElementById('es-download-uploads');
+link_download_uploads.addEventListener('click', () => {
+    setTimeout(() => {
+        link_download_uploads.style.display = "none";
+    }, 300);
+});
+
 
 // remove zip
 const btn_zip_remove = document.getElementById('es-zip-remove');
@@ -273,17 +206,14 @@ function authentification() {
 
     }
 }
-auth_user_input.onchange = () => {
-    authentification()
-}
-auth_password_input.onchange = () => {
-    authentification()
-}
+if (auth_user_input) auth_user_input.onchange = () => authentification()
+
+if (auth_password_input) auth_password_input.onchange = () => authentification()
+
 
 
 // Options
 const minify = document.getElementById("es-option-minify");
-const localisfolder = document.getElementById("es-option-localisfolder");
 
 function _minify() {
     const data = new FormData();
@@ -296,21 +226,7 @@ function _minify() {
     xhr.onload = () => {
     }
 }
-function _localisfolder() {
-    const data = new FormData();
-    data.append('action', "static_localisfolder");
-    data.append('nonce', nonce);
-    data.append('localisfolder', localisfolder.checked);
-    const xhr = new XMLHttpRequest();
-    xhr.open("post", ajax_url, true);
-    xhr.send(data);
-    xhr.onload = () => {
-    }
-}
 
 minify.onchange = () => {
     _minify();
-}
-localisfolder.onchange = () => {
-    _localisfolder()
 }

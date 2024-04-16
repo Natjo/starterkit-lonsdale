@@ -2,26 +2,22 @@
 /*
 Plugin Name: Easy static
 Description: Generate static site
-Version: 1.2.4
+Version: 1.4.0
 Author: Martin Jonathan
 */
 
 global $wpdb;
-global $host;
 global $authentification;
 global $table;
 global $haschange;
 global $isStatic;
+global $isminify;
 
-
-$homepageID = get_option('page_on_front');
-$homepagePost = get_post($homepageID);
-$home_folder = $homepagePost->post_name; // "homepage";
-$url = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'];
+//$url = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'];
 
 // Create table easystatic if not exist
 $charset_collate = $wpdb->get_charset_collate();
-$table =  $table_prefix . "easystatic";
+$table = $table_prefix . "easystatic";
 if (!$wpdb->get_var("SHOW TABLES LIKE '$table'") == $table) {
     $sql = "CREATE TABLE $table (
         id mediumint(9) NOT NULL AUTO_INCREMENT,
@@ -35,20 +31,15 @@ if (!$wpdb->get_var("SHOW TABLES LIKE '$table'") == $table) {
 }
 
 // Create options
-$result_host = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'host'");
-if (empty($result_host)) {
-    $data = array('option' => "host", 'value' => $url);
-    $format = array('%s', '%s');
-    $wpdb->insert($table, $data, $format);
-}
-
 $easy_static_active = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'active'");
 if (empty($easy_static_active)) {
     $data = array('option' => "active", 'value' => false);
     $format = array('%s', '%d');
     $wpdb->insert($table, $data, $format);
+    $isStatic = false;
+} else {
+    $isStatic = $easy_static_active[0]->value === "0" ? false : true;
 }
-$isStatic = $easy_static_active[0]->value === "0" ? false : true;
 
 $easy_static_user = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'user'");
 if (empty($easy_static_user)) {
@@ -56,14 +47,6 @@ if (empty($easy_static_user)) {
     $format = array('%s', '%s');
     $wpdb->insert($table, $data, $format);
 }
-
-$easy_static_generate = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'generate'");
-if (empty($easy_static_generate)) {
-    $data = array('option' => "generate", 'value' => "");
-    $format = array('%s', '%s');
-    $wpdb->insert($table, $data, $format);
-}
-$last_generate = $easy_static_generate[0]->value;
 
 $easy_static_password = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'password'");
 if (empty($easy_static_password)) {
@@ -74,23 +57,26 @@ if (empty($easy_static_password)) {
 
 $easy_static_slug = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'slug'");
 if (empty($easy_static_slug)) {
-    $data = array('option' => "slug", 'value' => "/");
+    $data = array('option' => "slug", 'value' => "");
     $format = array('%s', '%s');
     $wpdb->insert($table, $data, $format);
 }
 
 $easy_static_minify = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'minify'");
 if (empty($easy_static_minify)) {
-    $data = array('option' => "minify", 'value' => true);
+    $data = array('option' => "minify", 'value' => false);
     $format = array('%s', '%d');
     $wpdb->insert($table, $data, $format);
 }
 
-$easy_static_localisfolder = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'localisfolder'");
-if (empty($easy_static_localisfolder)) {
-    $data = array('option' => "localisfolder", 'value' => false);
-    $format = array('%s', '%d');
+$easy_static_generate = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'generate'");
+if (empty($easy_static_generate)) {
+    $data = array('option' => "generate", 'value' => "");
+    $format = array('%s', '%s');
     $wpdb->insert($table, $data, $format);
+    $last_generate = "";
+} else {
+    $last_generate = $easy_static_generate[0]->value;
 }
 
 $easy_static_haschange = $wpdb->get_results("SELECT * FROM " . $table . " WHERE option = 'haschange'");
@@ -98,14 +84,13 @@ if (empty($easy_static_haschange)) {
     $data = array('option' => "haschange", 'value' => false);
     $format = array('%s', '%d');
     $wpdb->insert($table, $data, $format);
+    $haschange = false;
+} else {
+    $haschange = $easy_static_haschange[0]->value === "0" ? false : true;
 }
-$haschange = $easy_static_haschange[0]->value === "0" ? false : true;
 
-$host = $result_host[0]->value;
 
-global $isminify;
 $minify = $wpdb->get_results("SELECT * FROM " . $table  . " WHERE option = 'minify'");
-$localisfolder = $wpdb->get_results("SELECT * FROM " . $table  . " WHERE option = 'localisfolder'");
 $isminify =  $minify[0]->value === "true" ? true : false;
 
 // authentification
@@ -113,7 +98,6 @@ $user = $wpdb->get_results("SELECT * FROM " . $table  . " WHERE option = 'user'"
 $password = $wpdb->get_results("SELECT * FROM " . $table  . " WHERE option = 'password'");
 $authentification["user"] =  $user[0]->value;
 $authentification["password"] = $password[0]->value;
-
 
 // Include mfp-functions.php, use require_once to stop the script if mfp-functions.php is not found
 require_once plugin_dir_path(__FILE__) . 'includes/es-functions.php';
@@ -126,6 +110,9 @@ function wpdocs_notify_subscribers($post_id, $post, $update)
 {
     global $easy_static_active;
 
+    //print_r($post);
+    //echo $post->post_name;
+
     if ($easy_static_active[0]->value) {
         if ($post->post_type == "page" || $post->post_type == "post") {
             if ($post->static_active) {
@@ -135,9 +122,7 @@ function wpdocs_notify_subscribers($post_id, $post, $update)
     }
 }
 
-
 add_action('check_admin_referer', 'check_nav_menu_updates', 11, 1);
-
 function check_nav_menu_updates($action)
 {
     if (('update-nav_menu' != $action) or !isset($_POST['menu-locations'])) {
@@ -145,7 +130,6 @@ function check_nav_menu_updates($action)
     }
     hasChanged();
 }
-
 
 // set haschange to true if change in parameters
 function clear_advert_main_transient($post_id)
