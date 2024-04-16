@@ -106,6 +106,7 @@ relative.addEventListener('keypress', (e) => {
 });
 relative.onblur = () => {
     let value = relative.innerText;
+   
     if (value.charAt(0) === '/') {
         value = value.substring(1)
     }

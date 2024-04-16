@@ -273,7 +273,7 @@ function static_export_pages_callback()
 
     global $isminify;
 
-    class SitemapGenerator
+    class SitemapGeneratorExport
     {
         private $config;
         private $scanned;
@@ -367,20 +367,20 @@ function static_export_pages_callback()
 
             if (ENV_LOCAL) {
                 $docker_url = str_replace($this->site_url_base . "/", 'https://' . $_SERVER['SERVER_ADDR'] . '/', $url);
-                $html = file_get_contents($docker_url. "?generate=true", false, stream_context_create($arrContextOptions));
-                $html1 = str_replace($docker_url, "/" . $this->dist_folder . "", $html);
-                $site_url_baseSlashed = str_replace("/", "\/", $docker_url);
+                $html = file_get_contents($docker_url . "?generate=true", false, stream_context_create($arrContextOptions));
+                $html1 = str_replace('https://' . $_SERVER['SERVER_ADDR'] . "/", "/" . $this->dist_folder, $html);
+                $site_url_baseSlashed = str_replace("/", "\/", 'https://' . $_SERVER['SERVER_ADDR'] . "/");
             } else {
-                $html = file_get_contents($url. "?generate=true", false, stream_context_create($arrContextOptions));
+                $html = file_get_contents($url . "?generate=true", false, stream_context_create($arrContextOptions));
                 $html1 = str_replace($this->site_url_base . '/', "/" . $this->dist_folder . "", $html);
-                $site_url_baseSlashed = str_replace("/", "\/", $this->site_url_base. '/');
+                $site_url_baseSlashed = str_replace("/", "\/", $this->site_url_base . '/');
                 //TODO test if working
             }
 
             $html1 = str_replace("/wp-content/uploads/", "/uploads/", $html1);
             $html1 = str_replace("/wp-content/themes/" . $this->theme_slug . "/assets/", "/assets/", $html1);
             $dist_folderSlashed = str_replace("/", "\/", $this->dist_folder);
-            $html1 = str_replace($site_url_baseSlashed . "wp-content\/themes\/" . $this->theme_slug . "\/",  "\/" . $dist_folderSlashed, $html1);
+            $html1 = str_replace($site_url_baseSlashed . "wp-content\/themes\/" . $this->theme_slug . "\/",   "\/" . $dist_folderSlashed, $html1);
 
             if ($this->isminify  === true) {
                 file_put_contents(WP_CONTENT_DIR . "/easy-static/export/" .  $folder  . 'index.html', TinyMinify::html($html1));
@@ -398,6 +398,11 @@ function static_export_pages_callback()
         // Recursive function that crawls a page's anchor tags and store them in the scanned array.
         private function crawlPage($page_url)
         {
+
+            if (ENV_LOCAL) {
+                $page_url = str_replace('https://' . $_SERVER['SERVER_ADDR'], $this->site_url_base, $page_url);
+            }
+
             $url = filter_var($page_url, FILTER_SANITIZE_URL);
 
             // Check if the url is invalid or if the page is already scanned;
@@ -418,6 +423,9 @@ function static_export_pages_callback()
 
                 $next_url = $a->getAttribute('href');
 
+                if (ENV_LOCAL) {
+                    $next_url = str_replace('https://' . $_SERVER['SERVER_ADDR'], $this->site_url_base, $next_url);
+                }
 
                 // Check if there is a anchor ID set in the config.
                 if ($this->config['CRAWL_ANCHORS_WITH_ID'] != "") {
@@ -484,14 +492,15 @@ function static_export_pages_callback()
         }
     }
 
-    if (empty($dist_folder)) {
-        $dist_folder = $_POST['slug'] . "/";
-    } else {
+    if (empty($_POST['slug'])) {
         $dist_folder = $_POST['slug'];
+    } else {
+        $dist_folder = $_POST['slug'] . "/";
     }
+
     global $authentification;
 
-    $smg = new SitemapGenerator($dist_folder, $isminify, $authentification);
+    $smg = new SitemapGeneratorExport($dist_folder, $isminify, $authentification);
     $smg->GenerateSitemap();
 
     $response['markup'] = "done";
