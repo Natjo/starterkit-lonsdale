@@ -41,9 +41,6 @@
             <h2>Options</h2>
         </header>
 
-        <?php
-
-        ?>
         <ul>
             <li><input id="es-option-minify" type="checkbox" <?= $isminify === true ? "checked" : "" ?>><label>Compresser les pages générées</label></li>
             <li><input id="es-option-localisfolder" type="checkbox" <?= $localisfolder[0]->value === "true" ? "checked" : "" ?>><label>Multilangue local (default) est un dossier</label></li>
